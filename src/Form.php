@@ -1,8 +1,5 @@
 <?php namespace Laraplus\Form;
 
-use Illuminate\Http\Request;
-use Illuminate\Database\Eloquent\Model;
-
 class Form extends Elements
 {
     /**
@@ -59,20 +56,13 @@ class Form extends Elements
      */
     public function getRules($name)
     {
-        $rules = array_get($this->rules, $name);
-
-        if (is_null($rules)) {
-            $name = trim(str_replace(['[', ']'], ['.', ''], $name), '.');
-            $rules = array_get($this->rules, $name);
-        }
-
-        return $rules;
+        return array_get($this->rules, $name);
     }
 
     /**
      * @param Model $model
      */
-    public function model(Model $model)
+    public function model($model)
     {
         $this->model = $model;
     }

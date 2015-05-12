@@ -2,11 +2,25 @@
 
 abstract class Element
 {
+    /**
+     * @var array
+     */
     protected $attributes = [];
 
+    /**
+     * @var string
+     */
     protected $name = null;
 
+    /**
+     * @var string|array
+     */
     protected $value = null;
+
+    /**
+     * @var \Laraplus\Form\Form
+     */
+    protected $form;
 
     /**
      * @param $name
@@ -84,5 +98,30 @@ abstract class Element
         return $this;
     }
 
+    /**
+     * @param $form
+     */
+    public function setForm($form)
+    {
+        $this->form = $form;
+    }
+
+    /**
+     * @return string
+     */
+    public function renderAttributes()
+    {
+        $attributes = [];
+
+        foreach($this->attributes as $key=>$value) {
+            $attributes[] = $key . '="' . $value . '"';
+        }
+
+        return implode(' ', $attributes);
+    }
+
+    /**
+     * @return string
+     */
     public abstract function render();
 }

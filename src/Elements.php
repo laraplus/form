@@ -45,10 +45,7 @@ class Elements
      */
     public function text($name)
     {
-        $element = new Text($name);
-        $this->elements[] = $element;
-
-        return $element;
+        return $this->addElement(new Text($name));
     }
 
     /**
@@ -57,10 +54,7 @@ class Elements
      */
     public function password($name)
     {
-        $element = new Password($name);
-        $this->elements[] = $element;
-
-        return $element;
+        return $this->addElement(new Password($name));
     }
 
     /**
@@ -69,10 +63,7 @@ class Elements
      */
     public function hidden($name)
     {
-        $element = new Hidden($name);
-        $this->elements[] = $element;
-
-        return $element;
+        return $this->addElement(new Hidden($name));
     }
 
     /**
@@ -81,10 +72,7 @@ class Elements
      */
     public function select($name)
     {
-        $element = new Select($name);
-        $this->elements[] = $element;
-
-        return $element;
+        return $this->addElement(new Select($name));
     }
 
     /**
@@ -93,10 +81,7 @@ class Elements
      */
     public function checkbox($name)
     {
-        $element = new Checkbox($name);
-        $this->elements[] = $element;
-
-        return $element;
+        return $this->addElement(new Checkbox($name));
     }
 
     /**
@@ -105,10 +90,7 @@ class Elements
      */
     public function checkboxList($name)
     {
-        $element = new CheckboxList($name);
-        $this->elements[] = $element;
-
-        return $element;
+        return $this->addElement(new CheckboxList($name));
     }
 
     /**
@@ -117,10 +99,7 @@ class Elements
      */
     public function radioList($name)
     {
-        $element = new RadioList($name);
-        $this->elements[] = $element;
-
-        return $element;
+        return $this->addElement(new RadioList($name));
     }
 
     /**
@@ -129,11 +108,17 @@ class Elements
      */
     public function file($name)
     {
-        $element = new File($name);
-        $this->elements[] = $element;
-
-        return $element;
+        return $this->addElement(new File($name));
     }
 
+    /**
+     * @param $element
+     */
+    protected function addElement($element)
+    {
+        $element->setFormBuilder($this);
+
+        return $this->elements[] = $element;
+    }
 
 }

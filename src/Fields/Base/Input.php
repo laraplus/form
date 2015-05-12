@@ -7,6 +7,11 @@ abstract class Input extends Element
         $this->attributes['type'] = $type;
     }
 
+    public function placeholder($placeholder)
+    {
+        $this->attributes['placeholder'] = $placeholder;
+    }
+
     public function render()
     {
         return '<input type="' . $this->attributes['type'] . '" />';
