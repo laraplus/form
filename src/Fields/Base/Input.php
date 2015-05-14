@@ -14,6 +14,6 @@ abstract class Input extends Element
 
     public function render()
     {
-        return '<input type="' . $this->attributes['type'] . '" />';
+        return '<input ' . $this->renderAttributes() . ' />';
     }
 }

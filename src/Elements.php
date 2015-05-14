@@ -10,10 +10,21 @@ use Laraplus\Form\Fields\Checkbox;
 use Laraplus\Form\Fields\RadioList;
 use Laraplus\Form\Fields\CheckboxList;
 
-class Elements
+abstract class Elements
 {
+    /**
+     * @var Open
+     */
     protected $open = null;
+
+    /**
+     * @var Close
+     */
     protected $close = null;
+
+    /**
+     * @var array
+     */
     protected $elements = [];
 
     /**
@@ -45,7 +56,7 @@ class Elements
      */
     public function text($name)
     {
-        return $this->addElement(new Text($name));
+        return $this->addElement('text', $name);
     }
 
     /**
@@ -54,7 +65,7 @@ class Elements
      */
     public function password($name)
     {
-        return $this->addElement(new Password($name));
+        return $this->addElement('password', $name);
     }
 
     /**
@@ -63,7 +74,7 @@ class Elements
      */
     public function hidden($name)
     {
-        return $this->addElement(new Hidden($name));
+        return $this->addElement('hidden', $name);
     }
 
     /**
@@ -72,7 +83,7 @@ class Elements
      */
     public function select($name)
     {
-        return $this->addElement(new Select($name));
+        return $this->addElement('select', $name);
     }
 
     /**
@@ -81,7 +92,7 @@ class Elements
      */
     public function checkbox($name)
     {
-        return $this->addElement(new Checkbox($name));
+        return $this->addElement('checkbox', $name);
     }
 
     /**
@@ -90,7 +101,7 @@ class Elements
      */
     public function checkboxList($name)
     {
-        return $this->addElement(new CheckboxList($name));
+        return $this->addElement('checkbox_list', $name);
     }
 
     /**
@@ -99,7 +110,7 @@ class Elements
      */
     public function radioList($name)
     {
-        return $this->addElement(new RadioList($name));
+        return $this->addElement('radio_list', $name);
     }
 
     /**
@@ -108,17 +119,13 @@ class Elements
      */
     public function file($name)
     {
-        return $this->addElement(new File($name));
+        return $this->addElement('file', $name);
     }
 
-    /**
-     * @param $element
+    /*
+     * @param string $type
+     * @param string $name
      */
-    protected function addElement($element)
-    {
-        $element->setFormBuilder($this);
-
-        return $this->elements[] = $element;
-    }
+    protected abstract function addElement($type, $name);
 
 }

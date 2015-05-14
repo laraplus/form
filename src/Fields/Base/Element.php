@@ -1,33 +1,47 @@
 <?php namespace Laraplus\Form\Fields\Base;
 
+use Laraplus\Contracts\DataStore;
+use Laraplus\Contracts\FormPresenter;
+
 abstract class Element
 {
     /**
-     * @var array
-     */
-    protected $attributes = [];
-
-    /**
      * @var string
      */
-    protected $name = null;
+    protected $name;
 
     /**
      * @var string|array
      */
-    protected $value = null;
+    protected $value;
 
     /**
-     * @var \Laraplus\Form\Form
+     * @var string
      */
-    protected $form;
+    protected $label;
 
     /**
-     * @param $name
+     * @var array
+     */
+    protected $attributes;
+
+    /**
+     * @var array
+     */
+    protected $rules;
+
+    /**
+     * @var DataStore
+     */
+    protected $dataStore;
+
+    /**
+     * @param string $name
      */
     public function __construct($name)
     {
         $this->name = $name;
+        $this->attributes['id'] = $name;
     }
 
     /**
@@ -99,29 +113,69 @@ abstract class Element
     }
 
     /**
-     * @param $form
+     * @param DataStore $dataStore
+     * @param array $rules
      */
-    public function setForm($form)
+    public function setProperties(DataStore $dataStore, array $rules)
     {
-        $this->form = $form;
+        $this->rules = $rules;
+        $this->dataStore = $dataStore;
+    }
+
+    /**
+     * @param FormPresenter $presenter
+     * @return string
+     */
+    public function render(FormPresenter $presenter)
+    {
+        $this->attributes = $presenter->prepare($this->attributes);
+
+        $errorMessage = $this->dataStore->getError($this->getName());
+
+        $label = $presenter->renderLabel($this->label, $this->attributes);
+        $error = $presenter->renderError($errorMessage, $this->attributes);
+        $field = $presenter->renderElement($this->renderField(), $this->attributes);
+
+        return $this->presenter->renderGroup($label, $field, $error);
     }
 
     /**
      * @return string
      */
-    public function renderAttributes()
-    {
-        $attributes = [];
+    public abstract function renderField();
 
-        foreach($this->attributes as $key=>$value) {
-            $attributes[] = $key . '="' . $value . '"';
+    /**
+     * @return array|string
+     */
+    protected function getValue()
+    {
+        $value = $this->dataStore->getValue($this->name);
+
+        return $value ?: $this->value;
+    }
+
+    /**
+     * Access field attributes
+     * @return string
+     */
+    public function __get($property)
+    {
+        if($property === 'name') {
+            return $this->name;
         }
 
-        return implode(' ', $attributes);
-    }
+        if($property === 'label') {
+            return $this->label;
+        }
 
-    /**
-     * @return string
-     */
-    public abstract function render();
+        if($property === 'value') {
+            return $this->getValue();
+        }
+
+        if(isset($this->attributes[$property])) {
+            return $this->attributes[$property];
+        }
+
+        return null;
+    }
 }
