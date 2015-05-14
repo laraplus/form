@@ -1,5 +1,6 @@
 <?php namespace Laraplus\Form\Fields;
 
+use ArrayAccess;
 use Laraplus\Form\Form;
 use Laraplus\Form\Contracts\DataStore;
 
@@ -11,23 +12,19 @@ class Open
     protected $name;
 
     /**
-     * @var method
+     * @var array
      */
-    protected $method;
-
-    /**
-     * @var method
-     */
-    protected $action;
+    protected $attributes;
 
     /**
      * @var DataStore
      */
-    private $data;
+    protected $data;
+
     /**
      * @var Form
      */
-    private $form;
+    protected $form;
 
     /**
      * @param string $name
@@ -38,14 +35,14 @@ class Open
     {
         $this->name = $name;
         $this->data = $data;
-
-        $this->method = 'GET';
-        $this->action = $data->getUrl();
         $this->form = $form;
+
+        $this->attributes['method'] = 'GET';
+        $this->attributes['action'] = $data->getUrl();
     }
 
     /**
-     * @param object $model
+     * @param ArrayAccess $model
      * @return $this
      */
     public function model($model)
@@ -72,7 +69,7 @@ class Open
      */
     public function method($method)
     {
-        $this->method = $method;
+        $this->attributes['method'] = $method;
 
         return $this;
     }
@@ -83,7 +80,17 @@ class Open
      */
     public function action($action)
     {
-        $this->action = $action;
+        $this->attributes['action'] = $action;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function multipart()
+    {
+        $this->attributes['enctype'] = 'multipart/form-data';
 
         return $this;
     }
@@ -100,8 +107,17 @@ class Open
         }
     }
 
+    /**
+     * @return string
+     */
     public function __toString()
     {
-        return '<form>';
+        $attributes = [];
+
+        foreach($this->attributes as $key => $value) {
+            $attributes[] = $key . '="' . $value . '"';
+        }
+
+        return '<form ' . implode(' ', $attributes) . '>';
     }
 }

@@ -179,7 +179,7 @@ abstract class Element
             $result[] = $key . '="' . $value . '"';
         }
 
-        return implode($result);
+        return implode(' ', $result);
     }
 
     /**
