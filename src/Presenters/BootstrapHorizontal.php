@@ -2,10 +2,6 @@
 
 use Laraplus\Contracts\FormPresenter;
 
-class BootstrapHorizontal implements FormPresenter
+class BootstrapHorizontal extends RawPresenter implements FormPresenter
 {
-    public function label($id)
-    {
-        return '';
-    }
 }

@@ -1,6 +1,13 @@
 <?php namespace Laraplus\Form\Fields;
 
-class Text
-{
+use Laraplus\Form\Fields\Base\Input;
 
+class Text extends Input
+{
+    protected function init()
+    {
+        parent::init();
+
+        $this->attributes['type'] = 'text';
+    }
 }

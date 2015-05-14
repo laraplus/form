@@ -60,4 +60,14 @@ class LaravelDataStore implements DataStore {
             return $name;
         }
     }
+
+    /**
+     * @return string
+     */
+    public function getUrl()
+    {
+        $query = $this->getQueryString();
+
+        return $this->request->path() . ($query ? '?' . $query : '');
+    }
 }

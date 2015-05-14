@@ -21,4 +21,9 @@ interface DataStore
      */
     public function getValue($name);
 
+    /**
+     * @return string
+     */
+    public function getUrl();
+
 }

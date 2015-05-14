@@ -1,60 +1,58 @@
 <?php namespace Laraplus\Form\Presenters;
 
 use Laraplus\Contracts\FormPresenter;
-use Laraplus\Form\Fields\Base\Element;
 
-class RawPresenter implements FormPresenter {
-
+class RawPresenter implements FormPresenter
+{
     /**
-     * @param Element $element
-     * @return string
+     * @param array $attributes
+     * @return array
      */
-    public function renderLabel(Element $element)
+    public function prepare(array $attributes)
     {
-        return '<label for="' . $element->getAttribute('id') . '">' . $element->getLabel() . '</label>';
-    }
-
-    /**
-     * @param Element $element
-     * @return string
-     */
-    public function renderError(Element $element)
-    {
-        return '<strong>' . $element->getError() . '</strong>';
-    }
-
-    /**
-     * @param Element $element
-     * @return string
-     */
-    public function renderElement(Element $element)
-    {
-        // TODO: Implement renderElement() method.
+        return $attributes;
     }
 
     /**
      * @param string $label
-     * @param string $field
-     * @param string $error
+     * @param array $attributes
      * @return string
      */
-    public function renderGroup($label, $field, $error)
+    public function renderLabel($label, array $attributes)
     {
-        // TODO: Implement renderGroup() method.
+        $for = isset($attributes['id']) ? $attributes['id'] : null;
+
+        return '<label' . ($for ? ' for="' . $for . '"' : '') . '>' . $label . '</label>';
     }
 
     /**
-     * @param Element $element
+     * @param string $error
+     * @param array $attributes
      * @return string
      */
-    protected function renderAttributes(Element $element)
+    public function renderError($error, array $attributes)
     {
-        $attributes = [];
+        return $error;
+    }
 
-        foreach($element->getAttributes() as $key=>$value) {
-            $attributes[] = $key . '="' . $value . '"';
-        }
+    /**
+     * @param string $field
+     * @param array $attributes
+     * @return string
+     */
+    public function renderField($field, array $attributes)
+    {
+        return $field;
+    }
 
-        return implode(' ', $attributes);
+    /**
+     * @param string $label
+     * @param string $elemen
+     * @param string $error
+     * @return string
+     */
+    public function renderGroup($label, $element, $error)
+    {
+        return '<div>' . $label . $element . $error . '</div>';
     }
 }

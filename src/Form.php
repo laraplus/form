@@ -1,5 +1,7 @@
 <?php namespace Laraplus\Form;
 
+use Laraplus\Form\Fields\Open;
+use Laraplus\Form\Fields\Close;
 use Laraplus\Contracts\DataStore;
 use Laraplus\Contracts\FormPresenter;
 use Laraplus\Form\Fields\Base\Element;
@@ -7,17 +9,12 @@ use Laraplus\Form\Fields\Base\Element;
 class Form extends Elements
 {
     /**
-     * @var Request
-     */
-    protected $request;
-
-    /**
      * @var array
      */
     protected $rules;
 
     /**
-     * @var Model
+     * @var object
      */
     protected $model;
 
@@ -27,15 +24,30 @@ class Form extends Elements
     protected $presenter;
 
     /**
+     * @var Open
+     */
+    protected $open;
+
+    /**
+     * @var Close
+     */
+    protected $close;
+
+    /**
+     * @var array
+     */
+    protected $elements;
+
+    /**
      * @param FormPresenter $presenter
      * @param DataStore $dataStore
-     * @internal param Request $request
      */
-    public function __construct(FormPresenter $presenter, DataStore $dataStore, array $rules = [])
+    public function __construct(FormPresenter $presenter, DataStore $dataStore)
     {
         $this->presenter = $presenter;
         $this->dataStore = $dataStore;
-        $this->setRules($rules);
+
+        $this->reset();
     }
 
     /**
@@ -97,9 +109,30 @@ class Form extends Elements
     {
         $class = 'Laraplus\\Form\\Fields\\' . studly_case($type);
 
-        $element = new $class($name, $this->dataStore, array_get($this->rules, $name));
+        $element = new $class($name, $this->open, $this->presenter, $this->dataStore, array_get($this->rules, $name));
 
         return $this->elements[] = $element;
+    }
+
+    /**
+     * @param string $name
+     * @return Open
+     */
+    protected function openForm($name)
+    {
+        $form = new Open($name, $this, $this->dataStore);
+
+        return $this->open = $form;
+    }
+
+    /**
+     * @return Close
+     */
+    protected function closeForm()
+    {
+        $form = new Close();
+
+        return $this->close = $form;
     }
 
     /**
@@ -127,6 +160,20 @@ class Form extends Elements
         }
 
     }
+
+    /*
+     * Reset all of the properties
+     */
+    protected function reset()
+    {
+        $this->open = null;
+        $this->close = null;
+        $this->model = null;
+
+        $this->rules = [];
+        $this->elements = [];
+    }
+
     /**
      * @return string
      */

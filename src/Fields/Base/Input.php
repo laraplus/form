@@ -12,8 +12,12 @@ abstract class Input extends Element
         $this->attributes['placeholder'] = $placeholder;
     }
 
-    public function render()
+    public function renderField()
     {
-        return '<input ' . $this->renderAttributes() . ' />';
+        $this->attributes['value'] = $this->getValue();
+
+        $attributes = $this->renderAttributes();
+
+        return '<input ' . $attributes . ' />';
     }
 }

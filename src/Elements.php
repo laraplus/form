@@ -9,34 +9,19 @@ use Laraplus\Form\Fields\Password;
 use Laraplus\Form\Fields\Checkbox;
 use Laraplus\Form\Fields\RadioList;
 use Laraplus\Form\Fields\CheckboxList;
+use Laraplus\Form\Fields\Base\Element;
 
 abstract class Elements
 {
-    /**
-     * @var Open
-     */
-    protected $open = null;
-
-    /**
-     * @var Close
-     */
-    protected $close = null;
-
-    /**
-     * @var array
-     */
-    protected $elements = [];
-
     /**
      * @param $name
      * @return Form
      */
     public function open($name)
     {
-        $form = new Open($name);
-        $this->open = $form;
+        $this->reset();
 
-        return $form;
+        return $this->openForm($name);
     }
 
     /**
@@ -44,10 +29,7 @@ abstract class Elements
      */
     public function close()
     {
-        $form = new Close();
-        $this->close = $form;
-
-        return $form;
+        return $this->closeForm();
     }
 
     /**
@@ -125,7 +107,24 @@ abstract class Elements
     /*
      * @param string $type
      * @param string $name
+     * @return Element
      */
     protected abstract function addElement($type, $name);
+
+    /**
+     * @param string $name
+     * @return Open
+     */
+    protected abstract function openForm($name);
+
+    /**
+     * @return Close
+     */
+    protected abstract function closeForm();
+
+    /*
+     * Reset all of the properties
+     */
+    protected abstract function reset();
 
 }

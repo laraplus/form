@@ -1,5 +1,6 @@
 <?php namespace Laraplus\Form\Fields\Base;
 
+use Laraplus\Form\Fields\Open;
 use Laraplus\Contracts\DataStore;
 use Laraplus\Contracts\FormPresenter;
 
@@ -9,6 +10,11 @@ abstract class Element
      * @var string
      */
     protected $name;
+
+    /**
+     * @var Open
+     */
+    protected $open;
 
     /**
      * @var string|array
@@ -36,12 +42,34 @@ abstract class Element
     protected $dataStore;
 
     /**
-     * @param string $name
+     * @var FormPresenter
      */
-    public function __construct($name)
+    private $presenter;
+
+    /**
+     * @param string $name
+     * @param Open $open
+     * @param FormPresenter $presenter
+     * @param DataStore $dataStore
+     * @param array $rules
+     */
+    public function __construct($name, Open $open, FormPresenter $presenter, DataStore $dataStore, array $rules = null)
     {
+        $this->open = $open;
         $this->name = $name;
-        $this->attributes['id'] = $name;
+        $this->rules = $rules;
+        $this->presenter = $presenter;
+        $this->dataStore = $dataStore;
+
+        $this->init();
+    }
+
+    /**
+     * Initialization function
+     */
+    protected function init()
+    {
+        $this->attributes['id'] = $this->open->name . '-' . $this->name;
     }
 
     /**
@@ -113,16 +141,6 @@ abstract class Element
     }
 
     /**
-     * @param DataStore $dataStore
-     * @param array $rules
-     */
-    public function setProperties(DataStore $dataStore, array $rules)
-    {
-        $this->rules = $rules;
-        $this->dataStore = $dataStore;
-    }
-
-    /**
      * @param FormPresenter $presenter
      * @return string
      */
@@ -142,7 +160,21 @@ abstract class Element
     /**
      * @return string
      */
-    public abstract function renderField();
+    protected function renderAttributes()
+    {
+        $result = [];
+
+        foreach($this->attributes as $key => $value) {
+            $result[] = $key . '="' . $value . '"';
+        }
+
+        return implode($result);
+    }
+
+    /**
+     * @return string
+     */
+    protected abstract function renderField();
 
     /**
      * @return array|string
@@ -155,7 +187,8 @@ abstract class Element
     }
 
     /**
-     * Access field attributes
+     * Magic getter
+     * @param $property
      * @return string
      */
     public function __get($property)
@@ -177,5 +210,13 @@ abstract class Element
         }
 
         return null;
+    }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return $this->render($this->presenter);
     }
 }
