@@ -26,4 +26,9 @@ interface DataStore
      */
     public function getUrl();
 
+    /**
+     * @return string
+     */
+    public function getToken();
+
 }

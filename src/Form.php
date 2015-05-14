@@ -1,5 +1,6 @@
 <?php namespace Laraplus\Form;
 
+use ArrayAccess;
 use Laraplus\Form\Fields\Open;
 use Laraplus\Form\Fields\Close;
 use Laraplus\Contracts\DataStore;
@@ -14,7 +15,7 @@ class Form extends Elements
     protected $rules;
 
     /**
-     * @var object
+     * @var ArrayAccess
      */
     protected $model;
 
@@ -73,7 +74,7 @@ class Form extends Elements
     }
 
     /**
-     * @param object $model
+     * @param ArrayAccess $model
      * @return $this
      */
     public function model($model)
@@ -84,6 +85,7 @@ class Form extends Elements
     }
 
     /**
+     * @param FormPresenter $presenter
      * @return string
      */
     public function render(FormPresenter $presenter = null)

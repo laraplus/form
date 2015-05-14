@@ -70,4 +70,12 @@ class LaravelDataStore implements DataStore {
 
         return $this->request->path() . ($query ? '?' . $query : '');
     }
+
+    /**
+     * @return string
+     */
+    public function getToken()
+    {
+        return $this->request->session()->getToken();
+    }
 }
