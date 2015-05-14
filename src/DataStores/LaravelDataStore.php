@@ -2,7 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
-use Laraplus\Contracts\DataStore;
+use Laraplus\Form\Contracts\DataStore;
 
 class LaravelDataStore implements DataStore {
 
@@ -66,7 +66,7 @@ class LaravelDataStore implements DataStore {
      */
     public function getUrl()
     {
-        $query = $this->getQueryString();
+        $query = $this->request->getQueryString();
 
         return $this->request->path() . ($query ? '?' . $query : '');
     }

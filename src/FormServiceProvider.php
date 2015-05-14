@@ -2,7 +2,7 @@
 
 use Illuminate\Support\ServiceProvider;
 
-class FormServiceProvide extends ServiceProvider
+class FormServiceProvider extends ServiceProvider
 {
     /**
      * @var bool
@@ -17,9 +17,9 @@ class FormServiceProvide extends ServiceProvider
     public function register()
     {
         $this->app->bind('Laraplus\Form\Contracts\DataStore', 'Laraplus\Form\DataStores\LaravelDataStore');
-        $this->app->bind('Laraplus\Form\Contracts\FormPresenter', 'Laraplus\Form\Presenters\RawFormPresenter');
+        $this->app->bind('Laraplus\Form\Contracts\FormPresenter', 'Laraplus\Form\Presenters\RawPresenter');
 
-        $this->app->instance('laraplus.form', 'Laraplus\Form\Form');
+        $this->app->singleton('laraplus.form', 'Laraplus\Form\Form');
     }
 
     /**

@@ -1,10 +1,8 @@
 <?php namespace Laraplus\Form\Facades;
 
-/**
- * @see \Illuminate\Auth\AuthManager
- * @see \Illuminate\Auth\Guard
- */
-class Auth extends Facade {
+use Illuminate\Support\Facades\Facade;
+
+class Form extends Facade {
 
     /**
      * Get the registered name of the component.

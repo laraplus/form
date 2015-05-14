@@ -1,8 +1,8 @@
 <?php namespace Laraplus\Form\Fields\Base;
 
 use Laraplus\Form\Fields\Open;
-use Laraplus\Contracts\DataStore;
-use Laraplus\Contracts\FormPresenter;
+use Laraplus\Form\Contracts\DataStore;
+use Laraplus\Form\Contracts\FormPresenter;
 
 abstract class Element
 {
@@ -84,6 +84,17 @@ abstract class Element
     }
 
     /**
+     * @param string $label
+     * @return $this
+     */
+    public function label($label)
+    {
+        $this->label = $label;
+
+        return $this;
+    }
+
+    /**
      * @param $name
      * @param $value
      * @return $this
@@ -148,11 +159,11 @@ abstract class Element
     {
         $this->attributes = $presenter->prepare($this->attributes);
 
-        $errorMessage = $this->dataStore->getError($this->getName());
+        $errorMessage = $this->dataStore->getError($this->name);
 
         $label = $presenter->renderLabel($this->label, $this->attributes);
         $error = $presenter->renderError($errorMessage, $this->attributes);
-        $field = $presenter->renderElement($this->renderField(), $this->attributes);
+        $field = $presenter->renderField($this->renderField(), $this->attributes);
 
         return $this->presenter->renderGroup($label, $field, $error);
     }

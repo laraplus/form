@@ -1,7 +1,7 @@
 <?php namespace Laraplus\Form\Fields;
 
 use Laraplus\Form\Form;
-use Laraplus\Contracts\DataStore;
+use Laraplus\Form\Contracts\DataStore;
 
 class Open
 {

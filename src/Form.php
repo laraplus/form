@@ -3,8 +3,8 @@
 use ArrayAccess;
 use Laraplus\Form\Fields\Open;
 use Laraplus\Form\Fields\Close;
-use Laraplus\Contracts\DataStore;
-use Laraplus\Contracts\FormPresenter;
+use Laraplus\Form\Contracts\DataStore;
+use Laraplus\Form\Contracts\FormPresenter;
 use Laraplus\Form\Fields\Base\Element;
 
 class Form extends Elements
@@ -132,7 +132,7 @@ class Form extends Elements
      */
     protected function closeForm()
     {
-        $form = new Close();
+        $form = new Close($this->open, $this->dataStore);
 
         return $this->close = $form;
     }

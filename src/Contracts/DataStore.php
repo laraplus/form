@@ -1,4 +1,4 @@
-<?php namespace Laraplus\Contracts;
+<?php namespace Laraplus\Form\Contracts;
 
 use ArrayAccess;
 

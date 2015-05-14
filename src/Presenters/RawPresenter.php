@@ -1,6 +1,6 @@
 <?php namespace Laraplus\Form\Presenters;
 
-use Laraplus\Contracts\FormPresenter;
+use Laraplus\Form\Contracts\FormPresenter;
 
 class RawPresenter implements FormPresenter
 {
@@ -47,7 +47,7 @@ class RawPresenter implements FormPresenter
 
     /**
      * @param string $label
-     * @param string $elemen
+     * @param string $element
      * @param string $error
      * @return string
      */

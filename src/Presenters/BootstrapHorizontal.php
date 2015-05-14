@@ -1,6 +1,6 @@
 <?php namespace Laraplus\Form\Presenters;
 
-use Laraplus\Contracts\FormPresenter;
+use Laraplus\Form\Contracts\FormPresenter;
 
 class BootstrapHorizontal extends RawPresenter implements FormPresenter
 {
