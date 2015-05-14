@@ -1,5 +1,6 @@
 <?php namespace Laraplus\Form;
 
+use Exception;
 use ArrayAccess;
 use Laraplus\Form\Fields\Open;
 use Laraplus\Form\Fields\Close;
@@ -109,6 +110,8 @@ class Form extends Elements
      */
     protected function addElement($type, $name)
     {
+        $this->enforceOpenForm($type);
+
         $class = 'Laraplus\\Form\\Fields\\' . studly_case($type);
 
         $element = new $class($name, $this->open, $this->presenter, $this->dataStore, array_get($this->rules, $name));
@@ -129,12 +132,26 @@ class Form extends Elements
 
     /**
      * @return Close
+     * @throws Exception
      */
     protected function closeForm()
     {
+        $this->enforceOpenForm('close');
+
         $form = new Close($this->open, $this->dataStore);
 
         return $this->close = $form;
+    }
+
+    /**
+     * @param string $type
+     * @throws Exception
+     */
+    protected function enforceOpenForm($type)
+    {
+        if(!$this->open) {
+            throw new Exception('Cannot call Form::' . camel_case($type) . '() without calling Form::open() first.');
+        }
     }
 
     /**

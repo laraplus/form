@@ -29,8 +29,6 @@ class Close
         $this->open = $open;
         $this->data = $data;
         $this->token = true;
-
-        $this->checkOpenTag();
     }
 
     /**
@@ -41,16 +39,6 @@ class Close
         $this->token = false;
 
         return $this;
-    }
-
-    /**
-     * @throws Exception
-     */
-    protected function checkOpenTag()
-    {
-        if(!$this->open) {
-            throw new Exception('Cannot close a form that has not been opened');
-        }
     }
 
     /**
