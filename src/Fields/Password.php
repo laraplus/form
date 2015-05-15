@@ -4,6 +4,9 @@ use Laraplus\Form\Fields\Base\Input;
 
 class Password extends Input
 {
+    /**
+     * Initialize field settings
+     */
     protected function init()
     {
         parent::init();

@@ -49,16 +49,26 @@ class LaravelDataStore implements DataStore {
 
     /**
      * @param string $name
-     * @return string
+     * @return null|string
      */
-    public function getValue($name)
+    public function getOldValue($name)
     {
         if($old = $this->request->old($name)) {
             return $old;
         }
+        return null;
+    }
+
+    /**
+     * @param string $name
+     * @return null|string
+     */
+    public function getModelValue($name)
+    {
         if(isset($this->model[$name])) {
             return $name;
         }
+        return null;
     }
 
     /**

@@ -1,6 +1,16 @@
 <?php namespace Laraplus\Form\Fields;
 
-class File
-{
+use Laraplus\Form\Fields\Base\Input;
 
+class File extends Input
+{
+    /**
+     * Initialize field settings
+     */
+    protected function init()
+    {
+        parent::init();
+
+        $this->attributes['type'] = 'file';
+    }
 }

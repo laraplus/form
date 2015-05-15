@@ -11,8 +11,6 @@ class FormServiceProvider extends ServiceProvider
 
     /**
      * Register the service provider.
-     *
-     * @return void
      */
     public function register()
     {
@@ -20,6 +18,14 @@ class FormServiceProvider extends ServiceProvider
         $this->app->bind('Laraplus\Form\Contracts\FormPresenter', 'Laraplus\Form\Presenters\RawPresenter');
 
         $this->app->singleton('laraplus.form', 'Laraplus\Form\Form');
+    }
+
+    /**
+     * Boot the service provider
+     */
+    public function boot()
+    {
+        $this->mergeConfigFrom(dirname(__DIR__) . '/config/form.php', 'laraplus.form');
     }
 
     /**

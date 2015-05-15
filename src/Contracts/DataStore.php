@@ -17,9 +17,15 @@ interface DataStore
 
     /**
      * @param string $name
-     * @return string
+     * @return null|string
      */
-    public function getValue($name);
+    public function getOldValue($name);
+
+    /**
+     * @param string $name
+     * @return null|string
+     */
+    public function getModelValue($name);
 
     /**
      * @return string

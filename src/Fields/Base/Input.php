@@ -27,12 +27,20 @@ abstract class Input extends Element
     /**
      * @return string
      */
-    public function renderField()
+    public function render()
     {
         $this->attributes['value'] = $this->getValue();
 
-        $attributes = $this->renderAttributes();
+        $attributes = $this->renderAttributes($this->attributes);
 
-        return '<input ' . $attributes . ' />';
+        return '<input' . $attributes . '/>';
+    }
+
+    /**
+     * @return string
+     */
+    public function getType()
+    {
+        return $this->attributes['type'];
     }
 }

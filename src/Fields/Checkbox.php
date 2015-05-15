@@ -4,12 +4,19 @@ use Laraplus\Form\Fields\Base\Element;
 
 class Checkbox extends Element
 {
+    /**
+     * @return string
+     */
+    function getType()
+    {
+        return 'checkbox';
+    }
 
     /**
      * @return string
      */
-    public function renderField()
+    function render()
     {
-        // TODO: Implement renderField() method.
+        // TODO: Implement render() method.
     }
 }

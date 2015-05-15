@@ -1,58 +1,50 @@
 <?php namespace Laraplus\Form\Presenters;
 
-use Laraplus\Form\Contracts\FormPresenter;
-
-class RawPresenter implements FormPresenter
+class RawPresenter extends BasePresenter
 {
     /**
-     * @param array $attributes
-     * @return array
-     */
-    public function prepare(array $attributes)
-    {
-        return $attributes;
-    }
-
-    /**
-     * @param string $label
-     * @param array $attributes
+     * @param array $items
      * @return string
      */
-    public function renderLabel($label, array $attributes)
+    public function implode(array $items)
     {
-        $for = isset($attributes['id']) ? $attributes['id'] : null;
-
-        return '<label' . ($for ? ' for="' . $for . '"' : '') . '>' . $label . '</label>';
-    }
-
-    /**
-     * @param string $error
-     * @param array $attributes
-     * @return string
-     */
-    public function renderError($error, array $attributes)
-    {
-        return $error;
+        return '<ul><li>' . implode('</li><li>', $items) . '</li></ul>';
     }
 
     /**
      * @param string $field
-     * @param array $attributes
      * @return string
      */
-    public function renderField($field, array $attributes)
+    public function render($field)
     {
-        return $field;
+        $label = $this->renderLabel();
+        $error = $this->renderError();
+        $attributes = $this->renderAttributes($this->groupAttributes);
+
+        $element = $label . $this->prefix . $field . $this->suffix . $error;
+
+        return '<div' . $attributes . '>' . $element . '</div>';
     }
 
     /**
-     * @param string $label
-     * @param string $element
-     * @param string $error
      * @return string
      */
-    public function renderGroup($label, $element, $error)
+    protected function renderLabel()
     {
-        return '<div>' . $label . $element . $error . '</div>';
+        if(!$this->label) return '';
+
+        $attribute = isset($this->attributes['id']) ? ' for="' . $this->attributes['id'] . '"' : '';
+
+        return '<label' . $attribute . '>' . $this->label . '</label>';
+    }
+
+    /**
+     * @return string
+     */
+    protected function renderError()
+    {
+        if(!$this->error) return '';
+
+        return '<strong class="error">' . $this->error . '</strong>';
     }
 }
