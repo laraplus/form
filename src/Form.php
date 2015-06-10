@@ -11,6 +11,7 @@ use Laraplus\Form\Fields\Base\Element;
 
 class Form extends Elements
 {
+
     /**
      * @var array
      */
@@ -26,20 +27,20 @@ class Form extends Elements
      */
     protected $presenter;
 
-	/**
-	 * @var DataStore
-	 */
-	protected $dataStore;
+    /**
+     * @var DataStore
+     */
+    protected $dataStore;
 
-	/**
-	 * @var ConfigProvider
-	 */
-	protected $config;
+    /**
+     * @var ConfigProvider
+     */
+    protected $config;
 
-	/**
-	 * @var string
-	 */
-	protected $style;
+    /**
+     * @var string
+     */
+    protected $style;
 
     /**
      * @var Open
@@ -56,16 +57,16 @@ class Form extends Elements
      */
     protected $elements;
 
-	/**
-	 * @param FormPresenter $presenter
-	 * @param DataStore $dataStore
-	 * @param ConfigProvider $config
-	 */
+    /**
+     * @param FormPresenter $presenter
+     * @param DataStore $dataStore
+     * @param ConfigProvider $config
+     */
     public function __construct(FormPresenter $presenter, DataStore $dataStore, ConfigProvider $config)
     {
         $this->presenter = $presenter;
         $this->dataStore = $dataStore;
-		$this->config = $config;
+        $this->config = $config;
 
         $this->reset();
     }
@@ -108,12 +109,12 @@ class Form extends Elements
      */
     public function render($style = null)
     {
-	    if($style) {
-		    $this->presenter->setStyle($style);
-	    }
+        if ($style) {
+            $this->presenter->setStyle($style);
+        }
 
         $result = '';
-        foreach($this->elements as $element) {
+        foreach ($this->elements as $element) {
             $result .= $element->render($this->presenter);
         }
 
@@ -166,7 +167,7 @@ class Form extends Elements
      */
     protected function enforceOpenForm($type)
     {
-        if(!$this->open) {
+        if (!$this->open) {
             throw new Exception('Cannot call Form::' . camel_case($type) . '() without calling Form::open() first.');
         }
     }
@@ -174,7 +175,8 @@ class Form extends Elements
     /**
      * @param array $rules
      */
-    protected function parseRules(array $rules) {
+    protected function parseRules(array $rules)
+    {
 
         foreach ($rules as $name => $fieldRules) {
 
@@ -189,7 +191,9 @@ class Form extends Elements
                     $rule = substr($rule, 0, $colon);
                 }
 
-                if (!isset($parameters)) $parameters = [];
+                if (!isset($parameters)) {
+                    $parameters = [];
+                }
 
                 $this->rules[$name][$rule] = $parameters;
             }
@@ -205,7 +209,7 @@ class Form extends Elements
         $this->open = null;
         $this->close = null;
         $this->model = null;
-	    $this->style = $this->config->get('style');
+        $this->style = $this->config->get('style');
 
         $this->rules = [];
         $this->elements = [];

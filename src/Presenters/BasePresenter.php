@@ -6,12 +6,13 @@ use Laraplus\Form\Helpers\RendersAttributes;
 
 abstract class BasePresenter implements FormPresenter
 {
+
     use RendersAttributes;
 
-	/**
-	 * @var array
-	 */
-	protected $style;
+    /**
+     * @var array
+     */
+    protected $style;
 
     /**
      * @var Element
@@ -74,12 +75,12 @@ abstract class BasePresenter implements FormPresenter
         $this->groupAttributes = $element->groupAttributes;
     }
 
-	/**
-	 * @param array $style
-	 * @return mixed|void
-	 */
-	public function setStyle(array $style)
-	{
-		$this->style = $style;
-	}
+    /**
+     * @param array $style
+     * @return mixed|void
+     */
+    public function setStyle(array $style)
+    {
+        $this->style = $style;
+    }
 }

@@ -16,7 +16,7 @@ class FormServiceProvider extends ServiceProvider
     {
         $this->app->bind('Laraplus\Form\Contracts\DataStore', 'Laraplus\Form\DataStores\LaravelDataStore');
         $this->app->bind('Laraplus\Form\Contracts\FormPresenter', 'Laraplus\Form\Presenters\RawPresenter');
-	    $this->app->bind('Laraplus\Form\Contracts\ConfigProvider', 'Laraplus\Form\ConfigProviders\LaravelConfigProvider');
+        $this->app->bind('Laraplus\Form\Contracts\ConfigProvider', 'Laraplus\Form\ConfigProviders\LaravelConfigProvider');
 
         $this->app->singleton('laraplus.form', 'Laraplus\Form\Form');
     }
@@ -28,9 +28,9 @@ class FormServiceProvider extends ServiceProvider
     {
         $this->mergeConfigFrom(dirname(__DIR__) . '/config/form.php', 'laraplus.form');
 
-	    if(config()->has('form.presenter')) {
-		    app('laraplus.form')->presenter(app(config('form.presenter')));
-	    }
+        if (config()->has('form.presenter')) {
+            app('laraplus.form')->presenter(app(config('form.presenter')));
+        }
     }
 
     /**

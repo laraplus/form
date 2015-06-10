@@ -31,7 +31,9 @@ class RawPresenter extends BasePresenter
      */
     protected function renderLabel()
     {
-        if(!$this->label) return '';
+        if (!$this->label) {
+            return '';
+        }
 
         $attribute = isset($this->attributes['id']) ? ' for="' . $this->attributes['id'] . '"' : '';
 
@@ -43,7 +45,9 @@ class RawPresenter extends BasePresenter
      */
     protected function renderError()
     {
-        if(!$this->error) return '';
+        if (!$this->error) {
+            return '';
+        }
 
         return '<strong class="error">' . $this->error . '</strong>';
     }

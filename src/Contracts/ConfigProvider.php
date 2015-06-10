@@ -2,11 +2,11 @@
 
 interface ConfigProvider
 {
-	/**
-	 * Get configuration by key
-	 *
-	 * @param $key
-	 * @return mixed
-	 */
-	public function get($key);
+    /**
+     * Get configuration by key
+     *
+     * @param $key
+     * @return mixed
+     */
+    public function get($key);
 }
