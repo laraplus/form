@@ -8,6 +8,11 @@ abstract class BasePresenter implements FormPresenter
 {
     use RendersAttributes;
 
+	/**
+	 * @var array
+	 */
+	protected $style;
+
     /**
      * @var Element
      */
@@ -68,4 +73,13 @@ abstract class BasePresenter implements FormPresenter
         $this->attributes = $element->attributes;
         $this->groupAttributes = $element->groupAttributes;
     }
+
+	/**
+	 * @param array $style
+	 * @return mixed|void
+	 */
+	public function setStyle(array $style)
+	{
+		$this->style = $style;
+	}
 }

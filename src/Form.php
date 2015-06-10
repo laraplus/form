@@ -2,6 +2,7 @@
 
 use Exception;
 use ArrayAccess;
+use Laraplus\Form\Contracts\ConfigProvider;
 use Laraplus\Form\Fields\Open;
 use Laraplus\Form\Fields\Close;
 use Laraplus\Form\Contracts\DataStore;
@@ -25,6 +26,21 @@ class Form extends Elements
      */
     protected $presenter;
 
+	/**
+	 * @var DataStore
+	 */
+	protected $dataStore;
+
+	/**
+	 * @var ConfigProvider
+	 */
+	protected $config;
+
+	/**
+	 * @var string
+	 */
+	protected $style;
+
     /**
      * @var Open
      */
@@ -40,14 +56,16 @@ class Form extends Elements
      */
     protected $elements;
 
-    /**
-     * @param FormPresenter $presenter
-     * @param DataStore $dataStore
-     */
-    public function __construct(FormPresenter $presenter, DataStore $dataStore)
+	/**
+	 * @param FormPresenter $presenter
+	 * @param DataStore $dataStore
+	 * @param ConfigProvider $config
+	 */
+    public function __construct(FormPresenter $presenter, DataStore $dataStore, ConfigProvider $config)
     {
         $this->presenter = $presenter;
         $this->dataStore = $dataStore;
+		$this->config = $config;
 
         $this->reset();
     }
@@ -86,14 +104,13 @@ class Form extends Elements
     }
 
     /**
-     * @param FormPresenter $presenter
      * @return string
      */
-    public function render(FormPresenter $presenter = null)
+    public function render($style = null)
     {
-        if($presenter) {
-            $this->presenter = $presenter;
-        }
+	    if($style) {
+		    $this->presenter->setStyle($style);
+	    }
 
         $result = '';
         foreach($this->elements as $element) {
@@ -188,6 +205,7 @@ class Form extends Elements
         $this->open = null;
         $this->close = null;
         $this->model = null;
+	    $this->style = $this->config->get('style');
 
         $this->rules = [];
         $this->elements = [];

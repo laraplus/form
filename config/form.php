@@ -2,11 +2,20 @@
 
 return [
 
-    'presenters' => [
-        'raw'        => 'Laraplus\Form\Presenters\RawPresenter',
-        'horizontal' => 'Laraplus\Form\Presenters\BootstrapHorizontal',
-        'vertical'   => 'Laraplus\Form\Presenters\BootstrapVertical',
-        'inline'     => 'Laraplus\Form\Presenters\BootstrapInline',
-    ]
+    'presenter' => 'Laraplus\Form\Presenters\BootstrapPresenter',
+
+	'style' => 'vertical',
+
+	'styles' => [
+		'horizontal' => [
+			'form' => 'form-horizontal'
+		],
+		'vertical' => [
+			'form' => null
+		],
+		'inline' => [
+			'form' => 'form-inline'
+		]
+	]
 
 ];

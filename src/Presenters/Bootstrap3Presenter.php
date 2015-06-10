@@ -1,6 +1,6 @@
 <?php namespace Laraplus\Form\Presenters;
 
-class BootstrapHorizontal extends BasePresenter
+class Bootstrap3Presenter extends BasePresenter
 {
     /**
      * @param array $items

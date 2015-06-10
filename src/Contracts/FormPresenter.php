@@ -9,6 +9,12 @@ interface FormPresenter
      */
     public function setElement(Element $element);
 
+	/**
+	 * @param array $style
+	 * @return mixed
+	 */
+	public function setStyle(array $style);
+
     /**
      * @param array $items
      * @return string
