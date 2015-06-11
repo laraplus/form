@@ -27,6 +27,11 @@ class Open
     protected $form;
 
     /**
+     * @var bool
+     */
+    protected $bare;
+
+    /**
      * @param string $name
      * @param Form $form
      * @param DataStore $data
@@ -95,6 +100,13 @@ class Open
         return $this;
     }
 
+    public function bare()
+    {
+        $this->bare = true;
+
+        return $this;
+    }
+
     /**
      * Magic getter
      * @param $property
@@ -105,6 +117,10 @@ class Open
         if($property == 'name') {
             return $this->name;
         }
+
+        if($property == 'bare') {
+            return $this->bare;
+        }
     }
 
     /**
@@ -112,6 +128,8 @@ class Open
      */
     public function __toString()
     {
+        if($this->bare) return '';
+
         $attributes = [];
 
         foreach($this->attributes as $key => $value) {

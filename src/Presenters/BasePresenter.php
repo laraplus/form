@@ -50,36 +50,51 @@ abstract class BasePresenter implements FormPresenter
     protected $suffix;
 
     /**
-     * @var
+     * @var array
      */
     protected $attributes;
 
     /**
-     * @var
+     * @var array
      */
     protected $groupAttributes;
 
     /**
-     * @param Element $element
+     * @var bool
      */
-    public function setElement(Element $element)
+    protected $raw;
+
+    /**
+     * @var bool
+     */
+    protected $multiple;
+
+    /**
+     * @param Element $element
+     * @return Element
+     */
+    public function decorate(Element $element)
     {
         $this->element = $element;
+        $this->raw = $element->raw;
         $this->name = $element->name;
         $this->help = $element->help;
         $this->label = $element->label;
         $this->error = $element->error;
         $this->prefix = $element->prefix;
         $this->suffix = $element->suffix;
+        $this->multiple = $element->multiple;
         $this->attributes = $element->attributes;
         $this->groupAttributes = $element->groupAttributes;
+
+        return $element;
     }
 
     /**
      * @param array $style
      * @return mixed|void
      */
-    public function setStyle(array $style)
+    public function style(array $style)
     {
         $this->style = $style;
     }

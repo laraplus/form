@@ -6,14 +6,15 @@ interface FormPresenter
 {
     /**
      * @param Element $element
+     * @return Element
      */
-    public function setElement(Element $element);
+    public function decorate(Element $element);
 
 	/**
 	 * @param array $style
 	 * @return mixed
 	 */
-	public function setStyle(array $style);
+	public function style(array $style);
 
     /**
      * @param array $items

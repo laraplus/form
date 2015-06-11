@@ -81,6 +81,11 @@ abstract class Element implements FormElement
     protected $raw;
 
     /**
+     * @var bool
+     */
+    protected $multiple = false;
+
+    /**
      * @param string $name
      * @param Open $open
      * @param FormPresenter $presenter
@@ -287,11 +292,9 @@ abstract class Element implements FormElement
      */
     public function present(FormPresenter $presenter)
     {
-        $field = $this->render();
-
         $this->error = $this->dataStore->getError($this->name);
 
-        $presenter->setElement($this);
+        $field = $presenter->decorate($this)->render();
 
         if(is_array($field)) {
             $field = $presenter->implode($field);
@@ -320,7 +323,7 @@ abstract class Element implements FormElement
     public function __get($property)
     {
         $whiteList = [
-            'name', 'label', 'help', 'error', 'prefix', 'suffix', 'attributes', 'groupAttributes'
+            'name', 'label', 'help', 'error', 'prefix', 'suffix', 'attributes', 'groupAttributes', 'raw', 'multiple'
         ];
 
         if(in_array($property, $whiteList)) {

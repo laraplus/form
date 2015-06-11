@@ -34,7 +34,7 @@ class Close
     /**
      * @return $this
      */
-    public function withoutToken()
+    public function noToken()
     {
         $this->token = false;
 
@@ -46,6 +46,8 @@ class Close
      */
     public function __toString()
     {
+        if($this->open->bare) return '';
+
         $tag = '</form>';
 
         if($this->token) {

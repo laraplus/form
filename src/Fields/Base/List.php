@@ -3,4 +3,6 @@
 abstract class MultiSelect extends Select
 {
 
+    protected $multiple = true;
+
 }
