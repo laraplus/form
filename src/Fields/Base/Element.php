@@ -107,6 +107,10 @@ abstract class Element implements FormElement
         $this->groupAttributes = [];
 
         $this->attributes['id'] = $this->open->name . '-' . $this->name;
+
+        if($this->name) {
+            $this->attributes['name'] = $this->name;
+        }
     }
 
     /**
@@ -281,7 +285,9 @@ abstract class Element implements FormElement
      */
     public function present($style = null)
     {
-        $this->error = $this->dataStore->getError($this->name);
+        if($this->name) {
+            $this->error = $this->dataStore->getError($this->name);
+        }
 
         $this->presenter->setElement($this);
 

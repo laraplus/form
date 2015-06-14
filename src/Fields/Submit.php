@@ -14,10 +14,6 @@ class Submit extends Button
         $this->text = 'Submit';
         $this->attributes['type'] = 'submit';
         $this->attributes['id'] = !$this->name ? $this->attributes['id'] . 'submit' : $this->attributes['id'];
-
-        if($this->name) {
-            $this->attributes['name'] = $this->name;
-        }
     }
 
     /**
