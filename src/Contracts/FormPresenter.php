@@ -11,10 +11,10 @@ interface FormPresenter
      */
     public function setElement(Element $element);
 
-	/**
-	 * @param array $style
-	 */
-	public function setStyle(array $style);
+    /**
+     * @param array $style
+     */
+    public function setStyle(array $style);
 
     /**
      * @param Open $open

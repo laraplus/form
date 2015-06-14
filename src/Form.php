@@ -2,16 +2,15 @@
 
 use Exception;
 use ArrayAccess;
-use Laraplus\Form\Contracts\ConfigProvider;
 use Laraplus\Form\Fields\Open;
 use Laraplus\Form\Fields\Close;
+use Laraplus\Form\Fields\Base\Element;
 use Laraplus\Form\Contracts\DataStore;
 use Laraplus\Form\Contracts\FormPresenter;
-use Laraplus\Form\Fields\Base\Element;
+use Laraplus\Form\Contracts\ConfigProvider;
 
 class Form extends Elements
 {
-
     /**
      * @var array
      */
@@ -112,7 +111,7 @@ class Form extends Elements
      */
     public function style($style = null)
     {
-        if($style) {
+        if ($style) {
             $this->presenter->setStyle($this->config->get('styles.' . $style));
         }
 
@@ -240,10 +239,14 @@ class Form extends Elements
      */
     public function __get($property)
     {
-        if($property == 'open') return $this->open;
-        if($property == 'close') return $this->close;
+        if ($property == 'open') {
+            return $this->open;
+        }
+        if ($property == 'close') {
+            return $this->close;
+        }
 
-        if(isset($this->elements[$property])) {
+        if (isset($this->elements[$property])) {
             return $this->$property;
         }
 

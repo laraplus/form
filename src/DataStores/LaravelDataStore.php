@@ -4,8 +4,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
 use Laraplus\Form\Contracts\DataStore;
 
-class LaravelDataStore implements DataStore {
-
+class LaravelDataStore implements DataStore
+{
     /**
      * @var ArrayAccess
      */
@@ -40,7 +40,7 @@ class LaravelDataStore implements DataStore {
     {
         $errors = $this->request->session()->get('errors', new MessageBag);
 
-        if($errors->has($name)) {
+        if ($errors->has($name)) {
             return $errors->get($name);
         }
 
@@ -53,7 +53,7 @@ class LaravelDataStore implements DataStore {
      */
     public function getOldValue($name)
     {
-        if($old = $this->request->old($name)) {
+        if ($old = $this->request->old($name)) {
             return $old;
         }
         return null;
@@ -65,7 +65,7 @@ class LaravelDataStore implements DataStore {
      */
     public function getModelValue($name)
     {
-        if(isset($this->model[$name])) {
+        if (isset($this->model[$name])) {
             return $name;
         }
         return null;

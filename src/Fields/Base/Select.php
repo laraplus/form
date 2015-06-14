@@ -37,7 +37,7 @@ abstract class Select extends Element
      */
     public function optionAttribute($key, $name, $value)
     {
-        if(!isset($this->optionAttributes[$key])) {
+        if (!isset($this->optionAttributes[$key])) {
             $this->optionAttributes[$key] = [];
         }
 

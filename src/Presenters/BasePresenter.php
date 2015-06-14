@@ -7,7 +7,6 @@ use Laraplus\Form\Helpers\RendersAttributes;
 
 abstract class BasePresenter implements FormPresenter
 {
-
     use RendersAttributes;
 
     /**

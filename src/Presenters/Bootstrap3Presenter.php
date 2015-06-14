@@ -4,12 +4,17 @@ use Laraplus\Form\Fields\Open;
 
 class Bootstrap3Presenter extends BasePresenter
 {
-
+    /**
+     * @return string
+     */
     protected function getLabelClass()
     {
         return isset($this->style['label']) ? ' class="' . $this->style['label'] . '"' : '';
     }
 
+    /**
+     * @return string
+     */
     protected function getElementClass()
     {
         return isset($this->style['element']) ? ' class="' . $this->style['element'] . '"' : '';
@@ -20,7 +25,7 @@ class Bootstrap3Presenter extends BasePresenter
      */
     public function renderOpeningTag(Open $open)
     {
-        if(isset($this->style['form'])) {
+        if (isset($this->style['form'])) {
             $open->addClass($this->style['form']);
         }
 
@@ -32,7 +37,9 @@ class Bootstrap3Presenter extends BasePresenter
      */
     public function renderLabel()
     {
-        if(!$this->label) return '';
+        if (!$this->label) {
+            return '';
+        }
 
         $class = $this->getLabelClass();
 
@@ -54,7 +61,9 @@ class Bootstrap3Presenter extends BasePresenter
      */
     public function renderError()
     {
-        if(!$this->error) return false;
+        if (!$this->error) {
+            return false;
+        }
 
         return '<div class="help-block">' . $this->error . '</div>';
     }
@@ -71,13 +80,13 @@ class Bootstrap3Presenter extends BasePresenter
         $result = '<div class="form-group">';
         $result .= $label;
 
-        if($fieldContainer = $this->getElementClass()) {
-            $result .= '<div' . $fieldContainer .'>';
+        if ($fieldContainer = $this->getElementClass()) {
+            $result .= '<div' . $fieldContainer . '>';
         }
 
         $result .= $field;
 
-        if($fieldContainer = $this->getElementClass()) {
+        if ($fieldContainer = $this->getElementClass()) {
             $result .= '</div>';
         }
 

@@ -8,7 +8,7 @@ interface DataStore
      * @param ArrayAccess $model
      */
     public function bind($model);
-    
+
     /**
      * @param string $name
      * @return string

@@ -242,7 +242,7 @@ abstract class Element implements FormElement
     {
         $classes = isset($this->attributes['class']) ? $this->attributes['class'] : '';
 
-        if(!in_array($class, explode(' ', $classes))) {
+        if (!in_array($class, explode(' ', $classes))) {
             $this->attributes['class'] = trim($classes . ' ' . $class);
         }
 
@@ -257,7 +257,7 @@ abstract class Element implements FormElement
     {
         $classes = isset($this->groupAttributes['class']) ? $this->groupAttributes['class'] : '';
 
-        if(!in_array($class, explode(' ', $classes))) {
+        if (!in_array($class, explode(' ', $classes))) {
             $this->groupAttributes['class'] = trim($classes . ' ' . $class);
         }
 
@@ -276,10 +276,10 @@ abstract class Element implements FormElement
     }
 
     /**
-     * @param array $style
+     * @param string $style
      * @return string
      */
-    public function present(array $style = null)
+    public function present($style = null)
     {
         $this->error = $this->dataStore->getError($this->name);
 
@@ -293,7 +293,7 @@ abstract class Element implements FormElement
      */
     protected function getValue()
     {
-        if($value = $this->dataStore->getOldValue($this->name)) {
+        if ($value = $this->dataStore->getOldValue($this->name)) {
             return $value;
         }
 
@@ -308,10 +308,18 @@ abstract class Element implements FormElement
     public function __get($property)
     {
         $properties = [
-            'name', 'label', 'help', 'error', 'prefix', 'suffix', 'attributes', 'groupAttributes', 'multiple'
+            'name',
+            'label',
+            'help',
+            'error',
+            'prefix',
+            'suffix',
+            'attributes',
+            'groupAttributes',
+            'multiple'
         ];
 
-        if(in_array($property, $properties)) {
+        if (in_array($property, $properties)) {
             return $this->$property;
         }
 
@@ -326,10 +334,12 @@ abstract class Element implements FormElement
     public function __call($method, $args)
     {
         $methods = [
-            'label', 'error', 'field'
+            'label',
+            'error',
+            'field'
         ];
 
-        if(in_array($method, $methods)) {
+        if (in_array($method, $methods)) {
             return $this->presenter->$method();
         }
 

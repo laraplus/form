@@ -127,7 +127,7 @@ class Open
     {
         $classes = isset($this->attributes['class']) ? $this->attributes['class'] : '';
 
-        if(!in_array($class, explode(' ', $classes))) {
+        if (!in_array($class, explode(' ', $classes))) {
             $this->attributes['class'] = trim($classes . ' ' . $class);
         }
 
@@ -151,13 +151,13 @@ class Open
      */
     public function __get($property)
     {
-        if($property == 'name') {
+        if ($property == 'name') {
             return $this->name;
         }
-        if($property == 'bare') {
+        if ($property == 'bare') {
             return $this->bare;
         }
-        if($property == 'attributes') {
+        if ($property == 'attributes') {
             return $this->attributes;
         }
     }
@@ -167,7 +167,9 @@ class Open
      */
     public function __toString()
     {
-        if($this->bare) return '';
+        if ($this->bare) {
+            return '';
+        }
 
         return $this->presenter->renderOpeningTag($this);
     }

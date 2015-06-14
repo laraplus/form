@@ -10,7 +10,7 @@ trait RendersAttributes
     {
         $result = [];
 
-        foreach($attributes as $key => $value) {
+        foreach ($attributes as $key => $value) {
             $result[] = $key . '="' . $value . '"';
         }
 

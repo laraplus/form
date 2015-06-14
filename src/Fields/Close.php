@@ -1,6 +1,5 @@
 <?php namespace Laraplus\Form\Fields;
 
-use Exception;
 use Laraplus\Form\Contracts\DataStore;
 use Laraplus\Form\Contracts\FormPresenter;
 
@@ -54,11 +53,13 @@ class Close
      */
     public function __toString()
     {
-        if($this->open->bare) return '';
+        if ($this->open->bare) {
+            return '';
+        }
 
         $tag = $this->presenter->renderClosingTag($this);
 
-        if($this->token) {
+        if ($this->token) {
             $tag = '<input type="hidden" name="_token" value="' . $this->data->getToken() . '" />' . $tag;
         }
 

@@ -28,7 +28,6 @@ class FormServiceProvider extends ServiceProvider
         $presenter = config('form.presenter', 'Laraplus\Form\Presenters\Bootstrap3Presenter');
 
         $this->app->bind('Laraplus\Form\Contracts\FormPresenter', $presenter);
-
         $this->app->singleton('laraplus.form', 'Laraplus\Form\Form');
     }
 

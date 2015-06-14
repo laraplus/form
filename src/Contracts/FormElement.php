@@ -10,9 +10,9 @@ interface FormElement
     public function render();
 
     /**
-     * @param FormPresenter $presenter
+     * @param string $style
      * @return string
      */
-    public function present(array $style);
+    public function present($style = null);
 
 }
