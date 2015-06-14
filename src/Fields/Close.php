@@ -2,6 +2,7 @@
 
 use Exception;
 use Laraplus\Form\Contracts\DataStore;
+use Laraplus\Form\Contracts\FormPresenter;
 
 class Close
 {
@@ -21,14 +22,21 @@ class Close
     protected $token;
 
     /**
+     * @var FormPresenter
+     */
+    protected $presenter;
+
+    /**
      * @param Open $open
      * @param DataStore $data
+     * @param FormPresenter $presenter
      */
-    public function __construct(Open $open, DataStore $data)
+    public function __construct(Open $open, DataStore $data, FormPresenter $presenter)
     {
         $this->open = $open;
         $this->data = $data;
         $this->token = true;
+        $this->presenter = $presenter;
     }
 
     /**
@@ -48,7 +56,7 @@ class Close
     {
         if($this->open->bare) return '';
 
-        $tag = '</form>';
+        $tag = $this->presenter->renderClosingTag($this);
 
         if($this->token) {
             $tag = '<input type="hidden" name="_token" value="' . $this->data->getToken() . '" />' . $tag;

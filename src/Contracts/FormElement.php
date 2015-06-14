@@ -13,6 +13,6 @@ interface FormElement
      * @param FormPresenter $presenter
      * @return string
      */
-    public function present(FormPresenter $presenter);
+    public function present(array $style);
 
 }

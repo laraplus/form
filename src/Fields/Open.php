@@ -1,6 +1,7 @@
 <?php namespace Laraplus\Form\Fields;
 
 use ArrayAccess;
+use Laraplus\Form\Contracts\FormPresenter;
 use Laraplus\Form\Form;
 use Laraplus\Form\Contracts\DataStore;
 
@@ -32,11 +33,17 @@ class Open
     protected $bare;
 
     /**
+     * @var FormPresenter
+     */
+    protected $presenter;
+
+    /**
      * @param string $name
      * @param Form $form
      * @param DataStore $data
+     * @param FormPresenter $presenter
      */
-    public function __construct($name, Form $form, DataStore $data)
+    public function __construct($name, Form $form, DataStore $data, FormPresenter $presenter)
     {
         $this->name = $name;
         $this->data = $data;
@@ -44,6 +51,18 @@ class Open
 
         $this->attributes['method'] = 'GET';
         $this->attributes['action'] = $data->getUrl();
+        $this->presenter = $presenter;
+    }
+
+    /**
+     * @param style $style
+     * @return $this
+     */
+    public function style($style = null)
+    {
+        $this->form->style($style);
+
+        return $this;
     }
 
     /**
@@ -100,6 +119,24 @@ class Open
         return $this;
     }
 
+    /**
+     * @param string $class
+     * @return $this
+     */
+    public function addClass($class)
+    {
+        $classes = isset($this->attributes['class']) ? $this->attributes['class'] : '';
+
+        if(!in_array($class, explode(' ', $classes))) {
+            $this->attributes['class'] = trim($classes . ' ' . $class);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
     public function bare()
     {
         $this->bare = true;
@@ -117,9 +154,11 @@ class Open
         if($property == 'name') {
             return $this->name;
         }
-
         if($property == 'bare') {
             return $this->bare;
+        }
+        if($property == 'attributes') {
+            return $this->attributes;
         }
     }
 
@@ -130,12 +169,6 @@ class Open
     {
         if($this->bare) return '';
 
-        $attributes = [];
-
-        foreach($this->attributes as $key => $value) {
-            $attributes[] = $key . '="' . $value . '"';
-        }
-
-        return '<form ' . implode(' ', $attributes) . '>';
+        return $this->presenter->renderOpeningTag($this);
     }
 }

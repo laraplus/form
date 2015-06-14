@@ -68,6 +68,8 @@ class Form extends Elements
         $this->dataStore = $dataStore;
         $this->config = $config;
 
+        $this->style($this->config->get('style'));
+
         $this->reset();
     }
 
@@ -105,20 +107,35 @@ class Form extends Elements
     }
 
     /**
+     * @param string $style
+     * @return $this
+     */
+    public function style($style = null)
+    {
+        if($style) {
+            $this->presenter->setStyle($this->config->get('styles.' . $style));
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $style
      * @return string
      */
     public function render($style = null)
     {
-        if ($style) {
-            $this->presenter->setStyle($style);
-        }
+        $this->style($style);
 
-        $result = '';
+        $result = [$this->open];
+
         foreach ($this->elements as $element) {
-            $result .= $element->render($this->presenter);
+            $result[] = $element->render($this->presenter);
         }
 
-        return $result;
+        $result[] = $this->close;
+
+        return implode("\n", $result);
     }
 
     /**
@@ -143,7 +160,7 @@ class Form extends Elements
      */
     protected function openForm($name)
     {
-        $form = new Open($name, $this, $this->dataStore);
+        $form = new Open($name, $this, $this->dataStore, $this->presenter);
 
         return $this->open = $form;
     }
@@ -156,7 +173,7 @@ class Form extends Elements
     {
         $this->enforceOpenForm('close');
 
-        $form = new Close($this->open, $this->dataStore);
+        $form = new Close($this->open, $this->dataStore, $this->presenter);
 
         return $this->close = $form;
     }
@@ -201,7 +218,7 @@ class Form extends Elements
 
     }
 
-    /*
+    /**
      * Reset all of the properties
      */
     protected function reset()
@@ -213,6 +230,24 @@ class Form extends Elements
 
         $this->rules = [];
         $this->elements = [];
+    }
+
+    /**
+     * Get single element
+     * @param $property
+     * @throws Exception
+     * @return Element
+     */
+    public function __get($property)
+    {
+        if($property == 'open') return $this->open;
+        if($property == 'close') return $this->close;
+
+        if(isset($this->elements[$property])) {
+            return $this->$property;
+        }
+
+        throw new Exception('Element [' . $property . '] does not exist');
     }
 
     /**

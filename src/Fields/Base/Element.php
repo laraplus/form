@@ -78,11 +78,6 @@ abstract class Element implements FormElement
     /**
      * @var bool
      */
-    protected $raw;
-
-    /**
-     * @var bool
-     */
     protected $multiple = false;
 
     /**
@@ -245,8 +240,10 @@ abstract class Element implements FormElement
      */
     public function addClass($class)
     {
-        if(!in_array($class, explode(' ', $this->attributes['class']))) {
-            $this->attributes['class'] = trim($this->attributes['class'] . ' ' . $class);
+        $classes = isset($this->attributes['class']) ? $this->attributes['class'] : '';
+
+        if(!in_array($class, explode(' ', $classes))) {
+            $this->attributes['class'] = trim($classes . ' ' . $class);
         }
 
         return $this;
@@ -258,8 +255,10 @@ abstract class Element implements FormElement
      */
     public function addGroupClass($class)
     {
-        if(!in_array($class, explode(' ', $this->groupAttributes['class']))) {
-            $this->groupAttributes['class'] = trim($this->groupAttributes['class'] . ' ' . $class);
+        $classes = isset($this->groupAttributes['class']) ? $this->groupAttributes['class'] : '';
+
+        if(!in_array($class, explode(' ', $classes))) {
+            $this->groupAttributes['class'] = trim($classes . ' ' . $class);
         }
 
         return $this;
@@ -277,30 +276,16 @@ abstract class Element implements FormElement
     }
 
     /**
-     * @return $this
-     */
-    public function raw()
-    {
-        $this->raw = true;
-
-        return $this;
-    }
-
-    /**
-     * @param FormPresenter $presenter
+     * @param array $style
      * @return string
      */
-    public function present(FormPresenter $presenter)
+    public function present(array $style = null)
     {
         $this->error = $this->dataStore->getError($this->name);
 
-        $field = $presenter->decorate($this)->render();
+        $this->presenter->setElement($this);
 
-        if(is_array($field)) {
-            $field = $presenter->implode($field);
-        }
-
-        return $presenter->render($field);
+        return $this->presenter->renderAll();
     }
 
     /**
@@ -322,11 +307,11 @@ abstract class Element implements FormElement
      */
     public function __get($property)
     {
-        $whiteList = [
-            'name', 'label', 'help', 'error', 'prefix', 'suffix', 'attributes', 'groupAttributes', 'raw', 'multiple'
+        $properties = [
+            'name', 'label', 'help', 'error', 'prefix', 'suffix', 'attributes', 'groupAttributes', 'multiple'
         ];
 
-        if(in_array($property, $whiteList)) {
+        if(in_array($property, $properties)) {
             return $this->$property;
         }
 
@@ -334,14 +319,28 @@ abstract class Element implements FormElement
     }
 
     /**
+     * @param string $method
+     * @param array $args
+     * @return string
+     */
+    public function __call($method, $args)
+    {
+        $methods = [
+            'label', 'error', 'field'
+        ];
+
+        if(in_array($method, $methods)) {
+            return $this->presenter->$method();
+        }
+
+        throw new \InvalidArgumentException('Cannot call [' . $method . '] method on an Element');
+    }
+
+    /**
      * @return string
      */
     public function __toString()
     {
-        if($this->raw) {
-            return $this->render();
-        }
-
-        return $this->present($this->presenter);
+        return $this->present();
     }
 }

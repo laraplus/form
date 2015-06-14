@@ -1,31 +1,51 @@
 <?php namespace Laraplus\Form\Contracts;
 
 use Laraplus\Form\Fields\Base\Element;
+use Laraplus\Form\Fields\Close;
+use Laraplus\Form\Fields\Open;
 
 interface FormPresenter
 {
     /**
      * @param Element $element
-     * @return Element
      */
-    public function decorate(Element $element);
+    public function setElement(Element $element);
 
 	/**
 	 * @param array $style
-	 * @return mixed
 	 */
-	public function style(array $style);
+	public function setStyle(array $style);
 
     /**
-     * @param array $items
+     * @param Open $open
      * @return string
      */
-    public function implode(array $items);
+    public function renderOpeningTag(Open $open);
 
     /**
-     * @param string $field
+     * @param Close $close
      * @return string
      */
-    public function render($field);
+    public function renderClosingTag(Close $close);
+
+    /**
+     * @return string
+     */
+    public function renderLabel();
+
+    /**
+     * @return string
+     */
+    public function renderField();
+
+    /**
+     * @return string
+     */
+    public function renderError();
+
+    /**
+     * @return string
+     */
+    public function renderAll();
 
 }
