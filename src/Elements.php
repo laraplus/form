@@ -5,6 +5,7 @@ use Laraplus\Form\Fields\Open;
 use Laraplus\Form\Fields\Text;
 use Laraplus\Form\Fields\Close;
 use Laraplus\Form\Fields\Select;
+use Laraplus\Form\Fields\Submit;
 use Laraplus\Form\Fields\Password;
 use Laraplus\Form\Fields\Checkbox;
 use Laraplus\Form\Fields\RadioList;
@@ -102,6 +103,15 @@ abstract class Elements
     public function file($name)
     {
         return $this->addElement('file', $name);
+    }
+
+    /**
+     * @param null $name
+     * @return Submit
+     */
+    public function submit($name = null)
+    {
+        return $this->addElement('submit', $name);
     }
 
     /*

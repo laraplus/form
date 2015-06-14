@@ -1,8 +1,9 @@
 <?php namespace Laraplus\Form\Contracts;
 
-use Laraplus\Form\Fields\Base\Element;
-use Laraplus\Form\Fields\Close;
 use Laraplus\Form\Fields\Open;
+use Laraplus\Form\Fields\Close;
+use Laraplus\Form\Fields\Base\Button;
+use Laraplus\Form\Fields\Base\Element;
 
 interface FormPresenter
 {
@@ -27,6 +28,12 @@ interface FormPresenter
      * @return string
      */
     public function renderClosingTag(Close $close);
+
+    /**
+     * @param Button $button
+     * @return string
+     */
+    public function renderButton(Button $button);
 
     /**
      * @return string

@@ -1,9 +1,34 @@
 <?php namespace Laraplus\Form\Presenters;
 
 use Laraplus\Form\Fields\Open;
+use Laraplus\Form\Fields\Base\Button;
 
 class Bootstrap3Presenter extends BasePresenter
 {
+    /**
+     * @return bool
+     */
+    protected function isInline()
+    {
+        return isset($this->style['form']) && strpos($this->style['form'], 'form-inline') !== false;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isHorizontal()
+    {
+        return isset($this->style['form']) && strpos($this->style['form'], 'form-horizontal') !== false;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isVertical()
+    {
+        return !$this->isInline() && !$this->isHorizontal();
+    }
+
     /**
      * @return string
      */
@@ -17,7 +42,13 @@ class Bootstrap3Presenter extends BasePresenter
      */
     protected function getElementClass()
     {
-        return isset($this->style['element']) ? ' class="' . $this->style['element'] . '"' : '';
+        $class = isset($this->style['element']) ? $this->style['element'] : '';
+
+        if(!$this->label && isset($this->style['no_label'])) {
+            $class = $this->style['no_label'];
+        }
+
+        return isset($this->style['element']) ? ' class="' . $class . '"' : '';
     }
 
     /**
@@ -33,11 +64,27 @@ class Bootstrap3Presenter extends BasePresenter
     }
 
     /**
+     * @param Button $button
+     * @return string
+     */
+    public function renderButton(Button $button)
+    {
+        $button->addClass('btn');
+
+        if($button->type == 'submit') {
+            $button->addClass('btn-primary');
+        }
+
+        return '<button' . $this->renderAttributes($button->attributes) . '>' . $button->text . '</button>';
+
+    }
+
+    /**
      * @return string
      */
     public function renderLabel()
     {
-        if (!$this->label) {
+        if (!$this->label || $this->labelShouldBeInline()) {
             return '';
         }
 
@@ -51,7 +98,10 @@ class Bootstrap3Presenter extends BasePresenter
      */
     public function renderField()
     {
-        $this->element->addClass('form-control');
+
+        if(!$this->element instanceof Button) {
+            $this->element->addClass('form-control');
+        }
 
         return $this->element->render();
     }
@@ -73,25 +123,84 @@ class Bootstrap3Presenter extends BasePresenter
      */
     public function renderAll()
     {
-        $field = $this->renderField();
-        $error = $this->renderError();
-        $label = $this->renderLabel();
+        $result = '<div class="form-group' . ($this->error ? ' has-error' : '') . '">';
+        $result .= $this->renderElementGroup();
+        $result .= '</div>';
 
-        $result = '<div class="form-group">';
-        $result .= $label;
+        return $result;
+    }
+
+    /**
+     * @return string
+     */
+    protected function renderElementGroup()
+    {
+        $result = $this->renderLabel();
 
         if ($fieldContainer = $this->getElementClass()) {
             $result .= '<div' . $fieldContainer . '>';
         }
 
-        $result .= $field;
+        if($this->label && $this->labelShouldBeInline()) {
+            $this->element->placeholder($this->label);
+        }
+
+        $result .= $this->renderPrefix() . $this->renderField() . $this->renderSuffix();
 
         if ($fieldContainer = $this->getElementClass()) {
             $result .= '</div>';
         }
 
-        $result .= $error . '</div>';
+        return $result;
+    }
+
+    /**
+     * @return string
+     */
+    protected function renderPrefix()
+    {
+        $result = '';
+
+        if($this->prefix || $this->suffix) {
+            $result .= '<div class="input-group">';
+        }
+
+        if($this->prefix) {
+            $result .= '<div class="input-group-addon">' . $this->prefix . '</div>';
+        }
 
         return $result;
+    }
+
+    /**
+     * @return string
+     */
+    protected function renderSuffix()
+    {
+        $result = '';
+
+        if($this->suffix) {
+            $result .= '<div class="input-group-addon">' . $this->suffix . '</div>';
+        }
+
+        if($this->prefix || $this->suffix) {
+            $result .= '</div>';
+        }
+
+        if(!$this->isInline() && ($this->help || $this->error)) {
+            $result .= '<div class="help-block">';
+            $result .= $this->error ? $this->error : $this->help;
+            $result .= '</div>';
+        }
+
+        return $result;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function labelShouldBeInline()
+    {
+        return $this->isInline() && method_exists($this->element, 'placeholder');
     }
 }

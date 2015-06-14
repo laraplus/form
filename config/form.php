@@ -7,9 +7,10 @@ return [
     'styles'    => [
 
         'horizontal' => [
-            'form'    => 'form-horizontal',
-            'label'   => 'col-sm-2 control-label',
-            'element' => 'col-sm-10'
+            'form'     => 'form-horizontal',
+            'label'    => 'col-sm-2 control-label',
+            'element'  => 'col-sm-10',
+            'no_label' => 'col-sm-10 col-sm-offset-2'
         ],
         'vertical'   => [
             'form'    => null,

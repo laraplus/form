@@ -41,7 +41,7 @@ class LaravelDataStore implements DataStore
         $errors = $this->request->session()->get('errors', new MessageBag);
 
         if ($errors->has($name)) {
-            return $errors->get($name);
+            return $errors->first($name);
         }
 
         return null;
