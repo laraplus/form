@@ -71,10 +71,6 @@ class Bootstrap3Presenter extends BasePresenter
     {
         $button->addClass('btn');
 
-        if($button->type == 'submit') {
-            $button->addClass('btn-primary');
-        }
-
         return '<button' . $this->renderAttributes($button->attributes) . '>' . $button->text . '</button>';
 
     }
