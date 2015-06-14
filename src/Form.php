@@ -129,7 +129,7 @@ class Form extends Elements
         $result = [$this->open];
 
         foreach ($this->elements as $element) {
-            $result[] = $element->render($this->presenter);
+            $result[] = $element->present();
         }
 
         $result[] = $this->close;

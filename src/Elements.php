@@ -16,7 +16,7 @@ abstract class Elements
 {
     /**
      * @param $name
-     * @return Form
+     * @return Open
      */
     public function open($name)
     {
