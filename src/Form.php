@@ -150,7 +150,7 @@ class Form extends Elements
 
         $element = new $class($name, $this->open, $this->presenter, $this->dataStore, array_get($this->rules, $name));
 
-        return $this->elements[] = $element;
+        return $this->elements[$name ?: 'element-' . count($this->elements)] = $element;
     }
 
     /**
