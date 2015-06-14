@@ -1,25 +1,21 @@
 {
-	"name": "laraplus/form",
-	"description": "A powerful package for building forms in Laravel.",
-	"keywords": [
-		"laravel",
-		"form",
-		"html"
-	],
-	"license": "MIT",
-	"authors": [
-		{
-			"name": "Anže Časar",
-			"email": "anze.casar@gmail.com"
-		}
-	],
-	"require": {
-		"php": ">=5.4.0",
-		"illuminate/support": "~5.0"
-	},
-	"autoload": {
-		"psr-4": {
-			"Laraplus\\Form\\": "src/"
-		}
-	}
+  "name": "laraplus/form",
+  "description": "A powerful package for building forms in Laravel.",
+  "keywords": ["laravel", "form", "html"],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Anže Časar",
+      "email": "anze.casar@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=5.4.0",
+    "illuminate/support": "~5.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Laraplus\\Form\\": "src/"
+    }
+  }
 }
