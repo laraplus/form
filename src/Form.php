@@ -247,7 +247,7 @@ class Form extends Elements
         }
 
         if (isset($this->elements[$property])) {
-            return $this->$property;
+            return $this->elements[$property];
         }
 
         throw new Exception('Element [' . $property . '] does not exist');
