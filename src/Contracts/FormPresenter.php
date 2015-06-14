@@ -13,9 +13,19 @@ interface FormPresenter
     public function setElement(Element $element);
 
     /**
+     * @return Element
+     */
+    public function getElement();
+
+    /**
      * @param array $style
      */
     public function setStyle(array $style);
+
+    /**
+     * @return array
+     */
+    public function getStyle();
 
     /**
      * @param Open $open

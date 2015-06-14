@@ -82,12 +82,28 @@ abstract class BasePresenter implements FormPresenter
     }
 
     /**
+     * @return Element
+     */
+    public function getElement()
+    {
+        return $this->element;
+    }
+
+    /**
      * @param array $style
      * @return mixed|void
      */
     public function setStyle(array $style)
     {
         $this->style = $style;
+    }
+
+    /**
+     * @return array
+     */
+    public function getStyle()
+    {
+        return $this->style;
     }
 
     /**

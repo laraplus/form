@@ -1,5 +1,6 @@
 <?php namespace Laraplus\Form\Fields\Base;
 
+use Laraplus\Form\Contracts\ConfigProvider;
 use Laraplus\Form\Fields\Open;
 use Laraplus\Form\Contracts\DataStore;
 use Laraplus\Form\Contracts\FormElement;
@@ -76,22 +77,34 @@ abstract class Element implements FormElement
     protected $presenter;
 
     /**
+     * @var ConfigProvider
+     */
+    protected $config;
+
+    /**
      * @var bool
      */
     protected $multiple = false;
+
+    /**
+     * @var null|array
+     */
+    protected $style = null;
 
     /**
      * @param string $name
      * @param Open $open
      * @param FormPresenter $presenter
      * @param DataStore $dataStore
+     * @param ConfigProvider $config
      * @param array $rules
      */
-    public function __construct($name, Open $open, FormPresenter $presenter, DataStore $dataStore, array $rules = null)
+    public function __construct($name, Open $open, FormPresenter $presenter, DataStore $dataStore, ConfigProvider $config, array $rules = null)
     {
         $this->open = $open;
         $this->name = $name;
         $this->rules = $rules;
+        $this->config = $config;
         $this->presenter = $presenter;
         $this->dataStore = $dataStore;
 
@@ -281,6 +294,17 @@ abstract class Element implements FormElement
 
     /**
      * @param string $style
+     * @return $this
+     */
+    public function style($style = null)
+    {
+        $this->style = $style ? $this->config->get('styles.' . $style) : null;
+
+        return $this;
+    }
+
+    /**
+     * @param string $style
      * @return string
      */
     public function present($style = null)
@@ -291,7 +315,18 @@ abstract class Element implements FormElement
 
         $this->presenter->setElement($this);
 
-        return $this->presenter->renderAll();
+        if($style = $style ?: ($this->style ?: null)) {
+            $tmpStyle = $this->presenter->getStyle();
+            $this->presenter->setStyle($style);
+        }
+
+        $element = $this->presenter->renderAll();
+
+        if($style) {
+            $this->presenter->setStyle($tmpStyle);
+        }
+
+        return $element;
     }
 
     /**

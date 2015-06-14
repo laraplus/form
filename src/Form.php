@@ -148,7 +148,7 @@ class Form extends Elements
 
         $class = 'Laraplus\\Form\\Fields\\' . studly_case($type);
 
-        $element = new $class($name, $this->open, $this->presenter, $this->dataStore, array_get($this->rules, $name));
+        $element = new $class($name, $this->open, $this->presenter, $this->dataStore, $this->config, array_get($this->rules, $name));
 
         return $this->elements[$name ?: 'element-' . count($this->elements)] = $element;
     }
