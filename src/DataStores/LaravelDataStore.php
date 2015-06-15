@@ -78,7 +78,7 @@ class LaravelDataStore implements DataStore
     {
         $query = $this->request->getQueryString();
 
-        return '/' . $this->request->path() . ($query ? '?' . $query : '');
+        return '/' . trim($this->request->path(), '/') . ($query ? '?' . $query : '');
     }
 
     /**
