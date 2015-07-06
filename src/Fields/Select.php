@@ -4,6 +4,8 @@ use Laraplus\Form\Fields\Base\Element;
 
 class Select extends Element
 {
+    protected $placeholder;
+    
     protected $options = [];
 
     protected $optionAttributes = [];
@@ -27,6 +29,17 @@ class Select extends Element
     public function addOption($key, $value)
     {
         $this->options[$key] = $value;
+
+        return $this;
+    }
+    
+    /**
+     * @param string $text
+     * @return $this
+     */
+    public function placeholder($text)
+    {
+        $this->placeholder = $text;
 
         return $this;
     }
@@ -95,6 +108,10 @@ class Select extends Element
         $select = '<select'.$this->renderAttributes($this->attributes).'>';
 
         $selected = $this->getValue();
+        
+        if($this->placeholder) {
+            $select .= '<option value="">' . $this->placeholder . '</option>';
+        }
 
         foreach($this->options as $key => $value) {
 
