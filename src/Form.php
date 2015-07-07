@@ -126,14 +126,20 @@ class Form extends Elements
     {
         $this->style($style);
 
-        $result = [$this->open];
-
+        return $this->open . "\n" . $this->renderElements() . "\n" . $this->close;
+    }
+    
+    /**
+     * @return string
+     */
+    protected function renderElements()
+    {
+        $result = [];
+        
         foreach ($this->elements as $element) {
             $result[] = $element->present();
         }
-
-        $result[] = $this->close;
-
+        
         return implode("\n", $result);
     }
 
@@ -244,6 +250,9 @@ class Form extends Elements
         }
         if ($property == 'close') {
             return $this->close;
+        }
+        if($property == 'elements') {
+            return $this->renderElements()
         }
 
         if (isset($this->elements[$property])) {
