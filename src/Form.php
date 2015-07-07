@@ -252,7 +252,7 @@ class Form extends Elements
             return $this->close;
         }
         if($property == 'elements') {
-            return $this->renderElements()
+            return $this->renderElements();
         }
 
         if (isset($this->elements[$property])) {
