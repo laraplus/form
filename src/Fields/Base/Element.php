@@ -383,7 +383,7 @@ abstract class Element implements FormElement
         if (in_array($method, $methods)) {
             
             $method = 'render' . ucfirst($method);
-            this->presenter->setElement($this);
+            $this->presenter->setElement($this);
             
             return $this->presenter->$method();
         }
