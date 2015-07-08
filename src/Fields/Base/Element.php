@@ -309,11 +309,7 @@ abstract class Element implements FormElement
      */
     public function present($style = null)
     {
-        if($this->name) {
-            $this->error = $this->dataStore->getError($this->name);
-        }
-
-        $this->presenter->setElement($this);
+        $this->initPresenter();
 
         if($style = $style ?: ($this->style ?: null)) {
             $tmpStyle = $this->presenter->getStyle();
@@ -327,6 +323,17 @@ abstract class Element implements FormElement
         }
 
         return $element;
+    }
+    
+    /**
+     * Inject the element into presenter
+     */
+    protected function initPresenter()
+    {
+        if($this->name) {
+            $this->error = $this->dataStore->getError($this->name);
+        }
+        $this->presenter->setElement($this);
     }
 
     /**
@@ -383,7 +390,7 @@ abstract class Element implements FormElement
         if (in_array($method, $methods)) {
             
             $method = 'render' . ucfirst($method);
-            $this->presenter->setElement($this);
+            $this->initPresenter();
             
             return $this->presenter->$method();
         }
