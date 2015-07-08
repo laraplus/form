@@ -108,6 +108,29 @@ class Open
 
         return $this;
     }
+    
+    /**
+     * @param $id
+     * @return $this
+     */
+    public function id($id)
+    {
+        $this->attributes['id'] = $id;
+
+        return $this;
+    }
+    
+    /**
+     * @param $name
+     * @param $value
+     * @return $this
+     */
+    public function attribute($name, $value)
+    {
+        $this->attributes[$name] = $value;
+        
+        return $this;
+    }
 
     /**
      * @return $this
