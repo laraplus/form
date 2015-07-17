@@ -5,11 +5,6 @@ use Illuminate\Support\ServiceProvider;
 class FormServiceProvider extends ServiceProvider
 {
     /**
-     * @var bool
-     */
-    protected $defer = true;
-
-    /**
      * Register the service provider.
      */
     public function register()
@@ -29,15 +24,5 @@ class FormServiceProvider extends ServiceProvider
 
         $this->app->bind('Laraplus\Form\Contracts\FormPresenter', $presenter);
         $this->app->singleton('laraplus.form', 'Laraplus\Form\Form');
-    }
-
-    /**
-     * Return an array of provided services
-     *
-     * @return array
-     */
-    public function provides()
-    {
-        return ['laraplus.form'];
     }
 }
