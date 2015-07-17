@@ -22,7 +22,7 @@ trait FormBuilder
 
         $rules = method_exists($this, 'rules') ? $this->rules() : [];
 
-        return $this->formBuilder = app('laraplus.form')->rules($rules);
+        return $this->formBuilder = app('Laraplus\Form\Form')->rules($rules);
     }
 
     /**
