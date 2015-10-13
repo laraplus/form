@@ -1,5 +1,6 @@
 <?php namespace Laraplus\Form\DataStores;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
 use Laraplus\Form\Contracts\DataStore;
 
@@ -15,9 +16,9 @@ class LaravelDataStore implements DataStore
      */
     private $request;
 
-    public function __construct()
+    public function __construct(Request $request)
     {
-        $this->request = app('request');
+        $this->request = $request;
     }
 
     /**
@@ -49,6 +50,9 @@ class LaravelDataStore implements DataStore
      */
     public function getOldValue($name)
     {
+        if($current = $this->request->input($name)) {
+            return $current;
+        }
         if ($old = $this->request->old($name)) {
             return $old;
         }
