@@ -27,6 +27,11 @@ abstract class Element implements FormElement
     protected $value;
 
     /**
+     * @var string|array
+     */
+    protected $forceValue;
+
+    /**
      * @var string
      */
     protected $label;
@@ -133,6 +138,17 @@ abstract class Element implements FormElement
     public function value($value)
     {
         $this->value = $value;
+
+        return $this;
+    }
+
+    /**
+     * @param $value
+     * @return $this
+     */
+    public function forceValue($value)
+    {
+        $this->forceValue = $value;
 
         return $this;
     }
@@ -341,6 +357,10 @@ abstract class Element implements FormElement
      */
     protected function getValue()
     {
+        if ($value = $this->forceValue) {
+            return $value;
+        }
+
         if ($value = $this->dataStore->getOldValue($this->name)) {
             return $value;
         }
