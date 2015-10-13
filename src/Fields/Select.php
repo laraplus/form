@@ -22,6 +22,17 @@ class Select extends Element
     }
 
     /**
+     * @param array $options
+     * @return $this
+     */
+    public function optionsWithDefault($options, $default = ['' => '-'])
+    {
+        $this->options = $default + $options;
+
+        return $this;
+    }
+
+    /**
      * @param $key
      * @param $value
      * @return $this

@@ -1,6 +1,5 @@
 <?php namespace Laraplus\Form\DataStores;
 
-use Illuminate\Http\Request;
 use Illuminate\Support\MessageBag;
 use Laraplus\Form\Contracts\DataStore;
 
@@ -16,12 +15,9 @@ class LaravelDataStore implements DataStore
      */
     private $request;
 
-    /**
-     * @param Request $request
-     */
-    public function __construct(Request $request)
+    public function __construct()
     {
-        $this->request = $request;
+        $this->request = app('request');
     }
 
     /**
