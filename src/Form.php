@@ -1,5 +1,6 @@
 <?php namespace Laraplus\Form;
 
+use Closure;
 use Exception;
 use ArrayAccess;
 use Laraplus\Form\Fields\Open;
@@ -114,6 +115,23 @@ class Form extends Elements
         if ($style) {
             $this->presenter->setStyle($this->config->get('styles.' . $style));
         }
+
+        return $this;
+    }
+
+
+    /**
+     * @param $name
+     * @param Closure $builder
+     * @return $this
+     */
+    public function group($name, Closure $builder)
+    {
+        $instance = new self($this->presenter, $this->dataStore, $this->config);
+
+        $builder($instance);
+
+        $this->elements[$name ?: 'element-' . count($this->elements)] = $instance;
 
         return $this;
     }

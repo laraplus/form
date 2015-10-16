@@ -4,6 +4,7 @@ use Laraplus\Form\Fields\File;
 use Laraplus\Form\Fields\Open;
 use Laraplus\Form\Fields\Text;
 use Laraplus\Form\Fields\Close;
+use Laraplus\Form\Fields\Group;
 use Laraplus\Form\Fields\Select;
 use Laraplus\Form\Fields\Submit;
 use Laraplus\Form\Fields\Password;
