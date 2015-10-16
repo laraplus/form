@@ -33,7 +33,7 @@ abstract class Input extends Element
 
         $attributes = $this->renderAttributes($this->attributes);
 
-        return '<input' . $attributes . '/>';
+        return '<input' . $attributes . ' />';
     }
 
     /**

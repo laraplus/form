@@ -21,4 +21,23 @@ class TestBasicForm extends TestCase
 
         $this->assertEquals($expect, $this->clean($this->form));
     }
+
+    public function testTextInputWithLabelsAndErrors()
+    {
+        $label = '<label for="test-name">Name:</label>';
+        $field = '<input id="test-name" name="name" type="text" value="" />';
+        $error = '<strong>Error message</strong>';
+
+        $this->form->open('test');
+        $this->form->text('name')->label('Name:');
+        $this->form->close();
+
+        $this->assertEquals($this->form->name->label(), $label);
+        $this->assertEquals($this->form->name->field(), $field);
+        $this->assertEquals($this->form->name->error(), $error);
+
+        $fullForm = $this->wrap('<div>' . $label . $field . $error . '</div>');
+
+        $this->assertEquals($fullForm, $this->clean($this->form));
+    }
 }

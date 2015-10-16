@@ -157,8 +157,13 @@ abstract class Element implements FormElement
      * @param string $label
      * @return $this
      */
-    public function label($label)
+    public function label($label = null)
     {
+        // When label is called without parameters, we will
+        // assume that a user wants to render rather it,
+        // so we will call the magic method instead
+        if(is_null($label)) return $this->__call('label', []);
+
         $this->label = $label;
 
         return $this;
