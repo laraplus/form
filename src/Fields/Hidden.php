@@ -11,14 +11,14 @@ class Hidden extends Input
     {
         parent::init();
 
-        $this->attributes['type'] = 'password';
+        $this->attributes['type'] = 'hidden';
     }
 
     /**
      * @return string
      */
-    public function render()
+    public function present($style = null)
     {
-        return $this->renderField();
+        return $this->render();
     }
 }
