@@ -28,6 +28,8 @@ class TestBasicForm extends TestCase
         $field = '<input id="test-name" name="name" type="text" value="" />';
         $error = '<strong>Error message</strong>';
 
+        $fullForm = $this->wrap('<div>' . $label . $field . $error . '</div>');
+
         $this->form->open('test');
         $this->form->text('name')->label('Name:');
         $this->form->close();
@@ -35,9 +37,6 @@ class TestBasicForm extends TestCase
         $this->assertEquals($this->form->name->label(), $label);
         $this->assertEquals($this->form->name->field(), $field);
         $this->assertEquals($this->form->name->error(), $error);
-
-        $fullForm = $this->wrap('<div>' . $label . $field . $error . '</div>');
-
         $this->assertEquals($fullForm, $this->clean($this->form));
     }
 }
