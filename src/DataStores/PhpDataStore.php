@@ -39,7 +39,7 @@ class PhpDataStore implements DataStore
     public function getOldValue($name)
     {
         if(isset($_POST[$name])) {
-            return $_POST['name'];
+            return $_POST[$name];
         }
 
         if(isset($_SESSION['input'][$name])) {

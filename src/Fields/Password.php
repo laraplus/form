@@ -13,4 +13,16 @@ class Password extends Input
 
         $this->attributes['type'] = 'password';
     }
+
+    /**
+     * @return array|string
+     */
+    protected function getValue()
+    {
+        if ($value = $this->forceValue) {
+            return $value;
+        }
+
+        return null;
+    }
 }

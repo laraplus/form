@@ -16,7 +16,6 @@ class PhpConfigProvider implements ConfigProvider
      */
     public function __construct(array $config)
     {
-
         $this->config = $config;
     }
 
