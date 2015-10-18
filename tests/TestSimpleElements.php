@@ -118,7 +118,7 @@ class TestSimpleElements extends TestCase
         $this->form->checkbox('confirmed');
         $this->form->close();
 
-        $expected = '<input id="test-confirmed" name="confirmed" value="1" />';
+        $expected = '<input id="test-confirmed" name="confirmed" type="checkbox" value="1" />';
         $this->assertEquals($this->form->confirmed->field(), $expected);
     }
 
@@ -130,7 +130,7 @@ class TestSimpleElements extends TestCase
         $this->form->checkbox('confirmed');
         $this->form->close();
 
-        $expected = '<input id="test-confirmed" name="confirmed" value="1" checked />';
+        $expected = '<input id="test-confirmed" name="confirmed" type="checkbox" value="1" checked />';
         $this->assertEquals($this->form->confirmed->field(), $expected);
     }
 
@@ -140,12 +140,12 @@ class TestSimpleElements extends TestCase
         $this->form->checkbox('confirmed')->checked();
         $this->form->close();
 
-        $expected = '<input id="test-confirmed" name="confirmed" value="1" checked />';
+        $expected = '<input id="test-confirmed" name="confirmed" type="checkbox" value="1" checked />';
         $this->assertEquals($this->form->confirmed->field(), $expected);
 
         $this->setPostValue('_form', 'test'); // fake submit
 
-        $expected = '<input id="test-confirmed" name="confirmed" value="1" />';
+        $expected = '<input id="test-confirmed" name="confirmed" type="checkbox" value="1" />';
         $this->assertEquals($this->form->confirmed->field(), $expected);
     }
 
@@ -155,7 +155,7 @@ class TestSimpleElements extends TestCase
         $this->form->checkbox('confirmed')->value('yes');
         $this->form->close();
 
-        $expected = '<input id="test-confirmed" name="confirmed" value="yes" />';
+        $expected = '<input id="test-confirmed" name="confirmed" type="checkbox" value="yes" />';
         $this->assertEquals($this->form->confirmed->field(), $expected);
     }
 

@@ -14,10 +14,21 @@
         ->placeholder('Enter your password...')
         ->help('Minimum 6 characters.');
 
+    $form->text('salary')
+        ->type('number')
+        ->label('Salary:')
+        ->placeholder('Enter your annual salary...')
+        ->prefix('$')
+        ->suffix('.00');
+
     $form->select('gender')
         ->label('Gender:')
         ->options(['male' => 'Male', 'female' => 'Female'])
         ->placeholder('- Select gender -');
+
+    $form->checkbox('terms')
+        ->label('I agree with terms')
+        ->checked();
 
     $form->submit('submit')
         ->text('Submit!')

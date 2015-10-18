@@ -1,5 +1,6 @@
 <?php namespace Laraplus\Form\Presenters;
 
+use Laraplus\Form\Fields\Checkbox;
 use Laraplus\Form\Fields\Open;
 use Laraplus\Form\Fields\Base\Button;
 
@@ -44,7 +45,7 @@ class Bootstrap3Presenter extends BasePresenter
     {
         $class = isset($this->style['element']) ? $this->style['element'] : '';
 
-        if(!$this->label && isset($this->style['no_label'])) {
+        if((!$this->label || $this->isCheckbox()) && isset($this->style['no_label'])) {
             $class = $this->style['no_label'];
         }
 
@@ -94,8 +95,7 @@ class Bootstrap3Presenter extends BasePresenter
      */
     public function renderField()
     {
-
-        if(!$this->element instanceof Button) {
+        if(!$this->element instanceof Button && !$this->isCheckbox()) {
             $this->element->addClass('form-control');
         }
 
@@ -133,6 +133,8 @@ class Bootstrap3Presenter extends BasePresenter
      */
     protected function renderElementGroup()
     {
+        if($this->isCheckbox()) return $this->renderCheckbox();
+
         $result = $this->renderLabel();
 
         if ($fieldContainer = $this->getElementClass()) {
@@ -145,11 +147,24 @@ class Bootstrap3Presenter extends BasePresenter
 
         $result .= $this->renderPrefix() . $this->renderField() . $this->renderSuffix();
 
-        if ($fieldContainer = $this->getElementClass()) {
+        if ($fieldContainer) {
             $result .= '</div>';
         }
 
         return $result;
+    }
+
+    protected function renderCheckbox()
+    {
+        $field = trim($this->prefix . $this->renderField() . ' ' . $this->label . $this->suffix);
+
+        $label = '<label for="' . $this->attributes['id'] . '">' . $field .  '</label>';
+
+        if(!$this->isHorizontal()) {
+            return '<div class="checkbox">' . $label . '</div>';
+        }
+
+        return '<div'.$this->getElementClass().'><div class="checkbox">' . $label . '</div></div>';
     }
 
     /**
@@ -200,5 +215,13 @@ class Bootstrap3Presenter extends BasePresenter
     protected function labelShouldBeInline()
     {
         return $this->isInline() && method_exists($this->element, 'placeholder');
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isCheckbox()
+    {
+        return $this->element instanceof Checkbox;
     }
 }

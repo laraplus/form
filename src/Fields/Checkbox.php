@@ -7,11 +7,11 @@ class Checkbox extends Element
     protected $checked = false;
 
     /**
-     * @return string
+     * Initialize field settings
      */
-    public function getType()
+    protected function init()
     {
-        return 'checkbox';
+        parent::init();
 
         $this->attributes['type'] = 'checkbox';
     }
