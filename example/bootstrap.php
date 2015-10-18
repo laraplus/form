@@ -26,7 +26,7 @@
         ->options(['male' => 'Male', 'female' => 'Female'])
         ->placeholder('- Select gender -');
 
-    $form->checkList('interests')
+    $form->checklist('interests')
         ->label('Interests:')
         ->options(['Basketball', 'Football', 'Tennis'])
         ->multiple()

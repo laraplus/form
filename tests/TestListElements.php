@@ -5,7 +5,7 @@ class TestListElements extends TestCase
     public function testStackedRadioList()
     {
         $this->form->open('test');
-        $this->form->checkList('gender')->options(['name' => 'Male', 'female' => 'Female']);
+        $this->form->checklist('gender')->options(['name' => 'Male', 'female' => 'Female']);
         $this->form->close();
 
         $expected = '<div><input value="name" type="radio" name="gender" /> Male</div><div><input value="female" type="radio" name="gender" /> Female</div>';
@@ -15,7 +15,7 @@ class TestListElements extends TestCase
     public function testInlineRadioList()
     {
         $this->form->open('test');
-        $this->form->checkList('gender')->options(['name' => 'Male', 'female' => 'Female'])->inline();
+        $this->form->checklist('gender')->options(['name' => 'Male', 'female' => 'Female'])->inline();
         $this->form->close();
 
         $expected = '<span><input value="name" type="radio" name="gender" /> Male</span><span><input value="female" type="radio" name="gender" /> Female</span>';
@@ -25,7 +25,7 @@ class TestListElements extends TestCase
     public function testStackedCheckboxList()
     {
         $this->form->open('test');
-        $this->form->checkList('interests')->options(['Football', 'Basketball'])->multiple();
+        $this->form->checklist('interests')->options(['Football', 'Basketball'])->multiple();
         $this->form->close();
 
         $expected = '<div><input value="0" type="checkbox" name="interests[0]" /> Football</div><div><input value="1" type="checkbox" name="interests[1]" /> Basketball</div>';

@@ -1,6 +1,6 @@
 <?php namespace Laraplus\Form\Fields;
 
-class CheckList extends Select
+class Checklist extends Select
 {
     /**
      * @var bool
