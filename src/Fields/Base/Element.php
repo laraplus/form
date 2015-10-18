@@ -1,10 +1,11 @@
 <?php namespace Laraplus\Form\Fields\Base;
 
-use Laraplus\Form\Contracts\ConfigProvider;
+use InvalidArgumentException;
 use Laraplus\Form\Fields\Open;
 use Laraplus\Form\Contracts\DataStore;
 use Laraplus\Form\Contracts\FormElement;
 use Laraplus\Form\Contracts\FormPresenter;
+use Laraplus\Form\Contracts\ConfigProvider;
 use Laraplus\Form\Helpers\RendersAttributes;
 
 abstract class Element implements FormElement
@@ -129,6 +130,17 @@ abstract class Element implements FormElement
         if($this->name) {
             $this->attributes['name'] = $this->name;
         }
+    }
+
+    /**
+     * @param $id
+     * @return $this
+     */
+    public function id($id)
+    {
+        $this->attributes['id'] = $id;
+
+        return $this;
     }
 
     /**
@@ -420,7 +432,7 @@ abstract class Element implements FormElement
             return $this->$property;
         }
 
-        throw new \InvalidArgumentException('Cannot access [' . $property . '] property on an Element');
+        throw new InvalidArgumentException('Cannot access [' . $property . '] property on an Element');
     }
 
     /**
@@ -444,7 +456,24 @@ abstract class Element implements FormElement
             return $this->presenter->$method();
         }
 
-        throw new \InvalidArgumentException('Cannot call [' . $method . '] method on an Element');
+        throw new InvalidArgumentException('Cannot call [' . $method . '] method on an Element');
+    }
+
+    /**
+     * @param $property
+     * @param $value
+     * @return mixed
+     */
+    public function __set($property, $value)
+    {
+        $properties = ['open'];
+
+        if (in_array($property, $properties)) {
+            $this->$property = $value;
+            return;
+        }
+
+        throw new InvalidArgumentException('Cannot set [' . $property . '] on an Element');
     }
 
     /**

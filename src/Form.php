@@ -13,6 +13,11 @@ use Laraplus\Form\Contracts\ConfigProvider;
 class Form extends Elements
 {
     /**
+     * @var int
+     */
+    protected static $copies = 0;
+
+    /**
      * @var array
      */
     protected $rules;
@@ -314,12 +319,21 @@ class Form extends Elements
      */
     public function __clone()
     {
+        static::$copies++;
         $this->open = clone $this->open;
         $this->close = clone $this->close;
 
         foreach($this->elements as $key => $element) {
+
             $this->elements[$key] = clone $element;
+
+            if($this->elements[$key] instanceof Element) {
+                $this->elements[$key]->id($this->elements[$key]->attributes['id'] . '-copy-' . static::$copies);
+                $this->elements[$key]->open = $this->open;
+            }
         }
+
+        $this->open->name($this->open->name . '-copy-' . static::$copies);
     }
 
     /**

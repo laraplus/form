@@ -55,6 +55,17 @@ class Open
     }
 
     /**
+     * @param $name
+     * @return $this
+     */
+    public function name($name)
+    {
+        $this->name = $name;
+
+        return $this;
+    }
+
+    /**
      * @param style $style
      * @return $this
      */

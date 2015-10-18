@@ -67,7 +67,7 @@ class PhpDataStore implements DataStore
      */
     public function getUrl()
     {
-        $path = !empty($_SERVER['REQUEST_URI']) ? '/' . $_SERVER['REQUEST_URI'] : '/';
+        $path = !empty($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '/';
         $query = !empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '';
 
         return $path . $query;

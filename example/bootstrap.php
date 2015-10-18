@@ -49,7 +49,7 @@
                 </div>
             </div>
             <div class="col-md-6">
-                <h1>Horizontal Form</h1>
+                <h1>Vertical Form</h1>
                 <div class="well">
                     <?= $form2->style('vertical') ?>
                 </div>
