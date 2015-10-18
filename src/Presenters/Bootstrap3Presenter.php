@@ -110,6 +110,10 @@ class Bootstrap3Presenter extends BasePresenter
         return $rendered;
     }
 
+    /**
+     * @param array $elements
+     * @return string
+     */
     protected function renderList($elements)
     {
         $list = '';
@@ -122,18 +126,20 @@ class Bootstrap3Presenter extends BasePresenter
         return $list;
     }
 
+    /**
+     * @param array $elements
+     * @return string
+     */
     protected function renderInlineList($elements)
     {
         $class = $this->element->multiple ? 'checkbox' : 'radio';
-        $list = '<div class="' . $class . '">';
+        $list = '<div' . ($this->isVertical() ? ' class="' . $class . '"' : ''). '>';
 
         foreach($elements as $element) {
             $list .= '<label class="' . $class . '-inline">' . $element . '</label>';
         }
 
-        $list .= '</div>';
-
-        return $list;
+        return $list . '</div>';
     }
 
     /**
