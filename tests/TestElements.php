@@ -74,6 +74,22 @@ class TestElements extends TestCase
         $this->assertEquals($this->clean($this->form->gender->field()), $expected);
     }
 
+    public function testSelectElementWithOptionAttributes()
+    {
+        $this->form->open('test');
+        $this->form->select('gender')->options([
+            'male' => 'Male',
+            'female' => 'Female'
+        ])->optionAttrs([
+            'male' => ['data-id' => 0],
+            'female' => ['data-id'=> 1]
+        ]);
+        $this->form->close();
+
+        $expected = '<select id="test-gender" name="gender"><option data-id="0" value="male">Male</option><option data-id="1" value="female">Female</option></select>';
+        $this->assertEquals($this->clean($this->form->gender->field()), $expected);
+    }
+
     public function testMultiSelectElement()
     {
         $this->form->open('test');

@@ -86,6 +86,8 @@ class Select extends Element
     }
 
     /**
+     * Alias for optionAttribute()
+     *
      * @param $key
      * @param $name
      * @param $value
@@ -97,6 +99,32 @@ class Select extends Element
     }
 
     /**
+     * @param array $attributes
+     * @return Select
+     */
+    public function optionAttributes(array $attributes)
+    {
+        foreach($attributes as $key => $attrs) {
+            foreach((array)$attrs as $name => $value) {
+                $this->optionAttribute($key, $name, $value);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Alias For optionAttributes()
+     *
+     * @param array $attributes
+     * @return Select
+     */
+    public function optionAttrs(array $attributes)
+    {
+        return $this->optionAttributes($attributes);
+    }
+
+    /**
      * @param $key
      * @param $name
      * @param $value
@@ -104,7 +132,7 @@ class Select extends Element
      */
     public function optionData($key, $name, $value)
     {
-        $this->setAttribute($key, 'data-' . $name, $value);
+        $this->optionAttribute($key, 'data-' . $name, $value);
 
         return $this;
     }
@@ -144,7 +172,7 @@ class Select extends Element
 
         $select = '<select' . $this->renderAttributes($this->attributes) . $multiple . '>';
 
-        $select .= $this->renderOptions($select);
+        $select .= $this->renderOptions();
 
         $select .= '</select>';
 
@@ -163,10 +191,9 @@ class Select extends Element
     }
 
     /**
-     * @param $select
      * @return string
      */
-    protected function renderOptions($select)
+    protected function renderOptions()
     {
         $options = '';
 
