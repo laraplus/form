@@ -66,7 +66,7 @@ class Open
     }
 
     /**
-     * @param ArrayAccess $model
+     * @param ArrayAccess|array $model
      * @return $this
      */
     public function model($model)

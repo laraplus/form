@@ -1,11 +1,12 @@
 <?php
 
 use Laraplus\Form\Form;
-use Laraplus\Form\Contracts\DataStore;
+use Laraplus\Form\DataStores\PhpDataStore;
 use Laraplus\Form\Presenters\RawPresenter;
 use Laraplus\Form\Contracts\ConfigProvider;
+use Laraplus\Form\ConfigProviders\PhpConfigProvider;
 
-class TestCase extends PHPUnit_Framework_TestCase
+abstract class TestCase extends PHPUnit_Framework_TestCase
 {
     /**
      * @var Form
@@ -15,22 +16,10 @@ class TestCase extends PHPUnit_Framework_TestCase
     public function setUp()
     {
         $presenter = new RawPresenter();
-        $dataStore = $this->emptyDataStore();
-        $configProvider = $this->emptyConfigProvider();
+        $dataStore = new PhpDataStore();
+        $configProvider = new PhpConfigProvider([]);
 
         $this->form = new Form($presenter, $dataStore, $configProvider);
-    }
-
-    protected function emptyDataStore()
-    {
-        $dataStore = Mockery::mock(DataStore::class);
-        $dataStore->shouldReceive('getUrl')->andReturn('/');
-        $dataStore->shouldReceive('getToken')->andReturn('secret_token');
-        $dataStore->shouldReceive('getOldValue')->andReturn(null);
-        $dataStore->shouldReceive('getModelValue')->andReturn(null);
-        $dataStore->shouldReceive('getError')->andReturn('Error message');
-
-        return $dataStore;
     }
 
     protected function emptyConfigProvider()
@@ -49,13 +38,36 @@ class TestCase extends PHPUnit_Framework_TestCase
     protected function wrap($string)
     {
         $open = '<form method="GET" action="/">';
-        $close = '<input type="hidden" name="_token" value="secret_token" /></form>';
+        $close = '<input type="hidden" name="_token" value="" /></form>';
 
         return $this->clean($open . $string . $close);
     }
 
+    protected function setError($field, $error)
+    {
+        $_SESSION['errors'] = isset($_SESSION['errors']) ? $_SESSION['errors'] : [];
+        $_SESSION['errors'][$field] = $error;
+    }
+
+    protected function setToken($token)
+    {
+        $_SESSION['token'] = $token;
+    }
+
+    protected function setOldValue($field, $value)
+    {
+        $_SESSION['input'] = isset($_SESSION['input']) ? $_SESSION['input'] : [];
+        $_SESSION['input'][$field] = $value;
+    }
+
     public function tearDown()
     {
+        if(isset($_SESSION)) {
+            unset($_SESSION['errors']);
+            unset($_SESSION['token']);
+            unset($_SESSION['input']);
+        }
+
         Mockery::close();
     }
 }

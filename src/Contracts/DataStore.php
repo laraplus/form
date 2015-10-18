@@ -5,7 +5,7 @@ use ArrayAccess;
 interface DataStore
 {
     /**
-     * @param ArrayAccess $model
+     * @param ArrayAccess|array $model
      */
     public function bind($model);
 

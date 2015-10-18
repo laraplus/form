@@ -1,25 +1,13 @@
 <?php namespace Laraplus\Form\DataStores;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\MessageBag;
 use Laraplus\Form\Contracts\DataStore;
 
-class LaravelDataStore implements DataStore
+class PhpDataStore implements DataStore
 {
     /**
      * @var ArrayAccess
      */
     protected $model = null;
-
-    /**
-     * @var Request
-     */
-    private $request;
-
-    public function __construct(Request $request)
-    {
-        $this->request = $request;
-    }
 
     /**
      * @param ArrayAccess|array $model
@@ -35,10 +23,10 @@ class LaravelDataStore implements DataStore
      */
     public function getError($name)
     {
-        $errors = $this->request->session()->get('errors', new MessageBag);
-
-        if ($errors->has($name)) {
-            return $errors->first($name);
+        if(isset($_SESSION['errors'][$name])) {
+            return is_array($_SESSION['errors'][$name]) ?
+                implode(' ', $_SESSION['errors'][$name]) :
+                $_SESSION['errors'][$name];
         }
 
         return null;
@@ -50,12 +38,14 @@ class LaravelDataStore implements DataStore
      */
     public function getOldValue($name)
     {
-        if($current = $this->request->input($name)) {
-            return $current;
+        if(isset($_POST[$name])) {
+            return $_POST['name'];
         }
-        if ($old = $this->request->old($name)) {
-            return $old;
+
+        if(isset($_SESSION['input'][$name])) {
+            return $_SESSION['input'][$name];
         }
+
         return null;
     }
 
@@ -66,8 +56,9 @@ class LaravelDataStore implements DataStore
     public function getModelValue($name)
     {
         if (isset($this->model[$name])) {
-            return $name;
+            return $this->model[$name];
         }
+
         return null;
     }
 
@@ -76,9 +67,10 @@ class LaravelDataStore implements DataStore
      */
     public function getUrl()
     {
-        $query = $this->request->getQueryString();
+        $path = !empty($_SERVER['REQUEST_URI']) ? '/' . $_SERVER['REQUEST_URI'] : '/';
+        $query = !empty($_SERVER['QUERY_STRING']) ? '?' . $_SERVER['QUERY_STRING'] : '';
 
-        return '/' . trim($this->request->path(), '/') . ($query ? '?' . $query : '');
+        return $path . $query;
     }
 
     /**
@@ -86,6 +78,6 @@ class LaravelDataStore implements DataStore
      */
     public function getToken()
     {
-        return $this->request->session()->getToken();
+        return isset($_SESSION['token']) ? $_SESSION['token'] : '';
     }
 }
