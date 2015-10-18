@@ -14,7 +14,7 @@ class TestElements extends TestCase
 
     public function testPasswordDoesNotPopulate()
     {
-        $_POST['password'] = '123456';
+        $this->setPostValue('password', '123456');
 
         $this->form->open('test');
         $this->form->password('password');
@@ -34,6 +34,21 @@ class TestElements extends TestCase
         $this->form->close();
 
         $expected = '<select id="test-gender" name="gender"><option value="male">Male</option><option value="female">Female</option></select>';
+        $this->assertEquals($this->clean($this->form->gender->field()), $expected);
+    }
+
+    public function testPopulatedSelectElement()
+    {
+        $this->setPostValue('gender', 'female');
+
+        $this->form->open('test');
+        $this->form->select('gender')->options([
+            'male' => 'Male',
+            'female' => 'Female'
+        ]);
+        $this->form->close();
+
+        $expected = '<select id="test-gender" name="gender"><option value="male">Male</option><option value="female" selected>Female</option></select>';
         $this->assertEquals($this->clean($this->form->gender->field()), $expected);
     }
 }

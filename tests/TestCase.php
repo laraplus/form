@@ -60,13 +60,15 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
         $_SESSION['input'][$field] = $value;
     }
 
+    protected function setPostValue($field, $value)
+    {
+        $_POST[$field] = $value;
+    }
+
     public function tearDown()
     {
-        if(isset($_SESSION)) {
-            unset($_SESSION['errors']);
-            unset($_SESSION['token']);
-            unset($_SESSION['input']);
-        }
+        if(isset($_SESSION)) $_SESSION = [];
+        if(isset($_POST)) $_POST = [];
 
         Mockery::close();
     }
