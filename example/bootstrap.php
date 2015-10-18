@@ -32,6 +32,10 @@
         ->multiple()
         ->inline();
 
+    $form->file('cv')
+        ->label('CV:')
+        ->multiple();
+
     $form->checkbox('terms')
         ->label('I agree with terms')
         ->checked();
