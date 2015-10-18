@@ -152,6 +152,17 @@ class Form extends Elements
     }
 
     /**
+     * Alias for render()
+     *
+     * @param string $style
+     * @return string
+     */
+    public function present($style = null)
+    {
+        return $this->render($style);
+    }
+
+    /**
      * @return bool
      * @throws Exception
      */

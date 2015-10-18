@@ -28,7 +28,7 @@ class RawPresenter extends BasePresenter
      */
     public function renderLabel()
     {
-        return '<label for="' . $this->attributes['id'] . '">' . $this->label . '</label>';
+        return $this->label ? '<label for="' . $this->attributes['id'] . '">' . $this->label . '</label>' : '';
     }
 
     /**
@@ -44,7 +44,7 @@ class RawPresenter extends BasePresenter
      */
     public function renderError()
     {
-        return '<strong>' . $this->error . '</strong>';
+        return $this->error ? '<strong>' . $this->error . '</strong>' : '';
     }
 
     /**
@@ -52,6 +52,8 @@ class RawPresenter extends BasePresenter
      */
     public function renderAll()
     {
-        return '<div>' . $this->renderLabel() . $this->renderField() . $this->renderError() . '</div>';
+        $wrap = isset($this->style['wrap']) ? $this->style['wrap'] : 'div';
+
+        return "<$wrap>" . $this->renderLabel() . $this->renderField() . $this->renderError() . "</$wrap>";
     }
 }
