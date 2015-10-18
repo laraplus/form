@@ -102,7 +102,9 @@ class Bootstrap3Presenter extends BasePresenter
         $rendered = $this->element->render();
 
         if(is_array($rendered)) {
-            return $this->renderList($rendered);
+            $isInline = $this->isInline() || $this->element->inline;
+
+            return $isInline ? $this->renderInlineList($rendered) : $this->renderList($rendered);
         }
 
         return $rendered;
@@ -111,17 +113,25 @@ class Bootstrap3Presenter extends BasePresenter
     protected function renderList($elements)
     {
         $list = '';
+        $class = $this->element->multiple ? 'checkbox' : 'radio';
 
         foreach($elements as $element) {
-            $class = $this->element->multiple ? 'checkbox' : 'radio';
-
-            if($this->isInline() || $this->element->inline) {
-                $list .= '<label class="' . $class . '-inline">' . $element . '</label>';
-                continue;
-            }
-
             $list .= '<div class="' . $class . '"><label>' . $element . '</label></div>';
         }
+
+        return $list;
+    }
+
+    protected function renderInlineList($elements)
+    {
+        $class = $this->element->multiple ? 'checkbox' : 'radio';
+        $list = '<div class="' . $class . '">';
+
+        foreach($elements as $element) {
+            $list .= '<label class="' . $class . '-inline">' . $element . '</label>';
+        }
+
+        $list .= '</div>';
 
         return $list;
     }

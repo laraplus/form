@@ -29,7 +29,8 @@
     $form->checkList('interests')
         ->label('Interests:')
         ->options(['Basketball', 'Football', 'Tennis'])
-        ->multiple();
+        ->multiple()
+        ->inline();
 
     $form->checkbox('terms')
         ->label('I agree with terms')
