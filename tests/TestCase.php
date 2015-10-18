@@ -15,19 +15,16 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 
     public function setUp()
     {
+        $this->form = $this->createForm();
+    }
+
+    public function createForm()
+    {
         $presenter = new RawPresenter();
         $dataStore = new PhpDataStore();
         $configProvider = new PhpConfigProvider([]);
 
-        $this->form = new Form($presenter, $dataStore, $configProvider);
-    }
-
-    protected function emptyConfigProvider()
-    {
-        $config = Mockery::mock(ConfigProvider::class);
-        $config->shouldReceive('get')->andReturn(null);
-
-        return $config;
+        return new Form($presenter, $dataStore, $configProvider);
     }
 
     protected function clean($string)
@@ -37,7 +34,7 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
 
     protected function wrap($string)
     {
-        $open = '<form method="GET" action="/">';
+        $open = '<form method="GET" action="/"><input type="hidden" name="_form" value="test" />';
         $close = '<input type="hidden" name="_token" value="" /></form>';
 
         return $this->clean($open . $string . $close);
@@ -58,11 +55,16 @@ abstract class TestCase extends PHPUnit_Framework_TestCase
     {
         $_SESSION['input'] = isset($_SESSION['input']) ? $_SESSION['input'] : [];
         $_SESSION['input'][$field] = $value;
+        $_SESSION['input']['_form'] = 'test';
     }
 
     protected function setPostValue($field, $value)
     {
         $_POST[$field] = $value;
+
+        if($field != '_form') {
+            $_POST['_form'] = 'test';
+        }
     }
 
     public function tearDown()

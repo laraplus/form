@@ -168,6 +168,14 @@ class Open
     }
 
     /**
+     * @return bool
+     */
+    public function isSubmitted()
+    {
+        return $this->data->getOldValue('_form') == $this->name;
+    }
+
+    /**
      * Magic getter
      * @param $property
      * @return string
@@ -194,6 +202,8 @@ class Open
             return '';
         }
 
-        return $this->presenter->renderOpeningTag($this);
+        $formId = '<input type="hidden" name="_form" value="' . $this->name . '" />';
+
+        return $this->presenter->renderOpeningTag($this) . $formId;
     }
 }

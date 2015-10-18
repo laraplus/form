@@ -129,7 +129,11 @@ class Form extends Elements
     {
         $instance = new self($this->presenter, $this->dataStore, $this->config);
 
+        $instance->open($this->open->name)->bare();
+
         $builder($instance);
+
+        $instance->close();
 
         $this->elements[$name ?: 'element-' . count($this->elements)] = $instance;
 

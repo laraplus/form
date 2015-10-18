@@ -4,7 +4,7 @@ class TestForm extends TestCase
 {
     public function testEmptyFormWithNoToken()
     {
-        $expect = '<form method="GET" action="/"></form>';
+        $expect = '<form method="GET" action="/"><input type="hidden" name="_form" value="test" /></form>';
 
         $this->form->open('test');
         $this->form->close()->noToken();
@@ -14,7 +14,8 @@ class TestForm extends TestCase
 
     public function testEmptyFormWithToken()
     {
-        $expect = '<form method="GET" action="/"><input type="hidden" name="_token" value="secret_token" /></form>';
+        $expect = '<form method="GET" action="/"><input type="hidden" name="_form" value="test" />'.
+            '<input type="hidden" name="_token" value="secret_token" /></form>';
 
         $this->setToken('secret_token');
 
@@ -77,6 +78,28 @@ class TestForm extends TestCase
 
         $field = '<input id="test-name" name="name" type="text" value="John Doe" />';
         $this->assertEquals($this->form->name->field(), $field);
+    }
+
+    public function testRepopulateCorrectForm()
+    {
+        $this->setPostValue('name', 'John Doe');
+        $this->setPostValue('_form', 'test1');
+
+        $form1 = $this->createForm();
+        $form1->open('test1');
+        $form1->text('name');
+        $form1->close();
+
+        $form2= $this->createForm();
+        $form2->open('test2');
+        $form2->text('name');
+        $form2->close();
+
+        $field = '<input id="test1-name" name="name" type="text" value="John Doe" />';
+        $this->assertEquals($form1->name->field(), $field);
+
+        $field = '<input id="test2-name" name="name" type="text" value="" />';
+        $this->assertEquals($form2->name->field(), $field);
     }
 
     public function testPopulatePriority()

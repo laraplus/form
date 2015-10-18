@@ -15,6 +15,14 @@ class Hidden extends Input
     }
 
     /**
+     * @return array|string
+     */
+    public function getValue()
+    {
+        return $this->forceValue ?: $this->value;
+    }
+
+    /**
      * @return string
      */
     public function present($style = null)

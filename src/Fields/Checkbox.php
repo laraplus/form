@@ -1,22 +1,61 @@
 <?php namespace Laraplus\Form\Fields;
 
-use Laraplus\Form\Fields\Base\Element;
+use Laraplus\Form\Fields\Base\Input;
 
-class Checkbox extends Element
+class Checkbox extends Input
 {
+    protected $checked = false;
+
     /**
      * @return string
      */
-    function getType()
+    public function getType()
     {
         return 'checkbox';
+
+        $this->attributes['type'] = 'checkbox';
+    }
+
+    /**
+     * @return $this
+     */
+    public function checked()
+    {
+        $this->checked = true;
+
+        return $this;
     }
 
     /**
      * @return string
      */
-    function render()
+    public function render()
     {
-        // TODO: Implement render() method.
+        $this->attributes['value'] = $this->forceValue ?: $this->value ?: '1';
+
+        $oldValueMatched = $this->getValue() && $this->getValue() == $this->attributes['value'];
+        $checkedByDefault = $this->checked && !$this->open->isSubmitted();
+
+        $checked = $oldValueMatched || $checkedByDefault ? ' checked' : '';
+
+        $attributes = $this->renderAttributes($this->attributes);
+
+        return '<input' . $attributes . $checked . ' />';
+    }
+
+    /**
+     * @return array|string
+     */
+    protected function getValue()
+    {
+        if ($value = $this->forceValue) {
+            return $value;
+        }
+
+        if ($this->open->isSubmitted() && $value = $this->dataStore->getOldValue($this->name)) {
+            return $value;
+        }
+
+        return $this->dataStore->getModelValue($this->name);
     }
 }

@@ -366,7 +366,7 @@ abstract class Element implements FormElement
             return $value;
         }
 
-        if ($value = $this->dataStore->getOldValue($this->name)) {
+        if ($this->open->isSubmitted() && ($value = $this->dataStore->getOldValue($this->name))) {
             return $value;
         }
 
