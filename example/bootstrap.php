@@ -26,6 +26,11 @@
         ->options(['male' => 'Male', 'female' => 'Female'])
         ->placeholder('- Select gender -');
 
+    $form->checkList('interests')
+        ->label('Interests:')
+        ->options(['Basketball', 'Football', 'Tennis'])
+        ->multiple();
+
     $form->checkbox('terms')
         ->label('I agree with terms')
         ->checked();

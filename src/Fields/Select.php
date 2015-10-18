@@ -4,12 +4,19 @@ use Laraplus\Form\Fields\Base\Element;
 
 class Select extends Element
 {
+    /**
+     * @var string
+     */
     protected $placeholder;
 
-    protected $multiple = false;
-    
+    /**
+     * @var array
+     */
     protected $options = [];
 
+    /**
+     * @var array
+     */
     protected $optionAttributes = [];
 
     /**

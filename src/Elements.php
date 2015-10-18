@@ -9,8 +9,7 @@ use Laraplus\Form\Fields\Select;
 use Laraplus\Form\Fields\Submit;
 use Laraplus\Form\Fields\Password;
 use Laraplus\Form\Fields\Checkbox;
-use Laraplus\Form\Fields\RadioList;
-use Laraplus\Form\Fields\CheckboxList;
+use Laraplus\Form\Fields\CheckList;
 use Laraplus\Form\Fields\Base\Element;
 
 abstract class Elements
@@ -81,20 +80,11 @@ abstract class Elements
 
     /**
      * @param string $name
-     * @return CheckboxList
+     * @return CheckList
      */
-    public function checkboxList($name)
+    public function checkList($name)
     {
-        return $this->addElement('checkbox_list', $name);
-    }
-
-    /**
-     * @param $name
-     * @return RadioList
-     */
-    public function radioList($name)
-    {
-        return $this->addElement('radio_list', $name);
+        return $this->addElement('check_list', $name);
     }
 
     /**

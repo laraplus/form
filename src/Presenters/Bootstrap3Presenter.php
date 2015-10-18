@@ -95,11 +95,35 @@ class Bootstrap3Presenter extends BasePresenter
      */
     public function renderField()
     {
-        if(!$this->element instanceof Button && !$this->isCheckbox()) {
+        if(!$this->isButton() && !$this->isCheckbox()) {
             $this->element->addClass('form-control');
         }
 
-        return $this->element->render();
+        $rendered = $this->element->render();
+
+        if(is_array($rendered)) {
+            return $this->renderList($rendered);
+        }
+
+        return $rendered;
+    }
+
+    protected function renderList($elements)
+    {
+        $list = '';
+
+        foreach($elements as $element) {
+            $class = $this->element->multiple ? 'checkbox' : 'radio';
+
+            if($this->isInline() || $this->element->inline) {
+                $list .= '<label class="' . $class . '-inline">' . $element . '</label>';
+                continue;
+            }
+
+            $list .= '<div class="' . $class . '"><label>' . $element . '</label></div>';
+        }
+
+        return $list;
     }
 
     /**
@@ -154,6 +178,9 @@ class Bootstrap3Presenter extends BasePresenter
         return $result;
     }
 
+    /**
+     * @return string
+     */
     protected function renderCheckbox()
     {
         $field = trim($this->prefix . $this->renderField() . ' ' . $this->label . $this->suffix);
@@ -223,5 +250,13 @@ class Bootstrap3Presenter extends BasePresenter
     protected function isCheckbox()
     {
         return $this->element instanceof Checkbox;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isButton()
+    {
+        return $this->element instanceof Button;
     }
 }

@@ -5,7 +5,7 @@ use Laraplus\Form\Contracts\FormPresenter;
 interface FormElement
 {
     /**
-     * @return string
+     * @return string|array
      */
     public function render();
 
