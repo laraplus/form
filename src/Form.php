@@ -285,6 +285,7 @@ class Form extends Elements
 
     /**
      * Get single element
+     *
      * @param $property
      * @throws Exception
      * @return Element
@@ -306,6 +307,19 @@ class Form extends Elements
         }
 
         throw new Exception('Element [' . $property . '] does not exist');
+    }
+
+    /**
+     * Clone all elements
+     */
+    public function __clone()
+    {
+        $this->open = clone $this->open;
+        $this->close = clone $this->close;
+
+        foreach($this->elements as $key => $element) {
+            $this->elements[$key] = clone $element;
+        }
     }
 
     /**

@@ -27,6 +27,15 @@ class PhpConfigProvider implements ConfigProvider
      */
     public function get($key)
     {
-        return isset($this->config[$key]) ? $this->config[$key] : null;
+        $parts = explode('.', $key);
+        $offset = $this->config;
+
+        foreach($parts as $part) {
+            if(!isset($offset[$part])) return null;
+
+            $offset = $offset[$part];
+        }
+
+        return $offset;
     }
 }
