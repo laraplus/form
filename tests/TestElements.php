@@ -105,7 +105,7 @@ class TestElements extends TestCase
         $expected = '<input id="test-confirmed" name="confirmed" value="1" checked />';
         $this->assertEquals($this->form->confirmed->field(), $expected);
 
-        $this->setPostValue('_form', 'test');
+        $this->setPostValue('_form', 'test'); // fake submit
 
         $expected = '<input id="test-confirmed" name="confirmed" value="1" />';
         $this->assertEquals($this->form->confirmed->field(), $expected);

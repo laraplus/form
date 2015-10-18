@@ -1,8 +1,8 @@
 <?php namespace Laraplus\Form\Fields;
 
-use Laraplus\Form\Fields\Base\Input;
+use Laraplus\Form\Fields\Base\Element;
 
-class Checkbox extends Input
+class Checkbox extends Element
 {
     protected $checked = false;
 
@@ -56,6 +56,6 @@ class Checkbox extends Input
             return $value;
         }
 
-        return $this->dataStore->getModelValue($this->name);
+        return !$this->open->isSubmitted() ? $this->dataStore->getModelValue($this->name) : null;
     }
 }

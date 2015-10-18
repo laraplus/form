@@ -150,6 +150,19 @@ class Form extends Elements
 
         return $this->open . "\n" . $this->renderElements() . "\n" . $this->close;
     }
+
+    /**
+     * @return bool
+     * @throws Exception
+     */
+    public function isSubmitted()
+    {
+        if(!$this->open) {
+            throw new Exception('Cannot call Form::isSubmitted() without calling Form::open() first.');
+        }
+
+        return $this->open->isSubmitted();
+    }
     
     /**
      * @return string
