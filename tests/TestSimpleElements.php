@@ -1,6 +1,6 @@
 <?php
 
-class TestElements extends TestCase
+class TestSimpleElements extends TestCase
 {
     public function testHiddenElement()
     {
@@ -157,5 +157,15 @@ class TestElements extends TestCase
 
         $expected = '<input id="test-confirmed" name="confirmed" value="yes" />';
         $this->assertEquals($this->form->confirmed->field(), $expected);
+    }
+
+    public function testSubmitElement()
+    {
+        $this->form->open('test');
+        $this->form->submit('submit')->text('Go!');
+        $this->form->close();
+
+        $expected = '<button id="test-submit" name="submit" type="submit">Go!</button>';
+        $this->assertEquals($this->form->submit->field(), $expected);
     }
 }
