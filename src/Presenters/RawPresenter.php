@@ -36,7 +36,29 @@ class RawPresenter extends BasePresenter
      */
     public function renderField()
     {
-        return $this->element->render();
+        $rendered = $this->element->render();
+
+        if(is_array($rendered)) {
+            return $this->renderList($rendered);
+        }
+        
+        return $rendered;
+    }
+
+    /**
+     * @param array $elements
+     * @return string
+     */
+    protected function renderList($elements)
+    {
+        $list = '';
+        $wrap = $this->element->inline ? 'span' : 'div';
+
+        foreach($elements as $element) {
+            $list .= "<$wrap>" . $element . "</$wrap>";
+        }
+
+        return $list;
     }
 
     /**
