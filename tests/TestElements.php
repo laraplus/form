@@ -2,7 +2,7 @@
 
 class TestElements extends TestCase
 {
-    public function testHidden()
+    public function testHiddenElement()
     {
         $this->form->open('test');
         $this->form->hidden('code')->value('123456');
@@ -74,7 +74,7 @@ class TestElements extends TestCase
         $this->assertEquals($this->clean($this->form->gender->field()), $expected);
     }
 
-    public function testCheckBox()
+    public function testCheckBoxElement()
     {
         $this->form->open('test');
         $this->form->checkbox('confirmed');
@@ -84,7 +84,7 @@ class TestElements extends TestCase
         $this->assertEquals($this->form->confirmed->field(), $expected);
     }
 
-    public function testCheckBoxChecked()
+    public function testCheckedCheckBox()
     {
         $this->setPostValue('confirmed', 1);
 
@@ -96,7 +96,7 @@ class TestElements extends TestCase
         $this->assertEquals($this->form->confirmed->field(), $expected);
     }
 
-    public function testCheckBoxCheckedByDefault()
+    public function testCheckedByDefaultCheckBox()
     {
         $this->form->open('test');
         $this->form->checkbox('confirmed')->checked();
@@ -111,7 +111,7 @@ class TestElements extends TestCase
         $this->assertEquals($this->form->confirmed->field(), $expected);
     }
 
-    public function testCheckBoxCustomValue()
+    public function testCustomValueCheckBox()
     {
         $this->form->open('test');
         $this->form->checkbox('confirmed')->value('yes');

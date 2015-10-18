@@ -56,7 +56,7 @@ class TestForm extends TestCase
         $this->assertEquals($this->form->name->field(), $field);
     }
 
-    public function testElementWithPostValue()
+    public function testPopulateWithPostValue()
     {
         $this->setPostValue('name', 'John Doe');
 
@@ -68,7 +68,7 @@ class TestForm extends TestCase
         $this->assertEquals($this->form->name->field(), $field);
     }
 
-    public function testElementWithOldValue()
+    public function testPopulateWithOldValue()
     {
         $this->setOldValue('name', 'John Doe');
 
@@ -102,7 +102,7 @@ class TestForm extends TestCase
         $this->assertEquals($form2->name->field(), $field);
     }
 
-    public function testPopulatePriority()
+    public function testPopulateByPriority()
     {
         $model = ['name' => 'Jane Doe'];
 
