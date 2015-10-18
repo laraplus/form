@@ -74,6 +74,28 @@ class TestElements extends TestCase
         $this->assertEquals($this->clean($this->form->gender->field()), $expected);
     }
 
+    public function testMultiSelectElement()
+    {
+        $this->form->open('test');
+        $this->form->select('sports')->options(['Basketball', 'Football', 'Tennis'])->multiple();
+        $this->form->close();
+
+        $expected = '<select id="test-sports" name="sports" multiple><option value="0">Basketball</option><option value="1">Football</option><option value="2">Tennis</option></select>';
+        $this->assertEquals($this->clean($this->form->sports->field()), $expected);
+    }
+
+    public function testPopulatedMultiSelectElement()
+    {
+        $this->setPostValue('sports', [0,1]);
+
+        $this->form->open('test');
+        $this->form->select('sports')->options(['Basketball', 'Football', 'Tennis'])->multiple();
+        $this->form->close();
+
+        $expected = '<select id="test-sports" name="sports" multiple><option value="0" selected>Basketball</option><option value="1" selected>Football</option><option value="2">Tennis</option></select>';
+        $this->assertEquals($this->clean($this->form->sports->field()), $expected);
+    }
+
     public function testCheckBoxElement()
     {
         $this->form->open('test');

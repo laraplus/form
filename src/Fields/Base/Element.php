@@ -215,6 +215,18 @@ abstract class Element implements FormElement
     }
 
     /**
+     * Alias for attribute()
+     *
+     * @param $name
+     * @param $value
+     * @return $this
+     */
+    public function attr($name, $value)
+    {
+        return $this->attribute($name, $value);
+    }
+
+    /**
      * @param $name
      * @param $value
      * @return $this
@@ -224,6 +236,18 @@ abstract class Element implements FormElement
         $this->groupAttributes[$name] = $value;
 
         return $this;
+    }
+
+    /**
+     * Alias for groupAttribute()
+     *
+     * @param $name
+     * @param $value
+     * @return $this
+     */
+    public function groupAttr($name, $value)
+    {
+        return $this->groupAttribute($name, $value);
     }
 
     /**

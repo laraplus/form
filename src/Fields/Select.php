@@ -5,6 +5,8 @@ use Laraplus\Form\Fields\Base\Element;
 class Select extends Element
 {
     protected $placeholder;
+
+    protected $multiple = false;
     
     protected $options = [];
 
@@ -22,12 +24,13 @@ class Select extends Element
     }
 
     /**
-     * @param array $options
+     * @param $key
+     * @param $value
      * @return $this
      */
-    public function optionsWithDefault($options, $default = ['' => '-'])
+    public function prependOption($key, $value)
     {
-        $this->options = $default + $options;
+        $this->options = [$key => $value] + $this->options;
 
         return $this;
     }
@@ -37,7 +40,7 @@ class Select extends Element
      * @param $value
      * @return $this
      */
-    public function addOption($key, $value)
+    public function appendOption($key, $value)
     {
         $this->options[$key] = $value;
 
@@ -51,6 +54,16 @@ class Select extends Element
     public function placeholder($text)
     {
         $this->placeholder = $text;
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function multiple()
+    {
+        $this->multiple = true;
 
         return $this;
     }
@@ -76,6 +89,17 @@ class Select extends Element
      * @param $key
      * @param $name
      * @param $value
+     * @return Select
+     */
+    public function optionAttr($key, $name, $value)
+    {
+        return $this->optionAttribute($key, $name, $value);
+    }
+
+    /**
+     * @param $key
+     * @param $name
+     * @param $value
      * @return $this
      */
     public function optionData($key, $name, $value)
@@ -94,7 +118,7 @@ class Select extends Element
     {
         $class = isset($this->optionAttributes[$key]['class']) ? $this->optionAttributes[$key]['class'] : '';
 
-        $this->setAttribute($key, 'class', trim($class . ' ' . $value));
+        $this->optionAttribute($key, 'class', trim($class . ' ' . $value));
 
         return $this;
     }
@@ -106,7 +130,7 @@ class Select extends Element
      */
     public function setOptionClass($key, $value)
     {
-        $this->setAttribute($key, 'class', $value);
+        $this->optionAttribute($key, 'class', $value);
 
         return $this;
     }
@@ -116,23 +140,49 @@ class Select extends Element
      */
     public function render()
     {
-        $select = '<select'.$this->renderAttributes($this->attributes).'>';
+        $multiple = $this->multiple ? ' multiple' : '';
 
-        $selected = $this->getValue();
-        
-        if($this->placeholder) {
-            $select .= '<option value="">' . $this->placeholder . '</option>';
-        }
+        $select = '<select' . $this->renderAttributes($this->attributes) . $multiple . '>';
 
-        foreach($this->options as $key => $value) {
-
-            $attr = $key == $selected ? ' selected' : '';
-
-            $select .= '<option value="' . $key . '"' . $attr . '>' . $value . '</option>';
-        }
+        $select .= $this->renderOptions($select);
 
         $select .= '</select>';
 
         return $select;
+    }
+
+    /**
+     * @param $key
+     * @return bool
+     */
+    protected function isSelected($key)
+    {
+        $selectedValue = $this->getValue();
+
+        return in_array($key, (array) $selectedValue);
+    }
+
+    /**
+     * @param $select
+     * @return string
+     */
+    protected function renderOptions($select)
+    {
+        $options = '';
+
+        if($this->placeholder) {
+            $options .= '<option value="">' . $this->placeholder . '</option>';
+        }
+
+        foreach ($this->options as $key => $value) {
+
+            $this->optionAttributes[$key]['value'] = $key;
+            $selected = $this->isSelected($key) ? ' selected' : '';
+            $attributes = $this->renderAttributes($this->optionAttributes[$key]);
+
+            $options .= '<option' . $attributes . $selected . '>' . $value . '</option>';
+        }
+
+        return $options;
     }
 }
