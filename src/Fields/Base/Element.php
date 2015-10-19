@@ -398,15 +398,15 @@ abstract class Element implements FormElement
      */
     protected function getValue()
     {
-        if ($value = $this->forceValue) {
-            return $value;
+        if (isset($this->forceValue)) {
+            return $this->forceValue;
         }
 
         if ($this->open->isSubmitted() && ($value = $this->dataStore->getOldValue($this->name))) {
             return $value;
         }
 
-        return $this->value ?: $this->dataStore->getModelValue($this->name);
+        return isset($this->value) ? $this->value : $this->dataStore->getModelValue($this->name);
     }
 
     /**
