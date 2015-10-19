@@ -10,7 +10,7 @@ use Laraplus\Form\Contracts\DataStore;
 use Laraplus\Form\Contracts\FormPresenter;
 use Laraplus\Form\Contracts\ConfigProvider;
 
-class Form extends Elements
+class Form extends Elements implements ArrayAccess
 {
     /**
      * @var int
@@ -342,5 +342,40 @@ class Form extends Elements
     public function __toString()
     {
         return $this->render();
+    }
+
+    /**
+     * @param mixed $offset
+     * @return bool
+     */
+    public function offsetExists($offset)
+    {
+        return isset($this->elements[$offset]);
+    }
+
+    /**
+     * @param mixed $offset
+     * @return mixed
+     */
+    public function offsetGet($offset)
+    {
+        return $this->elements[$offset];
+    }
+
+    /**
+     * @param mixed $offset
+     * @param mixed $value
+     */
+    public function offsetSet($offset, $value)
+    {
+        $this->elements[$offset] = $value;
+    }
+
+    /**
+     * @param mixed $offset
+     */
+    public function offsetUnset($offset)
+    {
+        unset($this->elements[$offset]);
     }
 }
