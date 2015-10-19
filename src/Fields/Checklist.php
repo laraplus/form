@@ -38,9 +38,11 @@ class Checklist extends Select
         {
             $this->optionAttribute($key, 'value', $key);
             $this->optionAttribute($key, 'type', $this->multiple ? 'checkbox' : 'radio');
-            $this->optionAttribute($key, 'name', $this->multiple ? $this->name . "[$key]" : $this->name);
+            $this->optionAttribute($key, 'name', $this->multiple ? $this->name . "[]" : $this->name);
 
-            $items[] = '<input' . $this->renderAttributes($this->optionAttributes[$key]) . ' /> ' . $value;
+            $checked = in_array($key, (array) $this->getValue()) ? ' checked' : '';
+
+            $items[] = '<input' . $this->renderAttributes($this->optionAttributes[$key]) . $checked . ' /> ' . $value;
         }
 
         return $items;

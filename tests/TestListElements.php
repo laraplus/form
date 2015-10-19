@@ -28,7 +28,7 @@ class TestListElements extends TestCase
         $this->form->checklist('interests')->options(['Football', 'Basketball'])->multiple();
         $this->form->close();
 
-        $expected = '<div><input value="0" type="checkbox" name="interests[0]" /> Football</div><div><input value="1" type="checkbox" name="interests[1]" /> Basketball</div>';
+        $expected = '<div><input value="0" type="checkbox" name="interests[]" /> Football</div><div><input value="1" type="checkbox" name="interests[]" /> Basketball</div>';
         $this->assertEquals($this->form->interests->field(), $expected);
     }
 }
