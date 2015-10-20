@@ -214,7 +214,7 @@ class Open
         $append = '<input type="hidden" name="_form" value="' . $this->name . '" />';
         
         if(in_array($this->attributes['method'], ['GET', 'POST'])) {
-            $append .= '<input type="hidden" name="_method" value="' . $this->attributes['method'] . '" />'
+            $append .= '<input type="hidden" name="_method" value="' . $this->attributes['method'] . '" />';
             $this->attributes['method'] = 'POST';
         }
 
