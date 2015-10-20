@@ -209,12 +209,15 @@ class Open
      */
     public function __toString()
     {
-        if ($this->bare) {
-            return '';
+        if ($this->bare) return '';
+        
+        $append = '<input type="hidden" name="_form" value="' . $this->name . '" />';
+        
+        if(in_array($this->attributes['method'], ['GET', 'POST'])) {
+            $append .= '<input type="hidden" name="_method" value="' . $this->attributes['method'] . '" />'
+            $this->attributes['method'] = 'POST';
         }
 
-        $formId = '<input type="hidden" name="_form" value="' . $this->name . '" />';
-
-        return $this->presenter->renderOpeningTag($this) . $formId;
+        return $this->presenter->renderOpeningTag($this) . $append;
     }
 }
