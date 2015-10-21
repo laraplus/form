@@ -4,18 +4,7 @@ use Laraplus\Form\Contracts\DataStore;
 
 class PhpDataStore implements DataStore
 {
-    /**
-     * @var ArrayAccess
-     */
-    protected $model = null;
-
-    /**
-     * @param ArrayAccess|array $model
-     */
-    public function bind($model)
-    {
-        $this->model = $model;
-    }
+    use RetrievesModelValues;
 
     /**
      * @param string $name
@@ -44,19 +33,6 @@ class PhpDataStore implements DataStore
 
         if(isset($_SESSION['input'][$name])) {
             return $_SESSION['input'][$name];
-        }
-
-        return null;
-    }
-
-    /**
-     * @param string $name
-     * @return null|string
-     */
-    public function getModelValue($name)
-    {
-        if (isset($this->model[$name])) {
-            return $this->model[$name];
         }
 
         return null;

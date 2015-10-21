@@ -6,27 +6,19 @@ use Laraplus\Form\Contracts\DataStore;
 
 class LaravelDataStore implements DataStore
 {
-    /**
-     * @var ArrayAccess
-     */
-    protected $model = null;
+    use RetrievesModelValues;
 
     /**
      * @var Request
      */
     private $request;
 
+    /**
+     * @param Request $request
+     */
     public function __construct(Request $request)
     {
         $this->request = $request;
-    }
-
-    /**
-     * @param ArrayAccess|array $model
-     */
-    public function bind($model)
-    {
-        $this->model = $model;
     }
 
     /**
@@ -56,30 +48,6 @@ class LaravelDataStore implements DataStore
         if ($old = $this->request->old($name)) {
             return $old;
         }
-        return null;
-    }
-
-    /**
-     * @param string $name
-     * @return null|string
-     */
-    public function getModelValue($name, $offset = null)
-    {
-        $model = isset($offset) ? $offset : $this->model;
-
-        if(($from = strpos($name, '[')) && ($to = strpos($name, ']'))) {
-            $newName = substr($name, $from+1, $to-$from-1) . substr($name, $to+1);
-            $offset = substr($name, 0, $from);
-
-            if(!isset($model[$offset])) return null;
-
-            return $this->getModelValue($newName, $model[$offset]);
-        }
-
-        if (isset($model[$name])) {
-            return $model[$name];
-        }
-
         return null;
     }
 
