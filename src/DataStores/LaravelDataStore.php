@@ -63,11 +63,23 @@ class LaravelDataStore implements DataStore
      * @param string $name
      * @return null|string
      */
-    public function getModelValue($name)
+    public function getModelValue($name, $offset = null)
     {
-        if (isset($this->model[$name])) {
-            return $name;
+        $model = isset($offset) ? $offset : $this->model;
+
+        if(($from = strpos($name, '[')) && ($to = strpos($name, ']'))) {
+            $newName = substr($name, $from+1, $to-$from-1) . substr($name, $to+1);
+            $offset = substr($name, 0, $from);
+
+            if(!isset($model[$offset])) return null;
+
+            return $this->getModelValue($newName, $model[$offset]);
         }
+
+        if (isset($model[$name])) {
+            return $model[$name];
+        }
+
         return null;
     }
 
