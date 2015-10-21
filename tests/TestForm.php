@@ -56,6 +56,21 @@ class TestForm extends TestCase
         $this->assertEquals($this->form->name->field(), $field);
     }
 
+    public function testPopulateWithModelWithOffset()
+    {
+        $model = ['coordinates' => ['x' => '123', 'y' => '456']];
+
+        $this->form->open('test')->model($model);
+        $this->form->text('coordinates[x]')->label('X:');
+        $this->form->text('coordinates[y]')->label('Y:');
+        $this->form->close();
+
+        $fieldX = '<input id="test-coordinates[x]" name="coordinates[x]" type="text" value="123" />';
+        $fieldY = '<input id="test-coordinates[y]" name="coordinates[y]" type="text" value="456" />';
+        $this->assertEquals($this->form['coordinates[x]']->field(), $fieldX);
+        $this->assertEquals($this->form['coordinates[y]']->field(), $fieldY);
+    }
+
     public function testPopulateWithPostValue()
     {
         $this->setPostValue('name', 'John Doe');
