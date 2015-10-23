@@ -195,15 +195,17 @@ class Form extends Elements implements ArrayAccess
     }
 
     /**
-     * @param string $type
-     * $param string $name
+     * @param $type
+     * @param $name
+     * @param bool $isMacro
      * @return Element
+     * @throws Exception
      */
-    protected function addElement($type, $name)
+    protected function addElement($type, $name, $isMacro = false)
     {
         $this->enforceOpenForm($type);
 
-        $class = 'Laraplus\\Form\\Fields\\' . studly_case($type);
+        $class = $isMacro ? static::$macros[$type] : 'Laraplus\\Form\\Fields\\' . studly_case($type);
 
         $element = new $class($name, $this->open, $this->presenter, $this->dataStore, $this->config, array_get($this->rules, $name));
 

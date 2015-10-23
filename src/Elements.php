@@ -15,6 +15,22 @@ use Laraplus\Form\Fields\Base\Element;
 abstract class Elements
 {
     /**
+     * @var array
+     */
+    protected static $macros = [];
+
+    /**
+     * Add a new macro
+     *
+     * @param $name
+     * @param string $class
+     */
+    public function extend($name, $class)
+    {
+        static::$macros[$name] = $class;
+    }
+
+    /**
      * @param $name
      * @return Open
      */
@@ -105,12 +121,24 @@ abstract class Elements
         return $this->addElement('submit', $name);
     }
 
+    /**
+     * Handle macro calls
+     *
+     * @param $method
+     * @param $args
+     * @return $this
+     */
+    public function __call($method, $args)
+    {
+        return $this->addElement($method, array_shift($args), true);
+    }
+
     /*
      * @param string $type
      * @param string $name
      * @return Element
      */
-    protected abstract function addElement($type, $name);
+    protected abstract function addElement($type, $name, $isMacro = false);
 
     /**
      * @param string $name
