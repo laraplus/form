@@ -368,7 +368,7 @@ abstract class Element implements FormElement
     {
         $this->initPresenter();
 
-        if($style = $style ?: ($this->style ?: null)) {
+        if($style = $style ? $this->config->get('styles.' . $style) : ($this->style ?: null)) {
             $tmpStyle = $this->presenter->getStyle();
             $this->presenter->setStyle($style);
         }
