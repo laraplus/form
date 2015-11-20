@@ -387,7 +387,7 @@ abstract class Element implements FormElement
      */
     protected function initPresenter()
     {
-        if($this->name) {
+        if($this->name && $this->open->isSubmitted()) {
             $this->error = $this->dataStore->getError($this->name);
         }
         $this->presenter->setElement($this);
