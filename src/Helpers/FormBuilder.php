@@ -37,9 +37,11 @@ trait FormBuilder
         if (!$this->shouldBeValidated()) {
             return $factory->make([], []);
         }
+        
+        $rules = $this->container->call([$this, 'rules']);
 
         return $factory->make(
-            $this->all(), $this->container->call([$this, 'rules']), $this->messages(), $this->attributes()
+            $this->all(), $rules, $this->messages(), $this->attributes()
         );
     }
 
