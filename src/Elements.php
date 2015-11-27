@@ -9,8 +9,8 @@ use Laraplus\Form\Fields\Select;
 use Laraplus\Form\Fields\Submit;
 use Laraplus\Form\Fields\Password;
 use Laraplus\Form\Fields\Checkbox;
+use Laraplus\Form\Fields\TextArea;
 use Laraplus\Form\Fields\Checklist;
-use Laraplus\Form\Fields\Base\Element;
 
 abstract class Elements
 {
@@ -65,6 +65,15 @@ abstract class Elements
     public function password($name)
     {
         return $this->addElement('password', $name);
+    }
+
+    /**
+     * @param string $name
+     * @return TextArea
+     */
+    public function textArea($name)
+    {
+        return $this->addElement('text_area', $name);
     }
 
     /**
