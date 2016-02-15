@@ -41,6 +41,14 @@ class Bootstrap3Presenter extends BasePresenter
     /**
      * @return string
      */
+    protected function getGroupClass()
+    {
+        return 'form-group' . ($this->error ? ' has-error' : '');
+    }
+
+    /**
+     * @return string
+     */
     protected function getElementClass()
     {
         $class = isset($this->style['element']) ? $this->style['element'] : '';
@@ -159,7 +167,7 @@ class Bootstrap3Presenter extends BasePresenter
      */
     public function renderAll()
     {
-        $this->element->addGroupClass('form-group' . ($this->error ? ' has-error' : ''));
+        $this->element->addGroupClass($this->getGroupClass());
         
         $result = '<div' . $this->renderAttributes($this->element->groupAttributes) . '>';
         $result .= $this->renderElementGroup();

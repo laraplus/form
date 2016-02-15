@@ -5,7 +5,6 @@ return [
     'presenter' => 'Laraplus\Form\Presenters\Bootstrap3Presenter',
     'style'     => 'horizontal',
     'styles'    => [
-
         'horizontal' => [
             'form'     => 'form-horizontal',
             'label'    => 'col-sm-2 control-label',
