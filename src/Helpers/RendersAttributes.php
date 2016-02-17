@@ -11,7 +11,7 @@ trait RendersAttributes
         $result = [];
 
         foreach ($attributes as $key => $value) {
-            $result[] = $key . ($value ? '="' . $value . '"' : '');
+            $result[] = $key . (strlen($value) ? '="' . $value . '"' : '');
         }
 
         return $result ? ' ' . implode(' ', $result) : '';
