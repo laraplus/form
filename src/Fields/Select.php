@@ -175,9 +175,12 @@ class Select extends Element
      */
     public function render()
     {
-        $multiple = $this->multiple ? ' multiple' : '';
+        if($this->multiple) {
+            $this->attributes['name'] .= '[]';
+            $this->attributes['multiple'] = '';
+        }
 
-        $select = '<select' . $this->renderAttributes($this->attributes) . $multiple . '>';
+        $select = '<select' . $this->renderAttributes($this->attributes) . '>';
 
         $select .= $this->renderOptions();
 
