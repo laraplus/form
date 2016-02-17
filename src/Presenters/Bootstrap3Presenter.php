@@ -3,6 +3,7 @@
 use Laraplus\Form\Fields\Checkbox;
 use Laraplus\Form\Fields\Open;
 use Laraplus\Form\Fields\Base\Button;
+use Laraplus\Form\Fields\Select;
 
 class Bootstrap3Presenter extends BasePresenter
 {
@@ -282,5 +283,13 @@ class Bootstrap3Presenter extends BasePresenter
     protected function isButton()
     {
         return $this->element instanceof Button;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isSelect()
+    {
+        return $this->element instanceof Select && !$this->element->multiple;
     }
 }
