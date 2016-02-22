@@ -7,7 +7,7 @@ class Bootstrap4Presenter extends Bootstrap3Presenter
      */
     protected function getGroupClass()
     {
-        return 'form-group' . ($this->error ? ' has-error' : '') . ($this->isHorizontal() ? ' row' : '');
+        return 'form-group' . ($this->error ? ' has-danger' : '') . ($this->isHorizontal() ? ' row' : '');
     }
 
     /**
@@ -75,5 +75,21 @@ class Bootstrap4Presenter extends Bootstrap3Presenter
     protected function getIndicator()
     {
         return '<span class="c-indicator"></span>';
+    }
+
+    /**
+     * @param string $help
+     * @param string $error
+     * @return string
+     */
+    protected function formatHelpAndError($help, $error = null)
+    {
+        if(!$help && !$error) return '';
+
+        $result = '<div class="text-help">';
+        $result .= $error ? $error : $this->help;
+        $result .= '</div>';
+
+        return $result;
     }
 }

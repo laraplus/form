@@ -5,6 +5,7 @@ use Laraplus\Form\Fields\Open;
 use Laraplus\Form\Fields\Text;
 use Laraplus\Form\Fields\Close;
 use Laraplus\Form\Fields\Group;
+use Laraplus\Form\Fields\Radio;
 use Laraplus\Form\Fields\Select;
 use Laraplus\Form\Fields\Submit;
 use Laraplus\Form\Fields\Password;
@@ -101,6 +102,15 @@ abstract class Elements
     public function checkbox($name)
     {
         return $this->addElement('checkbox', $name);
+    }
+
+    /**
+     * @param string $name
+     * @return Radio
+     */
+    public function radio($name)
+    {
+        return $this->addElement('radio', $name);
     }
 
     /**

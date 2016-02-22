@@ -160,7 +160,7 @@ class Bootstrap3Presenter extends BasePresenter
             return false;
         }
 
-        return '<div class="help-block">' . $this->error . '</div>';
+        return $this->formatHelpAndError('', $this->error);
     }
 
     /**
@@ -252,11 +252,25 @@ class Bootstrap3Presenter extends BasePresenter
             $result .= '</div>';
         }
 
-        if(!$this->isInline() && ($this->help || $this->error)) {
-            $result .= '<div class="help-block">';
-            $result .= $this->error ? $this->error : $this->help;
-            $result .= '</div>';
+        if(!$this->isInline()) {
+            $result .= $this->formatHelpAndError($this->help, $this->error);
         }
+
+        return $result;
+    }
+
+    /**
+     * @param string $help
+     * @param string $error
+     * @return string
+     */
+    protected function formatHelpAndError($help, $error = null)
+    {
+        if(!$help && !$error) return '';
+
+        $result = '<div class="help-block">';
+        $result .= $error ? $error : $this->help;
+        $result .= '</div>';
 
         return $result;
     }
