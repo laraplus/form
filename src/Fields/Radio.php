@@ -17,6 +17,9 @@ class Radio extends Checkbox
         $this->parseNameValue();
     }
 
+    /**
+     * @throws Exception
+     */
     protected function parseNameValue()
     {
         if(! str_contains($this->name, '[')) {
@@ -26,5 +29,13 @@ class Radio extends Checkbox
         list($name, $value) = explode('[', $this->name);
         $this->attributes['name'] = $name;
         $this->value = trim($value, ']');
+    }
+
+    /**
+     * @return string
+     */
+    protected function getRealName()
+    {
+        return $this->attributes['name'];
     }
 }

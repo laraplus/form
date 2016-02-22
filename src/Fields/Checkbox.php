@@ -52,10 +52,20 @@ class Checkbox extends Element
             return $value;
         }
 
-        if ($this->open->isSubmitted() && $value = $this->dataStore->getOldValue($this->name)) {
+        $name = $this->getRealName();
+
+        if ($this->open->isSubmitted() && $value = $this->dataStore->getOldValue($name)) {
             return $value;
         }
 
-        return !$this->open->isSubmitted() ? $this->dataStore->getModelValue($this->name) : null;
+        return !$this->open->isSubmitted() ? $this->dataStore->getModelValue($name) : null;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getRealName()
+    {
+        return $this->name;
     }
 }
