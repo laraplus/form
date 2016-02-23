@@ -24,17 +24,19 @@ class Bootstrap4Presenter extends Bootstrap3Presenter
 
     /**
      * @param array $elements
+     * @param string $class
      * @return string
      */
-    protected function renderList($elements)
+    protected function renderList($elements, $class = '')
     {
         $list = '';
-        $class = $this->element->multiple ? 'c-checkbox' : 'c-radio';
+        $class = $class ? $class . ' ' : '';
+        $class .= $this->element->multiple ? 'c-checkbox' : 'c-radio';
 
         foreach($elements as $element) {
             $element = str_replace('/>', '/>' . $this->getIndicator(), $element);
 
-            $list .= '<label class="c-indicator ' . $class . '">' . $element . '</label>';
+            $list .= '<label class="c-input ' . $class . '">' . $element . '</label>';
         }
 
         return $list;
@@ -46,11 +48,9 @@ class Bootstrap4Presenter extends Bootstrap3Presenter
      */
     protected function renderInlineList($elements)
     {
-        $list = '<div class="c-inputs-stacked">';
+        $class = $this->element->multiple ? 'checkbox-inline' : 'radio-inline';
 
-        $list .= $this->renderList($elements);
-
-        return $list . '</div>';
+        return $this->renderList($elements, $class);
     }
 
     /**

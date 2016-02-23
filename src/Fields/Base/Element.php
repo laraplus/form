@@ -445,7 +445,7 @@ abstract class Element implements FormElement
         $methods = [
             'label',
             'error',
-            'field'
+            'field',
         ];
 
         if (in_array($method, $methods)) {
@@ -454,6 +454,10 @@ abstract class Element implements FormElement
             $this->initPresenter();
             
             return $this->presenter->$method();
+        }
+
+        if($method == 'fieldWithError') {
+            return $this->field().$this->error();
         }
 
         throw new InvalidArgumentException('Cannot call [' . $method . '] method on an Element');
