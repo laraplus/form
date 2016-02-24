@@ -209,9 +209,9 @@ class Open
      */
     public function __toString()
     {
-        if ($this->bare) return '';
-        
         $append = '<input type="hidden" name="_form" value="' . $this->name . '" />';
+
+        if ($this->bare) return $append;
         
         if(!in_array($this->attributes['method'], ['GET', 'POST'])) {
             $append .= '<input type="hidden" name="_method" value="' . $this->attributes['method'] . '" />';
