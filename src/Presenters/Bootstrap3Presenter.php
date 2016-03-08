@@ -3,6 +3,7 @@
 use Laraplus\Form\Fields\Checkbox;
 use Laraplus\Form\Fields\Open;
 use Laraplus\Form\Fields\Base\Button;
+use Laraplus\Form\Fields\Radio;
 use Laraplus\Form\Fields\Select;
 
 class Bootstrap3Presenter extends BasePresenter
@@ -289,6 +290,14 @@ class Bootstrap3Presenter extends BasePresenter
     protected function isCheckbox()
     {
         return $this->element instanceof Checkbox;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isRadio()
+    {
+        return $this->element instanceof Radio;
     }
 
     /**

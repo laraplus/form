@@ -16,7 +16,10 @@ class Bootstrap4Presenter extends Bootstrap3Presenter
     public function renderField()
     {
         if($this->isSelect()) {
-            $this->element->addClass('c-select');
+            $this->element->addClass('custom-select');
+        }
+        if($this->isCheckbox()) {
+            $this->element->addClass('custom-control-input');
         }
 
         return parent::renderField();
@@ -24,22 +27,19 @@ class Bootstrap4Presenter extends Bootstrap3Presenter
 
     /**
      * @param array $elements
-     * @param string $class
+     * @param bool $stacked
      * @return string
      */
-    protected function renderList($elements, $class = '')
+    protected function renderList($elements, $stacked = true)
     {
         $list = '';
-        $class = $class ? $class . ' ' : '';
-        $class .= $this->element->multiple ? 'c-checkbox' : 'c-radio';
+        $class = $this->element->multiple ? 'custom-checkbox' : 'custom-radio';
 
         foreach($elements as $element) {
-            $element = str_replace('/>', '/>' . $this->getIndicator(), $element);
-
-            $list .= '<label class="c-input ' . $class . '">' . $element . '</label>';
+            $list .= '<label class="custom-control ' . $class . '">' . $this->formatCustomCheckable($element) . '</label>';
         }
 
-        return $list;
+        return '<div' . ($stacked ? ' class="custom-controls-stacked" ' : '') . '>' . $list . '</div>';
     }
 
     /**
@@ -48,9 +48,7 @@ class Bootstrap4Presenter extends Bootstrap3Presenter
      */
     protected function renderInlineList($elements)
     {
-        $class = $this->element->multiple ? 'checkbox-inline' : 'radio-inline';
-
-        return $this->renderList($elements, $class);
+        return $this->renderList($elements, false);
     }
 
     /**
@@ -58,13 +56,13 @@ class Bootstrap4Presenter extends Bootstrap3Presenter
      */
     protected function renderCheckbox()
     {
-        $field = trim($this->prefix . $this->renderField() . $this->getIndicator() . ' ' . $this->label . $this->suffix);
+        $field = trim(
+            $this->prefix . $this->renderField() . $this->getIndicator() .
+            $this->getDescription($this->label) . $this->suffix
+        );
 
-        $label = '<label class="c-input c-checkbox" for="' . $this->attributes['id'] . '">' . $field .  '</label>';
-
-        if(!$this->isHorizontal()) {
-            return '<div class="checkbox">' . $label . '</div>';
-        }
+        $class = $this->isRadio() ? 'custom-control custom-radio' : 'custom-control custom-checkbox';
+        $label = '<label class="' . $class . '" for="' . $this->attributes['id'] . '">' . $field .  '</label>';
 
         return '<div'.$this->getElementClass().'>' . $label . '</div>';
     }
@@ -72,9 +70,33 @@ class Bootstrap4Presenter extends Bootstrap3Presenter
     /**
      * @return string
      */
+    protected function formatCustomCheckable($element)
+    {
+        // inject custom-control class
+        if(str_contains($element, 'class="')) {
+            $element = str_replace('class="', 'class="custom-control-input ', $element);
+        } else {
+            $element = str_replace('/>', 'class="custom-control-input" />', $element);
+        }
+
+        // inject description & indicator
+        $description = ['<span class="custom-control-description">', '</span>'];
+        $element = str_replace('/>', '/>' . $this->getIndicator() . $description[0], $element) . $description[1];
+
+        return $element;
+    }
+
+    /**
+     * @return string
+     */
     protected function getIndicator()
     {
-        return '<span class="c-indicator"></span>';
+        return '<span class="custom-control-indicator"></span>';
+    }
+
+    protected function getDescription($description)
+    {
+        return '<span class="custom-control-description">' . $description . '</span>';
     }
 
     /**
