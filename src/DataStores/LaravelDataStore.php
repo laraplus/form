@@ -47,7 +47,7 @@ class LaravelDataStore implements DataStore
 
         if(isset($current)) return $current;
 
-        if (isset($old)) return $old;
+        if(isset($old)) return $old;
 
         return null;
     }
