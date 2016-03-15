@@ -42,12 +42,13 @@ class LaravelDataStore implements DataStore
      */
     public function getOldValue($name)
     {
-        if($current = $this->request->input($name)) {
-            return $current;
-        }
-        if ($old = $this->request->old($name)) {
-            return $old;
-        }
+        $current = $this->request->input($name);
+        $old = $this->request->old($name);
+
+        if(isset($current)) return $current;
+
+        if (isset($old)) return $old;
+
         return null;
     }
 
