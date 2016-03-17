@@ -56,7 +56,7 @@ class Checkbox extends Element
         $old = $this->dataStore->getOldValue($name);
 
         if ($this->open->isSubmitted() && isset($old)) {
-            return $value;
+            return $old;
         }
 
         return !$this->open->isSubmitted() ? $this->dataStore->getModelValue($name) : null;
