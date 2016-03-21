@@ -64,7 +64,7 @@ class Bootstrap4Presenter extends Bootstrap3Presenter
         $class = $this->isRadio() ? 'custom-control custom-radio' : 'custom-control custom-checkbox';
         $label = '<label class="' . $class . '" for="' . $this->attributes['id'] . '">' . $field .  '</label>';
 
-        return '<div'.$this->getElementClass().'>' . $label . '</div>';
+        return '<div'.$this->getElementClass().'>' . $label . $this->renderError() . '</div>';
     }
 
     /**

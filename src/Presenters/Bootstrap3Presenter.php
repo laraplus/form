@@ -217,7 +217,7 @@ class Bootstrap3Presenter extends BasePresenter
             return '<div class="checkbox">' . $label . '</div>';
         }
 
-        return '<div'.$this->getElementClass().'><div class="checkbox">' . $label . '</div></div>';
+        return '<div'.$this->getElementClass().'><div class="checkbox">' . $label . '</div>' . $this->renderError() . '</div>';
     }
 
     /**
