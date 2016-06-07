@@ -253,9 +253,7 @@ class Bootstrap3Presenter extends BasePresenter
             $result .= '</div>';
         }
 
-        if(!$this->isInline()) {
-            $result .= $this->formatHelpAndError($this->help, $this->error);
-        }
+        $result .= $this->formatHelpAndError($this->help, $this->error);
 
         return $result;
     }
