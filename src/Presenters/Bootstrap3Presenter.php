@@ -91,7 +91,7 @@ class Bootstrap3Presenter extends BasePresenter
      */
     public function renderLabel()
     {
-        if (!$this->label || $this->labelShouldBeInline()) {
+        if (!$this->label) {
             return '';
         }
 
@@ -191,10 +191,6 @@ class Bootstrap3Presenter extends BasePresenter
             $result .= '<div' . $fieldContainer . '>';
         }
 
-        if($this->label && $this->labelShouldBeInline()) {
-            $this->element->placeholder($this->label);
-        }
-
         $result .= $this->renderPrefix() . $this->renderField() . $this->renderSuffix();
 
         if ($fieldContainer) {
@@ -272,14 +268,6 @@ class Bootstrap3Presenter extends BasePresenter
         $result .= '</div>';
 
         return $result;
-    }
-
-    /**
-     * @return bool
-     */
-    protected function labelShouldBeInline()
-    {
-        return $this->isInline() && method_exists($this->element, 'placeholder');
     }
 
     /**
