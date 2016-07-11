@@ -33,6 +33,6 @@ class TextArea extends Element
     {
         $attributes = $this->renderAttributes($this->attributes);
 
-        return '<textarea' . $attributes . ' />' . htmlspecialchars($this->getValue()) . '</textarea>';
+        return '<textarea' . $attributes . '>' . htmlspecialchars($this->getValue()) . '</textarea>';
     }
 }
