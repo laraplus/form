@@ -18,7 +18,9 @@ class FormServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        $this->mergeConfigFrom(dirname(__DIR__) . '/config/form.php', 'form');
+        $config = dirname(__DIR__) . '/config/form.php';
+        $this->mergeConfigFrom($config, 'form');
+        $this->publishes([$config => config_path('form.php')], 'config');
 
         $presenter = config('form.presenter', 'Laraplus\Form\Presenters\Bootstrap3Presenter');
 
