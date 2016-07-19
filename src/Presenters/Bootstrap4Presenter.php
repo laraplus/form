@@ -21,6 +21,9 @@ class Bootstrap4Presenter extends Bootstrap3Presenter
         if($this->isCheckbox()) {
             $this->element->addClass('custom-control-input');
         }
+        if($this->error && !$this->isButton() && !$this->isCheckbox()) {
+            $this->element->addClass('form-control-danger');
+        }
 
         return parent::renderField();
     }
@@ -106,11 +109,14 @@ class Bootstrap4Presenter extends Bootstrap3Presenter
      */
     protected function formatHelpAndError($help, $error = null)
     {
-        if(!$help && !$error) return '';
+        $result = '';
 
-        $result = '<div class="text-help">';
-        $result .= $error ? $error : $this->help;
-        $result .= '</div>';
+        if($error) {
+            $result .= '<div class="form-control-feedback">' .$this->help . '</div>';
+        }
+        if($help) {
+            $result .= '<div class="form-text text-muted">' .$this->help . '</div>';
+        }
 
         return $result;
     }
