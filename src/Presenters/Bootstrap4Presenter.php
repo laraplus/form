@@ -112,10 +112,10 @@ class Bootstrap4Presenter extends Bootstrap3Presenter
         $result = '';
 
         if($error) {
-            $result .= '<div class="form-control-feedback">' .$this->help . '</div>';
+            $result .= '<div class="form-control-feedback">' . $error . '</div>';
         }
         if($help) {
-            $result .= '<div class="form-text text-muted">' .$this->help . '</div>';
+            $result .= '<div class="form-text text-muted">' . $help . '</div>';
         }
 
         return $result;
