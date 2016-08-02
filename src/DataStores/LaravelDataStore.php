@@ -27,6 +27,8 @@ class LaravelDataStore implements DataStore
      */
     public function getError($name)
     {
+        $name = str_replace(['[', ']'], ['.', ''], $name);
+        
         $errors = $this->request->session()->get('errors', new MessageBag);
 
         if ($errors->has($name)) {
@@ -42,6 +44,8 @@ class LaravelDataStore implements DataStore
      */
     public function getOldValue($name)
     {
+        $name = str_replace(['[', ']'], ['.', ''], $name);
+        
         $current = $this->request->input($name);
         $old = $this->request->old($name);
 
