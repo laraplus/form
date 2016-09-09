@@ -352,7 +352,7 @@ class Form extends Elements implements ArrayAccess
      */
     public function offsetExists($offset)
     {
-        return isset($this->elements[$offset]);
+        return in_array($offset, ['open', 'close']) || isset($this->elements[$offset]);
     }
 
     /**
@@ -361,7 +361,7 @@ class Form extends Elements implements ArrayAccess
      */
     public function offsetGet($offset)
     {
-        return $this->elements[$offset];
+        return $this->__get($offset);
     }
 
     /**
