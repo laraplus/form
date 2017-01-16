@@ -178,6 +178,12 @@ abstract class Element implements FormElement
 
         $this->label = $label;
 
+        if(isset($this->rules['required'])) {
+            $style = $this->presenter->getStyle();
+
+            $this->label .= isset($style['required']) ? $style['required'] : '';
+        }
+
         return $this;
     }
 

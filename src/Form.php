@@ -133,6 +133,7 @@ class Form extends Elements implements ArrayAccess
     public function group($name, Closure $builder)
     {
         $instance = new self($this->presenter, $this->dataStore, $this->config);
+        $instance->rules = $this->rules;
 
         $instance->open($this->open->name)->bare();
 
@@ -252,7 +253,6 @@ class Form extends Elements implements ArrayAccess
      */
     protected function parseRules(array $rules)
     {
-
         foreach ($rules as $name => $fieldRules) {
 
             if (!is_array($fieldRules)) {
@@ -273,7 +273,6 @@ class Form extends Elements implements ArrayAccess
                 $this->rules[$name][$rule] = $parameters;
             }
         }
-
     }
 
     /**
@@ -286,7 +285,6 @@ class Form extends Elements implements ArrayAccess
         $this->model = null;
         $this->style = $this->config->get('style');
 
-        $this->rules = [];
         $this->elements = [];
     }
 

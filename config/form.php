@@ -9,18 +9,20 @@ return [
             'form'     => 'form-horizontal',
             'label'    => 'col-sm-2 control-label',
             'element'  => 'col-sm-10',
-            'no_label' => 'col-sm-10 col-sm-offset-2'
+            'no_label' => 'col-sm-10 col-sm-offset-2',
+            'required' => ' *'
         ],
         'vertical'   => [
             'form'    => null,
             'label'   => null,
-            'element' => null
+            'element' => null,
+            'required' => ' *'
         ],
         'inline'     => [
             'form'    => 'form-inline',
             'label'   => null,
-            'element' => null
+            'element' => null,
+            'required' => ' *'
         ]
     ]
-
 ];
