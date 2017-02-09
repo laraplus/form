@@ -1,6 +1,7 @@
 <?php namespace Laraplus\Form;
 
 use Closure;
+use Countable;
 use Exception;
 use ArrayAccess;
 use Laraplus\Form\Fields\Open;
@@ -10,7 +11,7 @@ use Laraplus\Form\Contracts\DataStore;
 use Laraplus\Form\Contracts\FormPresenter;
 use Laraplus\Form\Contracts\ConfigProvider;
 
-class Form extends Elements implements ArrayAccess
+class Form extends Elements implements ArrayAccess, Countable
 {
     /**
      * @var int
@@ -377,5 +378,13 @@ class Form extends Elements implements ArrayAccess
     public function offsetUnset($offset)
     {
         unset($this->elements[$offset]);
+    }
+    
+    /**
+     * @return int
+     */
+    public function count()
+    {
+        return count($this->elements);
     }
 }
