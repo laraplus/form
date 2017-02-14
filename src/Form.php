@@ -288,6 +288,16 @@ class Form extends Elements implements ArrayAccess, Countable
 
         $this->elements = [];
     }
+    
+    /**
+     * Return all elements
+     *
+     * @return array
+     */
+    public function getElements()
+    {
+        return $this->elements;
+    }
 
     /**
      * Get single element
