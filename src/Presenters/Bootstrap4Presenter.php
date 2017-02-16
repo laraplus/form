@@ -39,10 +39,19 @@ class Bootstrap4Presenter extends Bootstrap3Presenter
         $class = $this->element->multiple ? 'custom-checkbox' : 'custom-radio';
 
         foreach($elements as $element) {
-            $list .= '<label class="custom-control ' . $class . '">' . $this->formatCustomCheckable($element) . '</label>';
+            $list .= '<label class="' . $this->getCustomControlClass($element) . '">' .
+                         $this->formatCustomCheckable($element) .
+                     '</label>';
         }
 
         return '<div' . ($stacked ? ' class="custom-controls-stacked" ' : '') . '>' . $list . '</div>';
+    }
+
+    protected function getCustomControlClass($element)
+    {
+        $class = $this->element->multiple ? 'custom-checkbox' : 'custom-radio';
+
+        return trim('custom-control ' . $class);
     }
 
     /**
@@ -84,7 +93,7 @@ class Bootstrap4Presenter extends Bootstrap3Presenter
 
         // inject description & indicator
         $description = ['<span class="custom-control-description">', '</span>'];
-        $element = str_replace('/>', '/>' . $this->getIndicator() . $description[0], $element) . $description[1];
+        $element = str_replace('/>', '/>' . $this->getIndicator($element) . $description[0], $element) . $description[1];
 
         return $element;
     }
@@ -92,7 +101,7 @@ class Bootstrap4Presenter extends Bootstrap3Presenter
     /**
      * @return string
      */
-    protected function getIndicator()
+    protected function getIndicator($element)
     {
         return '<span class="custom-control-indicator"></span>';
     }
