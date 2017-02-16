@@ -68,8 +68,10 @@ class Bootstrap4Presenter extends Bootstrap3Presenter
      */
     protected function renderCheckbox()
     {
+        $element = $this->renderField();
+
         $field = trim(
-            $this->prefix . $this->renderField() . $this->getIndicator() .
+            $this->prefix . $element . $this->getIndicator($element) .
             $this->getDescription($this->label) . $this->suffix
         );
 
