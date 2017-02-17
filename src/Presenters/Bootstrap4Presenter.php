@@ -36,7 +36,6 @@ class Bootstrap4Presenter extends Bootstrap3Presenter
     protected function renderList($elements, $stacked = true)
     {
         $list = '';
-        $class = $this->element->multiple ? 'custom-checkbox' : 'custom-radio';
 
         foreach($elements as $element) {
             $list .= '<label class="' . $this->getCustomControlClass($element) . '">' .

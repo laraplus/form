@@ -42,7 +42,10 @@ class Checklist extends Select
 
             $checked = in_array($key, (array) $this->getValue()) ? ' checked' : '';
 
-            $items[] = '<input' . $this->renderAttributes($this->optionAttributes[$key]) . $checked . ' /> ' . $value;
+            $items[] = '<input' . $this->renderAttributes($this->attributes) .
+                                  $this->renderAttributes($this->optionAttributes[$key]) .
+                                  $checked .
+                       ' /> ' . $value;
         }
 
         return $items;
