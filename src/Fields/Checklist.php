@@ -33,6 +33,9 @@ class Checklist extends Select
     public function render()
     {
         $items = [];
+        $attributes = $this->attributes;
+        unset($attributes['id']);
+        unset($attributes['name']);
 
         foreach($this->options as $key => $value)
         {
@@ -42,7 +45,7 @@ class Checklist extends Select
 
             $checked = in_array($key, (array) $this->getValue()) ? ' checked' : '';
 
-            $items[] = '<input' . $this->renderAttributes($this->attributes) .
+            $items[] = '<input' . $this->renderAttributes($attributes) .
                                   $this->renderAttributes($this->optionAttributes[$key]) .
                                   $checked .
                        ' /> ' . $value;
