@@ -31,6 +31,10 @@ class Open
      * @var bool
      */
     protected $bare;
+    /**
+     * @var bool
+     */
+    protected $bareWithoutFormId;
 
     /**
      * @var FormPresenter
@@ -169,11 +173,16 @@ class Open
     }
 
     /**
+     * @param bool $withFormId
      * @return $this
      */
-    public function bare()
+    public function bare($withFormId = true)
     {
-        $this->bare = true;
+        if($withFormId) {
+            $this->bare = true;
+        } else {
+            $this->bareWithoutFormId = true;
+        }
 
         return $this;
     }
@@ -209,6 +218,8 @@ class Open
      */
     public function __toString()
     {
+        if ($this->bareWithoutFormId) return '';
+
         $append = '<input type="hidden" name="_form" value="' . $this->name . '" />';
 
         if ($this->bare) return $append;
