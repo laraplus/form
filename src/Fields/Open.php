@@ -178,9 +178,9 @@ class Open
      */
     public function bare($withFormId = true)
     {
-        if($withFormId) {
-            $this->bare = true;
-        } else {
+        $this->bare = true;
+
+        if(!$withFormId) {
             $this->bareWithoutFormId = true;
         }
 
