@@ -1,6 +1,7 @@
 <?php namespace Laraplus\Form\Presenters;
 
 use Laraplus\Form\Fields\Checkbox;
+use Laraplus\Form\Fields\Checklist;
 use Laraplus\Form\Fields\Open;
 use Laraplus\Form\Fields\Base\Button;
 use Laraplus\Form\Fields\Radio;
@@ -105,7 +106,7 @@ class Bootstrap3Presenter extends BasePresenter
      */
     public function renderField()
     {
-        if(!$this->isButton() && !$this->isCheckbox()) {
+        if(!$this->isButton() && !$this->isCheckbox() &&!$this->isList()) {
             $this->element->addClass('form-control');
         }
 
@@ -300,5 +301,13 @@ class Bootstrap3Presenter extends BasePresenter
     protected function isSelect()
     {
         return $this->element instanceof Select && !$this->element->multiple;
+    }
+
+    /**
+     * @return bool
+     */
+    protected function isList()
+    {
+        return $this->element instanceof Checklist;
     }
 }
