@@ -65,6 +65,11 @@ abstract class BasePresenter implements FormPresenter
     protected $multiple;
 
     /**
+     * @var bool
+     */
+    protected $forcedClass;
+
+    /**
      * @param Element $element
      */
     public function setElement(Element $element)
@@ -78,6 +83,7 @@ abstract class BasePresenter implements FormPresenter
         $this->suffix = $element->suffix;
         $this->multiple = $element->multiple;
         $this->attributes = $element->attributes;
+        $this->forcedClass = $element->forcedClass;
         $this->groupAttributes = $element->groupAttributes;
     }
 

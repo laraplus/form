@@ -98,6 +98,11 @@ abstract class Element implements FormElement
     protected $style = null;
 
     /**
+     * @var bool
+     */
+    protected $forcedClass = false;
+
+    /**
      * @param string $name
      * @param Open $open
      * @param FormPresenter $presenter
@@ -298,6 +303,8 @@ abstract class Element implements FormElement
      */
     public function setClass($class)
     {
+        $this->forcedClass = true;
+
         $this->attributes['class'] = $class;
 
         return $this;
@@ -431,7 +438,8 @@ abstract class Element implements FormElement
             'suffix',
             'attributes',
             'groupAttributes',
-            'multiple'
+            'multiple',
+            'forcedClass'
         ];
 
         if (in_array($property, $properties)) {

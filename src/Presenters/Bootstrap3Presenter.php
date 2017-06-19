@@ -68,7 +68,7 @@ class Bootstrap3Presenter extends BasePresenter
      */
     public function renderOpeningTag(Open $open)
     {
-        if (isset($this->style['form'])) {
+        if (isset($this->style['form']) && !$this->forcedClass) {
             $open->addClass($this->style['form']);
         }
 
@@ -81,7 +81,9 @@ class Bootstrap3Presenter extends BasePresenter
      */
     public function renderButton(Button $button)
     {
-        $button->addClass('btn');
+        if(!$this->forcedClass) {
+            $button->addClass('btn');
+        }
 
         return '<button' . $this->renderAttributes($button->attributes) . '>' . $button->text . '</button>';
 
@@ -106,7 +108,7 @@ class Bootstrap3Presenter extends BasePresenter
      */
     public function renderField()
     {
-        if(!$this->isButton() && !$this->isCheckbox() &&!$this->isList()) {
+        if(!$this->isButton() && !$this->isCheckbox() &&!$this->isList() &&!$this->forcedClass) {
             $this->element->addClass('form-control');
         }
 

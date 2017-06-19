@@ -15,10 +15,10 @@ class Bootstrap4Presenter extends Bootstrap3Presenter
      */
     public function renderField()
     {
-        if($this->isSelect()) {
+        if($this->isSelect() && !$this->forcedClass) {
             $this->element->addClass('custom-select');
         }
-        if($this->isCheckbox()) {
+        if($this->isCheckbox() && !$this->forcedClass) {
             $this->element->addClass('custom-control-input');
         }
         if($this->error && !$this->isButton() && !$this->isCheckbox()) {
