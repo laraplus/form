@@ -26,7 +26,7 @@ abstract class Elements
      * @param $name
      * @param string $class
      */
-    public function extend($name, $class)
+    public static function extend($name, $class)
     {
         static::$macros[$name] = $class;
     }
