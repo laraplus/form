@@ -33,8 +33,12 @@ trait RetrievesModelValues
             return $this->getModelValue($newName, $model[$offset]);
         }
 
-        if (isset($model[$name])) {
+        if (is_array($model) && isset($model[$name])) {
             return $model[$name];
+        }
+
+        if(is_object($model) && $model->$name) {
+            return $model->$name;
         }
 
         return null;
