@@ -71,6 +71,6 @@ class LaravelDataStore implements DataStore
      */
     public function getToken()
     {
-        return $this->request->session()->getToken();
+        return $this->request->session()->token();
     }
 }
