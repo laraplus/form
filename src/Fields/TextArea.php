@@ -25,6 +25,17 @@ class TextArea extends Element
 
         return $this;
     }
+    
+    /**
+     * @param string $placeholder
+     * @return $this
+     */
+    public function placeholder($placeholder)
+    {
+        $this->attributes['placeholder'] = $placeholder;
+
+        return $this;
+    }
 
     /**
      * @return string
