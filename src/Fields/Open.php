@@ -40,6 +40,11 @@ class Open
      * @var FormPresenter
      */
     protected $presenter;
+    
+    /**
+     * @var boolean
+     */
+    protected $forcedSubmittedStatus;
 
     /**
      * @param string $name
@@ -192,7 +197,22 @@ class Open
      */
     public function isSubmitted()
     {
+        if(!is_null($this->forcedSubmittedStatus)) {
+            return $this->forcedSubmittedStatus;
+        }
+        
         return $this->data->getOldValue('_form') == $this->name;
+    }
+    
+    /**
+     * @param bool $toggle
+     * @return $this
+     */
+    public function forceSubmittedStatus($toggle)
+    {
+        $this->forcedSubmittedStatus = $toggle;
+
+        return $this;
     }
 
     /**
