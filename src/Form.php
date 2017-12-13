@@ -136,7 +136,9 @@ class Form extends Elements implements ArrayAccess, Countable
         $instance = new self($this->presenter, $this->dataStore, $this->config);
         $instance->rules = $this->rules;
 
-        $instance->open($this->open->name)->bare($withFormId = false);
+        $instance->open($this->open->name)
+            ->bare($withFormId = false)
+            ->forceSubmittedStatus($this->open->isSubmitted());
 
         $builder($instance);
 
