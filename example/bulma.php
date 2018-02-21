@@ -1,19 +1,5 @@
 <?php
 
-session_start();
-$_SESSION['errors'] = array(
-    'name' => 'This field is required',
-    'salary' => 'This field is required',
-    //'gender' => 'This field is required',
-    'interests' => 'This field is required',
-    //'hobby' => 'This field is required',
-    'cv' => 'This field is required',
-    //'terms' => 'This field is required',
-    'message' => 'This field is required',
-    //'salary2' => 'This field is required',
-    'password' => 'This field is required'
-);
-
 require '_init_bulma.php';
 
 $form->open('test')
@@ -89,21 +75,23 @@ $form3 = clone $form;
 </head>
 <body>
 
-<div class="container">
-    <div class="columns">
-        <div class="column is-6 is light">
-            <h2 class="title is-2">Horizontal Form</h2>
-            <?= $form->style('horizontal') ?>
+<div class="section">
+    <div class="container">
+        <div class="columns is-desktop">
+            <div class="column">
+                <h2 class="title is-2">Horizontal Form</h2>
+                <?= $form->style('horizontal') ?>
+            </div>
+            <div class="column">
+                <h2 class="title is-2">Vertical Form</h2>
+                <?= $form2->style('vertical') ?>
+            </div>
         </div>
-        <div class="column is-6">
-            <h2 class="title is-2">Vertical Form</h2>
-            <?= $form2->style('vertical') ?>
-        </div>
-    </div>
-    <div class="columns">
-        <div class="column">
-            <h2 class="title is-2">Inline Form</h2>
-            <?= $form3->style('inline') ?>
+        <div class="columns">
+            <div class="column">
+                <h2 class="title is-2">Inline Form</h2>
+                <?= $form3->style('inline') ?>
+            </div>
         </div>
     </div>
 </div>

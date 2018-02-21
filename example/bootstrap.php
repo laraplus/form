@@ -1,19 +1,5 @@
 <?php
 
-session_start();
-$_SESSION['errors'] = array(
-    'name' => 'This field is required',
-    'salary' => 'This field is required',
-    'gender' => 'This field is required',
-    'interests' => 'This field is required',
-    'hobby' => 'This field is required',
-    'cv' => 'This field is required',
-    'terms' => 'This field is required',
-    'message' => 'This field is required',
-    'salary2' => 'This field is required',
-    'password' => 'This field is required'
-);
-
     require '_init_bootstrap.php';
 
     $form->open('test')

@@ -8,6 +8,20 @@ use Laraplus\Form\Contracts\FormPresenter;
 use Laraplus\Form\Contracts\ConfigProvider;
 use Laraplus\Form\Helpers\RendersAttributes;
 
+/**
+ * Class Element
+ * @package Laraplus\Form\Fields\Base
+ * @property-read string $name
+ * @property-read string $label
+ * @property-read string $help
+ * @property-read string $error
+ * @property-read string $prefix
+ * @property-read string $suffix
+ * @property-read array $attributes
+ * @property-read array $groupAttributes
+ * @property-read bool $multiple
+ * @property-read bool $forcedClass
+ */
 abstract class Element implements FormElement
 {
     use RendersAttributes;

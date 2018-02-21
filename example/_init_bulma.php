@@ -9,6 +9,6 @@ require '../vendor/autoload.php';
 
 $dataStore = new PhpDataStore();
 $presenter = new BulmaPresenter();
-$configProvider = new PhpConfigProvider(require '../config/form.php');
+$configProvider = new PhpConfigProvider(require '../config/bulma_form.php');
 
 $form = new Form($presenter, $dataStore, $configProvider);

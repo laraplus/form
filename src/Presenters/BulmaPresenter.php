@@ -9,8 +9,6 @@ use Laraplus\Form\Fields\File;
 use Laraplus\Form\Fields\Open;
 use Laraplus\Form\Fields\Radio;
 use Laraplus\Form\Fields\Select;
-use Laraplus\Form\Fields\Submit;
-use Laraplus\Form\Fields\Text;
 use Laraplus\Form\Fields\TextArea;
 
 class BulmaPresenter extends BasePresenter
@@ -20,7 +18,7 @@ class BulmaPresenter extends BasePresenter
      */
     protected function isInline()
     {
-        return isset($this->style['form']) && strpos($this->style['form'], 'form-inline') !== false;
+        return isset($this->formStyle) && strpos($this->formStyle, 'inline') !== false;
     }
 
     /**
@@ -28,7 +26,7 @@ class BulmaPresenter extends BasePresenter
      */
     protected function isHorizontal()
     {
-        return isset($this->style['form']) && strpos($this->style['form'], 'form-horizontal') !== false;
+        return isset($this->formStyle) && strpos($this->formStyle, 'horizontal') !== false;
     }
 
     /**
@@ -66,6 +64,14 @@ class BulmaPresenter extends BasePresenter
     /**
      * @return bool
      */
+    protected function isChecklist()
+    {
+        return $this->element instanceof Checklist;
+    }
+
+    /**
+     * @return bool
+     */
     protected function isButton()
     {
         return $this->element instanceof Button;
@@ -93,10 +99,11 @@ class BulmaPresenter extends BasePresenter
      */
     public function renderOpeningTag(Open $open)
     {
-        $result = '<form' . $this->renderAttributes($open->attributes) . '>';
-        if ($this->isInline()) {
-            //$result .= '<div class="field is-horizontal is-grouped is-multiline">';
+        if (isset($this->style['form']) && !$this->forcedClass) {
+            $open->addClass($this->style['form']);
         }
+
+        $result = '<form' . $this->renderAttributes($open->attributes) . '>';
         return $result;
     }
 
@@ -107,11 +114,6 @@ class BulmaPresenter extends BasePresenter
     public function renderClosingTag(Close $close)
     {
         $result = '</form>';
-        /*
-        if ($this->isInline()) {
-            $result .= '</div>';
-        }
-        */
         return $result;
     }
 
@@ -121,9 +123,6 @@ class BulmaPresenter extends BasePresenter
      */
     public function renderButton(Button $button)
     {
-        if ($this->isInline()) {
-            $this->element->addClass('is-block');
-        }
         return '<button' . $this->renderAttributes($button->attributes) . '>' . $button->text . '</button>';
     }
 
@@ -134,17 +133,13 @@ class BulmaPresenter extends BasePresenter
     {
         $result = '';
 
-        if ($this->isHorizontal() || ($this->isInline() && !$this->isButton())) {
+        if ($this->isHorizontal()) {
             $normalClass = !$this->element instanceof Checklist ? ' is-normal' : '';
             $result .= '<div class="field-label' . $normalClass . '">';
         }
 
         if ($this->label) {
-            if ($this->isRadio()) {
-                $class = "radio";
-            } else {
-                $class = "label";
-            }
+            $class = $this->style['label'];
             if ($this->error) {
                 $class .= ' has-text-danger';
             }
@@ -152,7 +147,7 @@ class BulmaPresenter extends BasePresenter
             $result .= '<label class="' . $class . '" for="' . $this->attributes['id'] . '">' . $this->label . '</label>';
         }
 
-        if ($this->isHorizontal() || ($this->isInline() && !$this->isButton())) {
+        if ($this->isHorizontal()) {
             $result .= '</div>';
         }
 
@@ -172,7 +167,11 @@ class BulmaPresenter extends BasePresenter
         } elseif ($this->element instanceof Checkbox) {
             $this->element->addClass('checkbox');
         } elseif ($this->element instanceof Checklist) {
-            $this->element->addClass('checkbox');
+            if ($this->element->multiple) {
+                $this->element->addClass('checkbox');
+            } else {
+                $this->element->addClass('radio');
+            }
         } elseif ($this->element instanceof Select) {
             $this->element->addClass('select');
         } elseif ($this->element instanceof TextArea) {
@@ -213,7 +212,7 @@ class BulmaPresenter extends BasePresenter
      */
     protected function renderInlineList($elements)
     {
-        $class = $this->element->multiple ? 'checkbox' : 'radio';
+        $class = $this->element->multiple ? $this->style['label-checkbox'] : $this->style['label-radio'];
         $class .= $this->error ? ' has-text-danger' : '';
         $list = '';
 
@@ -231,7 +230,7 @@ class BulmaPresenter extends BasePresenter
     protected function renderList($elements)
     {
         $list = '';
-        $class = $this->element->multiple ? 'checkbox' : 'radio';
+        $class = $this->element->multiple ? $this->style['label-checkbox'] : $this->style['label-radio'];
         $class .= $this->error ? ' has-text-danger' : '';
 
         foreach($elements as $element) {
@@ -258,20 +257,9 @@ class BulmaPresenter extends BasePresenter
 
         $result = '';
 
-        /*
-        if (!$this->isInline()) {
-            $result .= '<div' . $this->renderAttributes($this->element->groupAttributes) . '>';
-        }
-        */
         $result .= '<div' . $this->renderAttributes($this->element->groupAttributes) . '>';
         $result .= $this->renderElementGroup();
         $result .= '</div>';
-
-        /*
-        if (!$this->isInline()) {
-            $result .= '</div>';
-        }
-        */
 
         return $result;
     }
@@ -282,23 +270,10 @@ class BulmaPresenter extends BasePresenter
     protected function renderElementGroup()
     {
         if($this->isCheckbox()) return $this->renderCheckbox();
-        //if($this->isFile()) return $this->renderFileUpload();
 
         $result = $this->renderLabel();
 
-        /*
-        if ($fieldContainer = $this->getElementClass()) {
-            $result .= '<div' . $fieldContainer . '>';
-        }
-        */
-
         $result .= $this->renderPrefix() . $this->renderField() . $this->renderSuffix();
-
-        /*
-        if ($fieldContainer) {
-            $result .= '</div>';
-        }
-        */
 
         return $result;
     }
@@ -309,14 +284,13 @@ class BulmaPresenter extends BasePresenter
     protected function renderPrefix()
     {
         $result = '';
-        $expandedClass = '';
+        $controlClass = "control";
 
-        if ($this->isHorizontal() || $this->isInline()) {
+        if ($this->isHorizontal()) {
             $result .= '<div class="field-body"><div class="field">';
         }
 
         if ($this->prefix || $this->suffix) {
-            $expandedClass = ' is-expanded';
             $result .= '<div class="field has-addons">';
         }
 
@@ -325,7 +299,11 @@ class BulmaPresenter extends BasePresenter
             $result .= '<div class="control"><button class="button is-static' . $errorClass . '">' . $this->prefix . '</button></div>';
         }
 
-        $result .= '<div class="control is-expanded">';
+        if ($this->style['element']) {
+            $controlClass .= ' ' . $this->style['element'];
+        }
+
+        $result .= '<div class="' . $controlClass . '">';
 
         return $result;
     }
@@ -348,7 +326,7 @@ class BulmaPresenter extends BasePresenter
 
         $result .= $this->formatHelpAndError($this->help, $this->error);
 
-        if ($this->isHorizontal() || $this->isInline()) {
+        if ($this->isHorizontal()) {
             $result .= '</div></div>';
         }
 
@@ -388,7 +366,7 @@ class BulmaPresenter extends BasePresenter
 
         $result .= $this->renderPrefix();
 
-        $result .= $this->label ? '<label class="checkbox' . $errorClass . '" for="' . $this->attributes['id'] . '">' : '';
+        $result .= $this->label ? '<label class="' . $this->style['label-checkbox'] . $errorClass . '" for="' . $this->attributes['id'] . '">' : '';
 
         $result .= $this->renderField();
 
@@ -406,7 +384,7 @@ class BulmaPresenter extends BasePresenter
     {
         $result = '';
 
-        if ($this->isHorizontal() || $this->isInline()) {
+        if ($this->isHorizontal()) {
             $result .= '<div class="field-label"></div><div class="field-body"><div class="field"> ';
         }
 
@@ -424,7 +402,7 @@ class BulmaPresenter extends BasePresenter
 
         $result .= '</label></div>';
 
-        if ($this->isHorizontal() || $this->isInline()) {
+        if ($this->isHorizontal()) {
             $result .= '</div></div>';
         }
 
@@ -439,13 +417,7 @@ class BulmaPresenter extends BasePresenter
     {
         $result = 'field';
 
-        if ($this->isHorizontal() || $this->isInline()) {
-            $result .= ' is-horizontal';
-        }
-
-        if ($this->isInline()) {
-            $result .= ' is-inline-flex-tablet';
-        }
+        $result .= ' ' . $this->style['field'];
 
         if ($this->error) {
             $result .= ' is-danger';
