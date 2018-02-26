@@ -18,7 +18,7 @@ class BulmaPresenter extends BasePresenter
      */
     protected function isInline()
     {
-        return isset($this->formStyle) && strpos($this->formStyle, 'inline') !== false;
+        return isset($this->styleName) && strpos($this->styleName, 'inline') !== false;
     }
 
     /**
@@ -26,7 +26,7 @@ class BulmaPresenter extends BasePresenter
      */
     protected function isHorizontal()
     {
-        return isset($this->formStyle) && strpos($this->formStyle, 'horizontal') !== false;
+        return isset($this->styleName) && strpos($this->styleName, 'horizontal') !== false;
     }
 
     /**
@@ -157,26 +157,20 @@ class BulmaPresenter extends BasePresenter
     public function addElementClasses() {
 
         if ($this->element instanceof Input) {
-            $this->element->addClass('input');
-        } elseif ($this->element instanceof Button) {
-            $this->element->addClass('button');
-        } elseif ($this->element instanceof TextArea) {
-            $this->element->addClass('textarea');
-        } elseif ($this->element instanceof Radio) {
-            $this->element->addClass('radio');
-        } elseif ($this->element instanceof Checkbox) {
-            $this->element->addClass('checkbox');
+            $class = 'input';
         } elseif ($this->element instanceof Checklist) {
             if ($this->element->multiple) {
-                $this->element->addClass('checkbox');
+                $class = 'checkbox';
             } else {
-                $this->element->addClass('radio');
+                $class = 'radio';
             }
-        } elseif ($this->element instanceof Select) {
-            $this->element->addClass('select');
-        } elseif ($this->element instanceof TextArea) {
-            $this->element->addClass('textarea');
+        } elseif ($this->element instanceof Button) {
+                $class = 'button';
+        } else {
+            $class = strtolower(class_basename($this->element));
         }
+
+        $this->element->addClass($class);
     }
 
     /**
@@ -409,7 +403,6 @@ class BulmaPresenter extends BasePresenter
         return $result;
     }
 
-    // TODO: has error
     /**
      * @return string
      */

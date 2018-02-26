@@ -120,7 +120,7 @@ class Form extends Elements implements ArrayAccess, Countable
     {
         if ($style) {
             $this->presenter->setStyle($this->config->get('styles.' . $style));
-            $this->presenter->setFormStyle($style);
+            $this->presenter->setStyleName($style);
         }
 
         return $this;

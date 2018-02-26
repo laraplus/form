@@ -19,7 +19,9 @@ $form->text('salary')
 $form->select('gender')
     ->label('Gender:')
     ->options(['male' => 'Male', 'female' => 'Female'])
-    ->placeholder('- Select gender -');
+    ->placeholder('- Select gender -')
+    ->prefix('$')
+    ->suffix('.00');
 
 $form->checklist('interests')
     ->label('Interests:')

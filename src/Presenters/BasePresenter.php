@@ -12,7 +12,7 @@ abstract class BasePresenter implements FormPresenter
     /**
      * @var string
      */
-    protected $formStyle;
+    protected $styleName;
 
     /**
      * @var array
@@ -110,12 +110,12 @@ abstract class BasePresenter implements FormPresenter
     }
 
     /**
-     * @param string $formStyle
+     * @param string $styleName
      * @return mixed|void
      */
-    public function setFormStyle($formStyle)
+    public function setStyleName($styleName)
     {
-        $this->formStyle = $formStyle;
+        $this->styleName = $styleName;
     }
 
     /**
@@ -129,9 +129,9 @@ abstract class BasePresenter implements FormPresenter
     /**
      * @return string
      */
-    public function getFormStyle()
+    public function getStyleName()
     {
-        return $this->formStyle;
+        return $this->styleName;
     }
 
     /**

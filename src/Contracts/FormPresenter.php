@@ -25,7 +25,7 @@ interface FormPresenter
     /**
      * @param string $style
      */
-    public function setFormStyle($formStyle);
+    public function setStyleName($styleName);
 
     /**
      * @return array
@@ -35,7 +35,7 @@ interface FormPresenter
     /**
      * @return string
      */
-    public function getFormStyle();
+    public function getStyleName();
 
     /**
      * @param Open $open
