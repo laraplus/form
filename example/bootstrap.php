@@ -1,6 +1,6 @@
 <?php
 
-    require '_init.php';
+    require '_init_bootstrap.php';
 
     $form->open('test')
         ->method('POST');
@@ -26,6 +26,11 @@
         ->options(['male' => 'Male', 'female' => 'Female'])
         ->placeholder('- Select gender -');
 
+    $form->checklist('hobby')
+        ->label('hobby:')
+        ->options(['Basketball', 'Football', 'Tennis'])
+        ->multiple();
+
     $form->checklist('interests')
         ->label('Interests:')
         ->options(['Basketball', 'Football', 'Tennis'])
@@ -39,6 +44,9 @@
     $form->checkbox('terms')
         ->label('I agree with terms')
         ->checked();
+
+    $form->textArea('message')
+        ->label('Message');
 
     $form->submit('submit')
         ->text('Submit!')

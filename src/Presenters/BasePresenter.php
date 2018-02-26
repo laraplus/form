@@ -10,6 +10,11 @@ abstract class BasePresenter implements FormPresenter
     use RendersAttributes;
 
     /**
+     * @var string
+     */
+    protected $styleName;
+
+    /**
      * @var array
      */
     protected $style;
@@ -105,11 +110,28 @@ abstract class BasePresenter implements FormPresenter
     }
 
     /**
+     * @param string $styleName
+     * @return mixed|void
+     */
+    public function setStyleName($styleName)
+    {
+        $this->styleName = $styleName;
+    }
+
+    /**
      * @return array
      */
     public function getStyle()
     {
         return $this->style;
+    }
+
+    /**
+     * @return string
+     */
+    public function getStyleName()
+    {
+        return $this->styleName;
     }
 
     /**
