@@ -426,7 +426,7 @@ abstract class Element implements FormElement
     /**
      * @return array|string
      */
-    protected function getValue()
+    public function getValue()
     {
         if (isset($this->forceValue)) {
             return $this->forceValue;
