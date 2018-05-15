@@ -264,6 +264,10 @@ class Form extends Elements implements ArrayAccess, Countable
             }
 
             foreach ($fieldRules as $rule) {
+                
+                if(!is_string($rule)) {
+                    continue;
+                }
 
                 if (($colon = strpos($rule, ':')) !== false) {
                     $parameters = str_getcsv(substr($rule, $colon + 1));
