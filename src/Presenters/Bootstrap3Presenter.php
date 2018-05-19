@@ -160,11 +160,11 @@ class Bootstrap3Presenter extends BasePresenter
      */
     public function renderError()
     {
-        if (!$this->error) {
+        if (!$this->error && !$this->help) {
             return false;
         }
 
-        return $this->formatHelpAndError('', $this->error);
+        return $this->formatHelpAndError($this->help, $this->error);
     }
 
     /**
