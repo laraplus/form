@@ -119,8 +119,9 @@ class Form extends Elements implements ArrayAccess, Countable
     public function style($style = null)
     {
         if ($style) {
-            $this->presenter->setStyle($this->config->get('styles.' . $style));
-            $this->presenter->setStyleName($style);
+            $this->style = $style;
+            $this->presenter->setStyle($this->config->get('styles.' . $this->style));
+            $this->presenter->setStyleName($this->style);
         }
 
         return $this;
@@ -139,6 +140,7 @@ class Form extends Elements implements ArrayAccess, Countable
 
         $instance->open($this->open->name)
             ->bare($withFormId = false)
+            ->style($this->style)
             ->forceSubmittedStatus($this->open->isSubmitted());
 
         $builder($instance);
