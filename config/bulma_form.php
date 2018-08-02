@@ -3,7 +3,7 @@
 return [
 
     'presenter'  => 'Laraplus\Form\Presenters\BulmaPresenter',
-    'style'      => 'horizontal',
+    'style'      => 'vertical',
     'styles'     => [
         'horizontal' => [
             'form'             => null,
