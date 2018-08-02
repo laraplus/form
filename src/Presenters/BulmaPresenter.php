@@ -139,12 +139,9 @@ class BulmaPresenter extends BasePresenter
         }
 
         if ($this->label) {
-            $class = $this->style['label'];
-            if ($this->error) {
-                $class .= ' has-text-danger';
-            }
+            $classes = $this->getLabelClasses();
 
-            $result .= '<label class="' . $class . '" for="' . $this->attributes['id'] . '">' . $this->label . '</label>';
+            $result .= '<label class="' . $classes . '" for="' . $this->attributes['id'] . '">' . $this->label . '</label>';
         }
 
         if ($this->isHorizontal()) {
@@ -154,31 +151,12 @@ class BulmaPresenter extends BasePresenter
         return $result;
     }
 
-    public function addElementClasses() {
-
-        if ($this->element instanceof Input) {
-            $class = 'input';
-        } elseif ($this->element instanceof Checklist) {
-            if ($this->element->multiple) {
-                $class = 'checkbox';
-            } else {
-                $class = 'radio';
-            }
-        } elseif ($this->element instanceof Button) {
-                $class = 'button';
-        } else {
-            $class = strtolower(class_basename($this->element));
-        }
-
-        $this->element->addClass($class);
-    }
-
     /**
      * @return string
      */
     public function renderField()
     {
-        $this->addElementClasses();
+        $this->element->addClass($this->getElementClasses());
 
         if ($this->error) {
             $this->element->addClass('is-danger');
@@ -196,7 +174,7 @@ class BulmaPresenter extends BasePresenter
             $errorClass = $this->error ? ' is-danger' : '';
             $rendered = '<div class="select is-fullwidth' . $errorClass . '">' . $rendered . '</div>';
         }
-        
+
         return $rendered;
     }
 
@@ -247,7 +225,7 @@ class BulmaPresenter extends BasePresenter
      */
     public function renderAll()
     {
-        $this->element->addGroupClass($this->getGroupClass());
+        $this->element->addGroupClass($this->getGroupClasses());
 
         $result = '';
 
@@ -406,16 +384,53 @@ class BulmaPresenter extends BasePresenter
     /**
      * @return string
      */
-    protected function getGroupClass()
-    {
-        $result = 'field';
+    protected function getElementClasses() {
 
-        $result .= ' ' . $this->style['field'];
-
-        if ($this->error) {
-            $result .= ' is-danger';
+        if ($this->element instanceof Input) {
+            $class = 'input';
+        } elseif ($this->element instanceof Checklist) {
+            if ($this->element->multiple) {
+                $class = 'checkbox';
+            } else {
+                $class = 'radio';
+            }
+        } elseif ($this->element instanceof Button) {
+                $class = 'button';
+        } else {
+            $class = strtolower(class_basename($this->element));
         }
 
-        return $result;
+        return $class;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getGroupClasses()
+    {
+        $class = 'field';
+
+        $class .= ' ' . $this->style['field'];
+
+        if ($this->error) {
+            $class .= ' is-danger';
+        }
+
+        return $class;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getLabelClasses()
+    {
+        $class = $this->style['label'];
+
+        if ($this->error) {
+            $class .= ' has-text-danger';
+            return $class;
+        }
+
+        return $class;
     }
 }

@@ -46,7 +46,7 @@ class Checkbox extends Element
     /**
      * @return array|string
      */
-    protected function getValue()
+    public function getValue()
     {
         if ($value = $this->forceValue) {
             return $value;

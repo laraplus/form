@@ -17,7 +17,7 @@ class Password extends Input
     /**
      * @return array|string
      */
-    protected function getValue()
+    public function getValue()
     {
         if ($value = $this->forceValue) {
             return $value;
