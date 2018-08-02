@@ -133,19 +133,19 @@ class BulmaPresenter extends BasePresenter
     {
         $result = '';
 
-        if ($this->isHorizontal()) {
-            $normalClass = !$this->element instanceof Checklist ? ' is-normal' : '';
-            $result .= '<div class="field-label' . $normalClass . '">';
-        }
-
         if ($this->label) {
+            if ($this->isHorizontal()) {
+                $normalClass = !$this->element instanceof Checklist ? ' is-normal' : '';
+                $result .= '<div class="field-label' . $normalClass . '">';
+            }
+
             $classes = $this->getLabelClasses();
 
             $result .= '<label class="' . $classes . '" for="' . $this->attributes['id'] . '">' . $this->label . '</label>';
-        }
 
-        if ($this->isHorizontal()) {
-            $result .= '</div>';
+            if ($this->isHorizontal()) {
+                $result .= '</div>';
+            }
         }
 
         return $result;
