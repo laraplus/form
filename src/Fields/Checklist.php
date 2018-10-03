@@ -8,6 +8,11 @@ class Checklist extends Select
     protected $inline;
 
     /**
+     * @var array
+     */
+    protected $optionLabelAttributes = [];
+
+    /**
      * @return $this
      */
     public function inline()
@@ -28,6 +33,62 @@ class Checklist extends Select
     }
 
     /**
+     * @param $key
+     * @param $name
+     * @param $value
+     * @return $this
+     */
+    public function optionLabelAttribute($key, $name, $value)
+    {
+        if (!isset($this->optionLabelAttributes[$key])) {
+            $this->optionLabelAttributes[$key] = [];
+        }
+
+        $this->optionLabelAttributes[$key][$name] = $value;
+
+        return $this;
+    }
+
+    /**
+     * Alias for optionAttribute()
+     *
+     * @param $key
+     * @param $name
+     * @param $value
+     * @return Select
+     */
+    public function optionLabelAttr($key, $name, $value)
+    {
+        return $this->optionLabelAttribute($key, $name, $value);
+    }
+
+    /**
+     * @param array $attributes
+     * @return Select
+     */
+    public function optionLabelAttributes(array $attributes)
+    {
+        foreach($attributes as $key => $attrs) {
+            foreach((array)$attrs as $name => $value) {
+                $this->optionLabelAttribute($key, $name, $value);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * Alias For optionAttributes()
+     *
+     * @param array $attributes
+     * @return Select
+     */
+    public function optionLabelAttrs(array $attributes)
+    {
+        return $this->optionLabelAttributes($attributes);
+    }
+
+    /**
      * @return array
      */
     public function render()
@@ -45,13 +106,21 @@ class Checklist extends Select
 
             $checked = in_array($key, (array) $this->getValue()) ? ' checked' : '';
 
-            $items[] = '<input' . $this->renderAttributes($attributes) .
+            $items[$key] = '<input' . $this->renderAttributes($attributes) .
                                   $this->renderAttributes($this->optionAttributes[$key]) .
                                   $checked .
                        ' /> ' . $value;
         }
 
         return $items;
+    }
+
+    public function renderLabelAttributes ($key) {
+        if (isset ($this->optionLabelAttributes[$key])) {
+            return $this->renderAttributes($this->optionLabelAttributes[$key]);
+        } else {
+            return '';
+        }
     }
 
     /**
