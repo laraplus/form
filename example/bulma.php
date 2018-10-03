@@ -26,6 +26,7 @@ $form->select('gender')
 $form->checklist('interests')
     ->label('Interests:')
     ->options(['Basketball', 'Football', 'Tennis'])
+    ->optionLabelAttributes([['data-color' => '#fff'], ['data-color' => '#00f'], ['data-color' => '#f00']])
     ->multiple();
 
 $form->password('password')

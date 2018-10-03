@@ -167,7 +167,7 @@ class BulmaPresenter extends BasePresenter
         if(is_array($rendered)) {
             $isInline = $this->isInline() || $this->element->inline;
 
-            return $isInline ? $this->renderInlineList($rendered) : $this->renderList($rendered);
+            return $this->renderList($rendered, $isInline);
         }
 
         if ($this->isSelect()) {
@@ -182,31 +182,24 @@ class BulmaPresenter extends BasePresenter
      * @param array $elements
      * @return string
      */
-    protected function renderInlineList($elements)
-    {
-        $class = $this->element->multiple ? $this->style['label-checkbox'] : $this->style['label-radio'];
-        $class .= $this->error ? ' has-text-danger' : '';
-        $list = '';
-
-        foreach($elements as $element) {
-            $list .= '<label class="' . $class . '">' . $element . '</label>';
-        }
-
-        return $list;
-    }
-
-    /**
-     * @param array $elements
-     * @return string
-     */
-    protected function renderList($elements)
+    protected function renderList($elements, $inline = false)
     {
         $list = '';
         $class = $this->element->multiple ? $this->style['label-checkbox'] : $this->style['label-radio'];
         $class .= $this->error ? ' has-text-danger' : '';
 
-        foreach($elements as $element) {
-            $list .= '<div><label class="' . $class . '">' . $element . '</label></div>';
+        foreach($elements as $key => $element) {
+            if ($this->element instanceof Checklist) {
+                $item = '<label class="' . $class . '"' . $this->element->renderLabelAttributes($key) . '>' . $element . '</label>';
+            } else {
+                $item = '<label class="' . $class . '">' . $element . '</label>';
+            }
+
+            if (!$inline) {
+                $list .= '<div>' . $item . '</div>';
+            } else {
+                $list .= $item;
+            }
         }
 
         return $list;
