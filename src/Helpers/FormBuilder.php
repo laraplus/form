@@ -20,9 +20,17 @@ trait FormBuilder
             return $this->formBuilder;
         }
 
+        return $this->formBuilder = $this->newFormBuilder();
+    }
+
+    /**
+     * @return Form
+     */
+    public function newFormBuilder()
+    {
         $rules = method_exists($this, 'rules') ? app()->call([$this, 'rules']) : [];
 
-        return $this->formBuilder = app('Laraplus\Form\Form')->rules($rules);
+        return app('Laraplus\Form\Form')->rules($rules);
     }
 
     /**
