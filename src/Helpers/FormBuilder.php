@@ -46,7 +46,7 @@ trait FormBuilder
             return $factory->make([], []);
         }
         
-        $rules = $this->container->call([$this, 'rules']);
+        $rules = app()->call([$this, 'rules']);
 
         return $factory->make(
             $this->all(), $rules, $this->messages(), $this->attributes()

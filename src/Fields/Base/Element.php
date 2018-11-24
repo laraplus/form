@@ -366,6 +366,16 @@ abstract class Element implements FormElement
     }
 
     /**
+     * @return $this
+     */
+    public function withoutAjaxValidation()
+    {
+        unset($this->groupAttributes['data-ajax-validate-group']);
+
+        return $this;
+    }
+
+    /**
      * @param $name
      * @return $this
      */
@@ -393,20 +403,20 @@ abstract class Element implements FormElement
      */
     public function present($style = null)
     {
+        $resetStyle = null;
         $this->initPresenter();
 
-        if ($style) {
-            $this->presenter->setStyleName($style);
-        }
         if($style = $style ? $this->config->get('styles.' . $style) : ($this->style ?: null)) {
-            $tmpStyle = $this->presenter->getStyle();
+            $resetStyle = [$this->presenter->getStyle(), $this->presenter->getStyleName()];
+            $this->presenter->setStyleName($style);
             $this->presenter->setStyle($style);
         }
 
         $element = $this->presenter->renderAll();
 
-        if($style) {
-            $this->presenter->setStyle($tmpStyle);
+        if($resetStyle) {
+            $this->presenter->setStyleName($resetStyle[1]);
+            $this->presenter->setStyle($resetStyle[0]);
         }
 
         return $element;
