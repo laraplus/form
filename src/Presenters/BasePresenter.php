@@ -142,4 +142,20 @@ abstract class BasePresenter implements FormPresenter
     {
         return '</form>';
     }
+
+    /**
+     * @return bool
+     */
+    public function isSubmitted()
+    {
+        return $this->element->open->isSubmitted();
+    }
+
+    /**
+     * @return bool
+     */
+    public function hasSuccessStatus()
+    {
+        return !empty($this->style['success-status']) && $this->isSubmitted() && $this->element->getValue();
+    }
 }

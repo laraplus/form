@@ -457,6 +457,7 @@ abstract class Element implements FormElement
     public function __get($property)
     {
         $properties = [
+            'open',
             'name',
             'label',
             'help',

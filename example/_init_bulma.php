@@ -6,6 +6,7 @@ use Laraplus\Form\ConfigProviders\PhpConfigProvider;
 use Laraplus\Form\Presenters\BulmaPresenter;
 
 require '../vendor/autoload.php';
+//require '_init_errors.php';
 
 $dataStore = new PhpDataStore();
 $presenter = new BulmaPresenter();

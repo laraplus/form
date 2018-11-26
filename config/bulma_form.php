@@ -12,25 +12,28 @@ return [
             'label-checkbox'   => 'checkbox',
             'element'          => 'is-expanded',
             'field'            => 'is-horizontal',
-            'required'         => ' *'
+            'required'         => ' *',
+            'success-status'   => true
         ],
         'vertical'   => [
             'form'             => null,
             'label'            => 'label',
-            'label-radio'     => 'radio',
+            'label-radio'      => 'radio',
             'label-checkbox'   => 'checkbox',
             'element'          => 'is-expanded',
             'field'            => null,
-            'required'         => ' *'
+            'required'         => ' *',
+            'success-status'   => true
         ],
         'inline'     => [
             'form'             => null,
             'label'            => 'label',
-            'label-radio'     => 'radio',
+            'label-radio'      => 'radio',
             'label-checkbox'   => 'checkbox',
             'element'          => 'is-expanded',
             'field'            => 'is-inline-flex-tablet',
-            'required'         => ' *'
+            'required'         => ' *',
+            'success-status'   => true
         ]
     ]
 ];
