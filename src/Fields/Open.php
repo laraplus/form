@@ -153,6 +153,18 @@ class Open
     }
 
     /**
+     * Alias for attribute()
+     *
+     * @param $name
+     * @param $value
+     * @return $this
+     */
+    public function attr($name, $value)
+    {
+        return $this->attribute($name, $value);
+    }
+
+    /**
      * @return $this
      */
     public function multipart()

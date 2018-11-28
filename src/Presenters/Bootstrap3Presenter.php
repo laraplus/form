@@ -46,7 +46,9 @@ class Bootstrap3Presenter extends BasePresenter
      */
     protected function getGroupClass()
     {
-        return 'form-group' . ($this->error ? ' has-error' : '');
+        $successClass = $this->hasSuccessStatus() ? ' has-success' : '';
+        
+        return 'form-group' . ($this->error ? ' has-error' : $successClass);
     }
 
     /**

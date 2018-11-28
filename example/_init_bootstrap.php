@@ -6,6 +6,7 @@ use Laraplus\Form\Presenters\Bootstrap3Presenter;
 use Laraplus\Form\ConfigProviders\PhpConfigProvider;
 
 require '../vendor/autoload.php';
+//require '_init_errors.php';
 
 $dataStore = new PhpDataStore();
 $presenter = new Bootstrap3Presenter();

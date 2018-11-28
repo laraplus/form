@@ -64,6 +64,11 @@ class Form extends Elements implements ArrayAccess, Countable
     protected $elements;
 
     /**
+     * @var array
+     */
+    protected $ajaxValidation = false;
+
+    /**
      * @param FormPresenter $presenter
      * @param DataStore $dataStore
      * @param ConfigProvider $config
@@ -186,6 +191,28 @@ class Form extends Elements implements ArrayAccess, Countable
 
         return $this->open->isSubmitted();
     }
+
+    /**
+     * @return $this
+     */
+    public function withAjaxValidation()
+    {
+        $this->ajaxValidation = true;
+
+        if($this->open) {
+            $this->open->attribute('data-ajax-validate', $this->open->name);
+        }
+
+        foreach($this->elements as $name => $element) {
+            if($element instanceof Element) {
+                $element->groupAttr('data-ajax-validate-group', $name);
+            } elseif ($element instanceof static) {
+                $element->withAjaxValidation();
+            }
+        }
+
+        return $this;
+    }
     
     /**
      * @return string
@@ -216,6 +243,10 @@ class Form extends Elements implements ArrayAccess, Countable
 
         $element = new $class($name, $this->open, $this->presenter, $this->dataStore, $this->config, array_get($this->rules, $name));
 
+        if($this->ajaxValidation) {
+            $element->groupAttr('data-ajax-validate-group', $name);
+        }
+
         return $this->elements[$name ?: 'element-' . count($this->elements)] = $element;
     }
 
@@ -226,6 +257,10 @@ class Form extends Elements implements ArrayAccess, Countable
     protected function openForm($name)
     {
         $form = new Open($name, $this, $this->dataStore, $this->presenter);
+
+        if($this->ajaxValidation) {
+            $form->attribute('data-ajax-validate', $name);
+        }
 
         return $this->open = $form;
     }
