@@ -405,9 +405,7 @@ class BulmaPresenter extends BasePresenter
 
         $class .= ' ' . $this->style['field'];
 
-        if ($this->error) {
-            $class .= ' is-danger';
-        }
+        $class .= $this->error ? ' is-danger' : ($this->hasSuccessStatus() ? ' is-valid' : '');
 
         return $class;
     }
