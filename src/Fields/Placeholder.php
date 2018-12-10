@@ -25,8 +25,8 @@ class Placeholder extends Element
      */
     public function render()
     {
-        $attributes = $this->renderAttributes(array_except($this->attributes, ['name', 'class']));
+        $attributes = $this->renderAttributes(array_except($this->attributes, ['name']));
 
-        return '<span' . $attributes . '>' . $this->content . '</span>';
+        return '<div' . $attributes . '>' . $this->content . '</div>';
     }
 }
