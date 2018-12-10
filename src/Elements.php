@@ -12,6 +12,7 @@ use Laraplus\Form\Fields\Password;
 use Laraplus\Form\Fields\Checkbox;
 use Laraplus\Form\Fields\TextArea;
 use Laraplus\Form\Fields\Checklist;
+use Laraplus\Form\Fields\Placeholder;
 
 abstract class Elements
 {
@@ -129,6 +130,15 @@ abstract class Elements
     public function file($name)
     {
         return $this->addElement('file', $name);
+    }
+
+    /**
+     * @param $name
+     * @return Placeholder
+     */
+    public function placeholder($name)
+    {
+        return $this->addElement('placeholder', $name);
     }
 
     /**

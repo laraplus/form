@@ -46,6 +46,10 @@ $form->checkbox('terms')
 $form->textArea('message')
     ->label('Message');
 
+$form->placeholder('placeholder')
+    ->label('Custom text')
+    ->content('<i>Some custom content</i>');
+
 $form->submit('submit')
     ->text('Submit!')
     ->addClass('btn-primary');
