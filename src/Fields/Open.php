@@ -237,6 +237,9 @@ class Open
         if ($property == 'name') {
             return $this->name;
         }
+        if ($property == 'form') {
+            return $this->form;
+        }
         if ($property == 'bare') {
             return $this->bare;
         }
