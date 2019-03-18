@@ -3,6 +3,7 @@
 use Laraplus\Form\Fields\Close;
 use Laraplus\Form\Fields\Base\Element;
 use Laraplus\Form\Contracts\FormPresenter;
+use Laraplus\Form\Form;
 use Laraplus\Form\Helpers\RendersAttributes;
 
 abstract class BasePresenter implements FormPresenter
@@ -23,6 +24,11 @@ abstract class BasePresenter implements FormPresenter
      * @var Element
      */
     protected $element;
+
+    /**
+     * @var Form
+     */
+    protected $form;
 
     /**
      * @var string
@@ -80,6 +86,7 @@ abstract class BasePresenter implements FormPresenter
     public function setElement(Element $element)
     {
         $this->element = $element;
+        $this->form = $element->open->form;
         $this->name = $element->name;
         $this->help = $element->help;
         $this->label = $element->label;
