@@ -4,6 +4,7 @@ use Closure;
 use Countable;
 use Exception;
 use ArrayAccess;
+use BadMethodCallException;
 use Laraplus\Form\Fields\Open;
 use Laraplus\Form\Fields\Close;
 use Laraplus\Form\Fields\Base\Element;
@@ -69,6 +70,21 @@ class Form extends Elements implements ArrayAccess, Countable
     protected $ajaxValidation = false;
 
     /**
+     * @var array
+     */
+    protected $dynamicProperties = [];
+
+    /**
+     * @var array
+     */
+    protected static $macros = [];
+
+    /**
+     * @var array
+     */
+    protected static $properties = [];
+
+    /**
      * @param FormPresenter $presenter
      * @param DataStore $dataStore
      * @param ConfigProvider $config
@@ -82,6 +98,39 @@ class Form extends Elements implements ArrayAccess, Countable
         $this->style($this->config->get('style'));
 
         $this->reset();
+    }
+
+    /**
+     * Add new macro
+     *
+     * @param $name
+     * @param string $class
+     */
+    public static function extend($name, $class)
+    {
+        static::$macros[$name] = $class;
+    }
+
+    /**
+     * Register new dynamic property
+     *
+     * @param $name
+     */
+    public static function registerDynamicProperty($name)
+    {
+        static::$properties[$name] = true;
+    }
+
+    /**
+     * Read dynamic property
+     *
+     * @param $name
+     * @param null $default
+     * @return mixed|null
+     */
+    public function getDynamicProperty($name, $default = null)
+    {
+        return isset($this->dynamicProperties[$name]) ? $this->dynamicProperties[$name] : $default;
     }
 
     /**
@@ -367,6 +416,28 @@ class Form extends Elements implements ArrayAccess, Countable
         }
 
         throw new Exception('Element [' . $property . '] does not exist');
+    }
+
+    /**
+     * Handle macro calls
+     *
+     * @param $method
+     * @param $args
+     * @return $this
+     */
+    public function __call($method, $args)
+    {
+        if(isset(static::$macros[$method])) {
+            return $this->addElement($method, array_shift($args), true);
+        }
+
+        if(isset(static::$properties[$method])) {
+            $this->dynamicProperties[$method] = count($args) == 1 ? $args[0] : $args;
+
+            return $this;
+        }
+
+        throw new BadMethodCallException('Method [' . $method . '] does not exist on Form class');
     }
 
     /**
