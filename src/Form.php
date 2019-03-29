@@ -434,6 +434,12 @@ class Form extends Elements implements ArrayAccess, Countable
         if(isset(static::$properties[$method])) {
             $this->dynamicProperties[$method] = count($args) == 0 ?: (count($args) == 1 ? $args[0] : $args);
 
+            foreach($this->elements as $name => $element) {
+                if ($element instanceof static) {
+                    $element->$method(...$args);
+                }
+            }
+
             return $this;
         }
 
