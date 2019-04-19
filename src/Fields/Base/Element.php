@@ -117,6 +117,11 @@ abstract class Element implements FormElement
     protected $forcedClass = false;
 
     /**
+     * @var array
+     */
+    protected static $macros = [];
+
+    /**
      * @param string $name
      * @param Open $open
      * @param FormPresenter $presenter
@@ -134,6 +139,17 @@ abstract class Element implements FormElement
         $this->dataStore = $dataStore;
 
         $this->init();
+    }
+
+    /**
+     * Add new macro
+     *
+     * @param $name
+     * @param string $class
+     */
+    public static function extend($name, $class)
+    {
+        static::$macros[$name] = $class;
     }
 
     /**
@@ -484,6 +500,12 @@ abstract class Element implements FormElement
      */
     public function __call($method, $args)
     {
+        if(isset(static::$macros[$method])) {
+            $result = call_user_func_array(static::$macros[$method], array_merge([$this], $args));
+
+            return $result?: $this;
+        }
+
         $methods = [
             'label',
             'error',

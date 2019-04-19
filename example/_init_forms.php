@@ -1,10 +1,14 @@
 <?php
 
+\Laraplus\Form\Fields\Base\Element::extend('italicLabel', function($element, $label) {
+    $element->label('<i>' . $label . '</i>');
+});
+
 $form->open('test')
     ->method('POST');
 
 $form->text('name')
-    ->label('Name:')
+    ->italicLabel('Name:')
     ->placeholder('Enter your name...');
 
 $form->password('password')
