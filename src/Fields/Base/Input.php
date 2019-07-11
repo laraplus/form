@@ -23,6 +23,27 @@ abstract class Input extends Element
 
         return $this;
     }
+    
+    /**
+     * @return $this
+     */
+    public function labelToPlaceholder()
+    {
+        $label = $this->label;
+        $this->label = null;
+
+        if(isset($this->rules['required'])) {
+            $style = $this->presenter->getStyle();
+
+            if(isset($style['required'])) {
+                $label = str_replace($style['required'], '', $label);
+            }
+        }
+
+        $this->attributes['placeholder'] = $label;
+
+        return $this;
+    }
 
     /**
      * @return string
