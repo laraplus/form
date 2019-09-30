@@ -480,6 +480,7 @@ abstract class Element implements FormElement
             'error',
             'prefix',
             'suffix',
+            'rules',
             'attributes',
             'groupAttributes',
             'multiple',
