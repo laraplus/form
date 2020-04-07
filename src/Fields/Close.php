@@ -53,16 +53,18 @@ class Close
      */
     public function __toString()
     {
+        $wrapper = !empty($this->open->wrapper[1]) ? $this->open->wrapper[1] : '';
+
         if ($this->open->bare) {
-            return '';
+            return $wrapper;
         }
 
         $tag = $this->presenter->renderClosingTag($this);
 
         if ($this->token) {
-            $tag = '<input type="hidden" name="_token" value="' . $this->data->getToken() . '" />' . $tag;
+            return '<input type="hidden" name="_token" value="' . $this->data->getToken() . '" />' . $wrapper . $tag;
         }
 
-        return $tag;
+        return $wrapper . $tag;
     }
 }

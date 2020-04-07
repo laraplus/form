@@ -28,9 +28,15 @@ class Open
     protected $form;
 
     /**
+     * @var array
+     */
+    protected $wrapper;
+
+    /**
      * @var bool
      */
     protected $bare;
+
     /**
      * @var bool
      */
@@ -205,6 +211,17 @@ class Open
     }
 
     /**
+     * @param string $open
+     * @param string $close
+     */
+    public function wrap($open, $close)
+    {
+        $this->wrapper = [$open, $close];
+
+        return $this;
+    }
+
+    /**
      * @return bool
      */
     public function isSubmitted()
@@ -243,6 +260,9 @@ class Open
         if ($property == 'bare') {
             return $this->bare;
         }
+        if ($property == 'wrapper') {
+            return $this->wrapper;
+        }
         if ($property == 'attributes') {
             return $this->attributes;
         }
@@ -253,9 +273,11 @@ class Open
      */
     public function __toString()
     {
-        if ($this->bareWithoutFormId) return '';
+        $append = !empty($this->wrapper[0]) ? $this->wrapper[0] : '';
 
-        $append = '<input type="hidden" name="_form" value="' . $this->name . '" />';
+        if ($this->bareWithoutFormId) return $append;
+
+        $append .= '<input type="hidden" name="_form" value="' . $this->name . '" />';
 
         if ($this->bare) return $append;
         
