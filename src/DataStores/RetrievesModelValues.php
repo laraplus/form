@@ -37,7 +37,7 @@ trait RetrievesModelValues
             return $model[$name];
         }
 
-        if(is_object($model) && $model->$name) {
+        if(is_object($model) && strlen($model->$name)) {
             return $model->$name;
         }
 
