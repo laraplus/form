@@ -32,7 +32,7 @@ abstract class Input extends Element
         $label = $this->label;
         $this->label = null;
 
-        if(isset($this->rules['required'])) {
+        if($this->hasRequiredRule()) {
             $style = $this->presenter->getStyle();
 
             if(isset($style['required'])) {
