@@ -289,8 +289,10 @@ class Form extends Elements implements ArrayAccess, Countable
         $this->enforceOpenForm($type);
 
         $class = $isMacro ? static::$macros[$type] : 'Laraplus\\Form\\Fields\\' . studly_case($type);
+        
+        $ruleName = str_replace(['[', ']'], ['.', ''], $name);
 
-        $element = new $class($name, $this->open, $this->presenter, $this->dataStore, $this->config, array_get($this->rules, $name));
+        $element = new $class($name, $this->open, $this->presenter, $this->dataStore, $this->config, array_get($this->rules, $ruleName));
 
         if($this->ajaxValidation) {
             $element->groupAttr('data-ajax-validate-group', $name);
