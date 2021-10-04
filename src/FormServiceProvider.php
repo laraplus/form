@@ -1,6 +1,7 @@
 <?php namespace Laraplus\Form;
 
 use Illuminate\Support\ServiceProvider;
+use Laraplus\Form\ConfigProviders\LaravelConfigProvider;
 
 class FormServiceProvider extends ServiceProvider
 {
@@ -22,9 +23,13 @@ class FormServiceProvider extends ServiceProvider
         $this->mergeConfigFrom($config, 'form');
         $this->publishes([$config => config_path('form.php')], 'config');
 
-        $presenter = config('form.presenter', 'Laraplus\Form\Presenters\Bootstrap3Presenter');
+        $this->app->bind('Laraplus\Form\Contracts\FormPresenter', function() {
+            $configOffset = LaravelConfigProvider::$configOffset;
+            $presenter = config($configOffset . '.presenter', 'Laraplus\Form\Presenters\Bootstrap3Presenter');
 
-        $this->app->bind('Laraplus\Form\Contracts\FormPresenter', $presenter);
+            return new $presenter;
+        });
+        
         $this->app->singleton('laraplus.form', 'Laraplus\Form\Form');
     }
 }
