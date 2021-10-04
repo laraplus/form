@@ -4,6 +4,8 @@ use Laraplus\Form\Contracts\ConfigProvider;
 
 class LaravelConfigProvider implements ConfigProvider
 {
+    public static $configOffset = 'form';
+    
     /**
      * Get configuration by key
      *
@@ -12,6 +14,6 @@ class LaravelConfigProvider implements ConfigProvider
      */
     public function get($key)
     {
-        return config('form.' . $key);
+        return config(static::$configOffset . '.' . $key);
     }
 }
