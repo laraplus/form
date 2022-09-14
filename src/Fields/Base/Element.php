@@ -145,7 +145,7 @@ abstract class Element implements FormElement
      * Add new macro
      *
      * @param $name
-     * @param string $class
+     * @param $class
      */
     public static function extend($name, $class)
     {
