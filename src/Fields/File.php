@@ -55,14 +55,6 @@ class File extends Input
 
         return $this;
     }
-    
-    /**
-     * @return string
-     */
-    public function getPrompt()
-    {
-        return $this->prompt;
-    }
 
     /**
      * @return string
@@ -74,5 +66,19 @@ class File extends Input
         $multiple = $this->multiple ? ' multiple' : '';
 
         return '<input' . $attributes . $multiple . ' />';
+    }
+
+    /**
+     * Magic getter
+     * @param $property
+     * @return string
+     */
+    public function __get($property)
+    {
+        if($property == 'prompt') {
+            return $this->prompt;
+        }
+
+        return parent::__get($property);
     }
 }
