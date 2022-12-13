@@ -8,6 +8,11 @@ class File extends Input
      * @var bool
      */
     protected $multiple = false;
+    
+    /**
+     * @var string
+     */
+    protected $prompt = null;
 
     /**
      * Initialize field settings
@@ -38,6 +43,25 @@ class File extends Input
         $this->attributes['accept'] = $mime;
 
         return $this;
+    }
+    
+    /**
+     * @param string $prompt
+     * @return $this
+     */
+    public function prompt($prompt)
+    {
+        $this->prompt = $prompt;
+
+        return $this;
+    }
+    
+    /**
+     * @return string
+     */
+    public function getPrompt()
+    {
+        return $this->prompt;
     }
 
     /**
