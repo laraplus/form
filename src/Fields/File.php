@@ -61,11 +61,12 @@ class File extends Input
      */
     public function render()
     {
-        $attributes = $this->renderAttributes($this->attributes);
+        if($this->multiple) {
+            $this->attributes['name'] .= '[]';
+            $this->attributes['multiple'] = '';
+        }
 
-        $multiple = $this->multiple ? ' multiple' : '';
-
-        return '<input' . $attributes . $multiple . ' />';
+        return '<input' . $this->renderAttributes($this->attributes) . ' />';
     }
 
     /**
