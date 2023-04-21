@@ -1,5 +1,6 @@
 <?php namespace Laraplus\Form\Fields;
 
+use Exception;
 use Laraplus\Form\Fields\Base\Element;
 
 class Radio extends Checkbox
