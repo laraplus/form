@@ -11,7 +11,9 @@ trait RendersAttributes
         $result = [];
 
         foreach ($attributes as $key => $value) {
-            $result[] = $key . (strlen($value) ? '="' . $value . '"' : '');
+            $encoded = htmlspecialchars($value, ENT_COMPAT, 'UTF-8', false);
+            
+            $result[] = $key . (strlen($value) ? '="' . $encoded . '"' : '');
         }
 
         return $result ? ' ' . implode(' ', $result) : '';
