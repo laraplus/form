@@ -518,7 +518,7 @@ abstract class Element implements FormElement
         if(isset(static::$macros[$method])) {
             $result = call_user_func_array(static::$macros[$method], array_merge([$this], $args));
 
-            return $result?: $this;
+            return is_null($result) ? $this : $result;
         }
 
         $methods = [
