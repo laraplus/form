@@ -486,6 +486,10 @@ abstract class Element implements FormElement
      */
     public function __get($property)
     {
+        if($property == 'basename') {
+            return class_basename($this);
+        }
+        
         $properties = [
             'open',
             'name',
@@ -515,6 +519,10 @@ abstract class Element implements FormElement
      */
     public function __call($method, $args)
     {
+        if($method == 'basename') {
+            return class_basename($this);
+        }
+        
         if(isset(static::$macros[$method])) {
             $result = call_user_func_array(static::$macros[$method], array_merge([$this], $args));
 
