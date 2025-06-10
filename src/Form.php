@@ -403,6 +403,9 @@ class Form extends Elements implements ArrayAccess, Countable
      */
     public function __get($property)
     {
+        if($property == 'basename') {
+            return class_basename($this);
+        }
         if ($property == 'open') {
             return $this->open;
         }
@@ -429,6 +432,10 @@ class Form extends Elements implements ArrayAccess, Countable
      */
     public function __call($method, $args)
     {
+        if($method == 'basename') {
+            return class_basename($this);
+        }
+        
         if(isset(static::$macros[$method])) {
             return $this->addElement($method, array_shift($args), true);
         }
