@@ -412,6 +412,9 @@ class Form extends Elements implements ArrayAccess, Countable
         if ($property == 'close') {
             return $this->close;
         }
+        if ($property == 'presenter') {
+            return $this->presenter;
+        }
         if($property == 'elements') {
             return $this->renderElements();
         }
