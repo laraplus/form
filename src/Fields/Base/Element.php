@@ -129,7 +129,7 @@ abstract class Element implements FormElement
      * @param ConfigProvider $config
      * @param array $rules
      */
-    public function __construct($name, Open $open, FormPresenter $presenter, DataStore $dataStore, ConfigProvider $config, array $rules = null)
+    public function __construct($name, Open $open, FormPresenter $presenter, DataStore $dataStore, ConfigProvider $config, ?array $rules = null)
     {
         $this->open = $open;
         $this->name = $name;
